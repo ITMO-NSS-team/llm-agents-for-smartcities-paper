@@ -161,5 +161,10 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-#datasets folders
+
+# dataset files
 data/*
+*.geojson
+
+# env file
+*.env
