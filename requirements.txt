@@ -1,7 +1,8 @@
-geojson==3.1.0
-langchain==0.1.20
-langchain_community==0.0.38
-langchain_core==0.1.52
-python-dotenv==1.0.1
-torch==2.3.0
-transformers==4.40.2
+geojson~=3.1.0
+langchain~=0.1.20
+langchain_community~=0.0.38
+langchain_core~=0.1.52
+python-dotenv~=1.0.1
+torch~=2.3.0
+transformers~=4.40.2
+accelerate~=0.30.1
