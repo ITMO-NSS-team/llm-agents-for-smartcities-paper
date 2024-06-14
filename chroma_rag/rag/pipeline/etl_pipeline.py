@@ -4,7 +4,6 @@ from itertools import islice
 from typing import Iterable, Callable, Any
 
 import chromadb
-from chromadb.utils.embedding_functions import HuggingFaceEmbeddingServer
 from langchain_community.embeddings.huggingface import HuggingFaceEmbeddings
 from langchain_community.embeddings.huggingface_hub import HuggingFaceHubEmbeddings
 from langchain_community.vectorstores.chroma import Chroma

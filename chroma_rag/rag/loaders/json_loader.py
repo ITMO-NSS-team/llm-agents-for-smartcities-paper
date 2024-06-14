@@ -5,7 +5,7 @@ from pathlib import Path
 from langchain_community.document_loaders import JSONLoader
 from langchain_core.documents import Document
 
-from rag.loaders.utilities import get_text
+from chroma_rag.rag.loaders.utilities import get_text
 
 
 class CustomJSONLoader(JSONLoader):

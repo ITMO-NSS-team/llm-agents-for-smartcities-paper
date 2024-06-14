@@ -1,6 +1,4 @@
-import requests
-
-from modules.web_api import WebAssistant
+from web_api import WebAssistant
 
 if __name__ == "__main__":
     sys_prompt = '''Your name is Larry. You are smart AI assistant, You have high experitce in field of city building, 

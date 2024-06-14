@@ -1,7 +1,5 @@
 from transformers import BitsAndBytesConfig
-
-from modules.definitions import ROOT
-from modules.model import UrbAssistant
+from model import UrbAssistant
 
 
 if __name__ == '__main__':
@@ -37,7 +35,6 @@ if __name__ == '__main__':
     
     assistant = UrbAssistant('meta-llama/Meta-Llama-3-8B-Instruct', quantization_config=bnb_config)
     assistant.set_sys_prompt(sys_prompt)
-    assistant.init_retirever(pth=str(ROOT / 'data'/ 'docs' / 'example.docx'), collection_name='test_1')
     user_message = f'Question:{question}\nContext:{context}'
     ans = assistant(user_message, temperature=0.015, top_p=.05)
     print(ans.split('ANSWER: ')[-1])

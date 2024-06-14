@@ -10,16 +10,17 @@ class ChromaSettings(BaseSettings):
     allow_reset: bool = False
 
     # Documents collection's settings
-    collection_name: str = 'my_collection2'
+    collection_name: str = 'strategy-spb'
     embedding_name: str = 'intfloat/multilingual-e5-large'
     embedding_host: str = 'http://10.32.1.34:9942/embed'
     distance_fn: str = 'cosine'
 
     # Documents' processing settings
     docs_processing_config: str = str(Path(dirname(dirname(__file__)) + '/configs/' + 'docs_processing_config.yaml'))
-    docs_collection_path: str = str(Path(Path(__file__).parent.parent.parent, 'docs', 'strategy.pdf'))
-    # docs_collection_path: str = str(Path(dirname(dirname(dirname(__file__))) + '/docs/' + 'example.docx'))
+    # docs_collection_path: str = str(Path(Path(__file__).parent.parent.parent, 'docs', 'strategy.pdf'))
+    docs_collection_path: str = str(Path(dirname(dirname(dirname(__file__))) + '/docs/' + 'example.docx'))
 
+    # TODO: decide if we need a chroma.env local config
     # model_config = SettingsConfigDict(
     #     env_file=Path(dirname(dirname(__file__)) + '/configs/' + 'chroma.env'),
     #     env_file_encoding='utf-8',

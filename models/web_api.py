@@ -4,7 +4,7 @@ from typing import Any
 from dotenv import load_dotenv
 import requests
 
-from modules.definitions import ROOT
+from models.definitions import ROOT
 
 class WebAssistant:
     """
@@ -35,9 +35,9 @@ class WebAssistant:
         """
         self._context = context
 
-    def __call__(self, user_question:str, 
+    def __call__(self, user_question: str,
                  temperature: float = .015,
-                 top_p: float  = .5,
+                 top_p: float = .5,
                  *args: Any,
                  **kwargs: Any) -> str:
         """Get a response from model for given question.

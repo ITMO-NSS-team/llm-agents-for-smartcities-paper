@@ -1,0 +1,29 @@
+version: '3.0'
+
+networks:
+  net:
+    driver: bridge
+
+services:
+  server:
+    image: chromadb/chroma:latest
+    environment:
+      - IS_PERSISTENT=TRUE
+    volumes:
+      # Default configuration for persist_directory in chromadb/config.py
+      # Currently it's located in "/chroma/chroma/"
+      - /var/essdata/llm/chromadb/:/chroma/chroma/
+    ports:
+      - 9941:8000
+    networks:
+      - net
+
+  embedding_server:
+    image: ${EMBEDDING_IMAGE:-ghcr.io/huggingface/text-embeddings-inference:cpu-0.3.0} #default image with CPU support
+    command: --model-id ${ST_MODEL:-intfloat/multilingual-e5-large} --revision ${ST_MODEL_REVISION:-main} #configure model and model revision paramters
+    ports:
+      - 9942:80
+    networks:
+      - net
+    volumes:
+      - /var/essdata/llm/embedding/:/data

@@ -1,6 +1,6 @@
 geojson~=3.1.0
-langchain~=0.1.20
-langchain_community~=0.0.38
+langchain~=0.1.14
+langchain_community~=0.0.31
 langchain_core~=0.1.52
 python-dotenv~=1.0.1
 torch~=2.3.0
@@ -10,3 +10,12 @@ chromadb~=0.5.0
 fastapi~=0.111.0
 pydantic~=2.7.3
 poetry~=1.8.3
+
+pandas~=2.2.1
+sortedcontainers~=2.4.0
+langchain-experimental~=0.0.55
+sentence-transformers~=2.6.1
+pydantic-settings~=2.2.1
+pytest~=8.2.0
+
+git+https://github.com/aimclub/stairs-pdf-parsing.git
