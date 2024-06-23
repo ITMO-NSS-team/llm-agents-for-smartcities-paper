@@ -1,9 +1,11 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
 
 import chroma_rag.loading as chroma_connector
 from models.web_api import WebAssistant
-from models.standard_prompt import standard_sys_prompt
+from models.prompts.buildings_prompt import buildings_sys_prompt
+from models.prompts.strategy_prompt import strategy_sys_prompt
 
 
 class Question(BaseModel):
@@ -24,6 +26,19 @@ class Question(BaseModel):
 
 
 app = FastAPI()
+
+origins = [
+    "http://localhost",
+    "http://localhost:8080",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*'],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.post('/question')
 async def read_item(question: Question):
@@ -47,8 +62,8 @@ async def read_item(question: Question):
         context = f'{context}Отрывок {ind}: {chunk[0].page_content} '
         context_list.append(chunk[0].page_content)
 
-    # model = WebAssistant()
-    # model.set_sys_prompt(standard_sys_prompt)
-    # model.add_context(context)
-    # llm_res = model(question.question_body, as_json=True)
-    return {'llm_res': res[0][0].page_content, 'context_list': context_list}
+    model = WebAssistant()
+    model.set_sys_prompt(strategy_sys_prompt)
+    model.add_context(context)
+    llm_res = model(question.question_body, as_json=True)
+    return {'llm_res': llm_res, 'context_list': context_list}

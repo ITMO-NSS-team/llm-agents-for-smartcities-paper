@@ -52,14 +52,25 @@ class WebAssistant:
         Returns:
             str: Model's answer to user's question. 
         """
-        formatted_prompt = {'system': self._system_prompt,
-                            'user': user_question,
-                            'context': self._context,
-                            'temperature': temperature, 
-                            'top_p': top_p}
+        formatted_prompt = {
+            "messages": [
+                {
+                    "role": "system",
+                    "content": self._system_prompt
+                },
+                {
+                    "role": "user",
+                    "content": f"Question: {user_question} Context: {self._context}"
+                }
+            ]
+        }
         response = requests.post(url=self._url, json=formatted_prompt)
         if kwargs.get('as_json'):
-            return json.loads(response.text)['response']
+            try:
+                res = json.loads(response.text)['choices'][0]['message']['content'].split('ANSWER: ')[1]
+            except:
+                res = json.loads(response.text)['choices'][0]['message']['content']
+            return res
         else:
             return response.text
         

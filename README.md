@@ -6,22 +6,24 @@
 
 Создать `config.env` в корне проекта:
 ```
-SAIGA_URL=http://10.32.2.2:8672/generate
+SAIGA_URL=http://10.32.2.2:8671/v1/chat/completions
 ```
 
 Создать на сервере переменную окружения `$NSS_NPA_TOKEN` (гитхаб токен для пользователя `nss-npa`)
+
+Обновить приложение
 ```
-cd /var/essdata/llm/project
-git clone https://github.com/ITMO-NSS-team/BIAM-Urb.git
-git checkout add_app_api_and_dockerfile
+cd /var/essdata/llm/project/BIAM-Urb
+git checkout <required_branch>
 git pull
 
-cd BIAM-Urb
-docker container stop llm_city_app-container 
-docker container rm llm_city_app-container 
-docker image rm llm_city_app
-docker build -t llm_city_app --build-arg NSS_NPA_TOKEN=$NSS_NPA_TOKEN .
-docker run -d -p 9951:80 --name llm_city_app-container llm_city_app
+docker container stop llm_city_app-container
+docker container rm llm_city_app-container
+
+# use --no-cache key if the entire image needs to be rebuilt (e.g. dependencies changed)
+docker build -t llm_city_app [--no-cache] --build-arg NSS_NPA_TOKEN=$NSS_NPA_TOKEN . 
+ 
+docker run -d --restart always -p 9951:80 --name llm_city_app-container llm_city_app
 ```
 
 ## Тестировать пайплайн на сервере:
