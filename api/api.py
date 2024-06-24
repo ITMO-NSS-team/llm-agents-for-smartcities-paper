@@ -35,9 +35,6 @@ class Api:
             param_names=('city', 'centers_only'))
 
 
-
-
-
     class EndpointsMetrics:
         _base_url = 'http://10.32.1.65:5000'
         blocks_accessibility = GetEndpoint(
@@ -49,8 +46,16 @@ class Api:
             url='/api_v3/get_provision/',
             param_names=("city", "service_types", "year", "calculation_type", "user_selection_zone", "valuation_type", "service_impotancy"))
 
+    class EndpointsSummaryTables:
+        _base_url = 'http://10.32.1.42'
+        get_table_by_geometry = PostEndpoint(
+            url='/api_llm/context_by_geom/',
+            param_names=("table", "user_selection_zone"))
+        get_table_by_territory_name_id = PostEndpoint(
+            url='/api_llm/context_by_text/',
+            param_names=("table", "territory_name_id", "territory_type"))
 
-# Process all endpoint groups to set base url
+    # Process all endpoint groups to set base url
 for endpoint_group_name in dir(Api):
     if not endpoint_group_name.startswith('Endpoints'):
         continue
