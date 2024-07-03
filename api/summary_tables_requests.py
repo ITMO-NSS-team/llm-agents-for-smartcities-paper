@@ -46,7 +46,7 @@ def get_general_stats_city(coordinates: List) -> Dict:
     )
 
 
-def get_general_stats_districs_mo(coordinates: List) -> Dict:
+def get_general_stats_districs_mo(coordinates: List) -> Dict:  #!!!!!!!!!!
     return Api.EndpointsSummaryTables.get_table_by_geometry(
         table='Территориальный контекст сводка по выбранному району или МО',
         user_selection_zone=coordinates
