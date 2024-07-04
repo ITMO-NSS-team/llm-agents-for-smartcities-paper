@@ -17,7 +17,7 @@ class WebAssistant:
         load_dotenv(ROOT / 'config.env')
         self._system_prompt = None
         self._context = None
-        self._url = os.environ.get('SAIGA_URL')
+        self._url = os.environ.get('LLAMA_URL')
 
     def set_sys_prompt(self, new_prompt: str) -> None:
         """Set model's role and generation instructions.

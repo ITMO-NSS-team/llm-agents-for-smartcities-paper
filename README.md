@@ -1,12 +1,10 @@
 # BIAM-Urb
 
-Нужен VPN!
-
 ## Собрать образ для пайплайна с RAG и запустить контейнер:
 
 Создать `config.env` в корне проекта:
 ```
-SAIGA_URL=http://10.32.2.2:8671/v1/chat/completions
+LLAMA_URL=http://10.32.2.2:8671/v1/chat/completions
 ```
 
 Создать на сервере переменную окружения `$NSS_NPA_TOKEN` (гитхаб токен для пользователя `nss-npa`)
@@ -61,3 +59,28 @@ http://localhost/docs#/
 ```
 docker compose up
 ```
+
+## Дополнительные материалы
+[Task tracker](https://github.com/orgs/ITMO-NSS-team/projects/3)
+
+[Пример для работы с ChromaDB](https://github.com/aimclub/stairs-rag)
+
+[Таблицы с тестовыми вопросами](https://docs.google.com/spreadsheets/d/1FseP8q0kuRyUc4PJWUfR3yzFLmOi8bBplZRQ-H6F3WU/edit?gid=28598507)
+
+[Документ с примерами всех тем/вопросов для сервиса](https://docs.google.com/document/d/1bZWENunwM2j2x67a4yRUagvw3-OiC4zz/edit?pli=1)
+
+[Описание апи 1](https://docs.google.com/document/d/104Cznsoj9RL0iQsDFqz3RGIOYqQDEvZebI-ecmk0CpI/edit)
+
+[Возможные роли с типовыми вопросами](https://docs.google.com/document/d/1DtBHCn04urr_7gJq_X0tQ-hD6yhVBdmj/edit)
+
+[Основное API для доступа к данным по разным территориям](http://10.32.1.107:1244/swagger-ui/#/)
+
+[Основное API для доступа к данным по разным территориям - альтернатива](https://main-api-new.idu.actcognitive.org/swagger-ui/#/)
+
+[API с транспортной доступностью](http://10.32.1.65:5000/docs#/)
+
+[Ещё API с транспортной доступностью](http://10.32.1.42:5000/docs#/)
+
+[Новое API с таблицами](http://10.32.1.42/docs)
+
+[Описание содержимого API с таблицами](https://niuitmo-my.sharepoint.com/:x:/g/personal/412499_niuitmo_ru/EcbagMIPX0BGoiPcPwXMJjsBnP1I0o4mndqqGVi54wmsoA?rtime=qcIb9LKZ3Eg)
