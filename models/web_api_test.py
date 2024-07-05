@@ -8,20 +8,20 @@ from pprint import pprint
 if __name__ == "__main__":
 
     sys_prompt = strategy_sys_prompt
-    # Пытался протестировать таким скриптом, но после долгого ожидания все равно нет ответа
-    with open('/home/kolyan288/Data/Отраслевой_контекст_–_Культура_и_досуг.json') as f:
-        context = str(json.load(f)).replace('{', '')\
-            .replace('}', '')\
-            .replace('\'', '')\
-            .replace('\n', '')
+    path_to_file_with_context = '/home/kolyan288/Data/Отраслевой_контекст_–_Культура_и_досуг.json'
+    files = [path_to_file_with_context]  # если нужно собрать контекст с нескольких файлов, добавить пути
+    context = ''
 
-        sys_prompt = sys_prompt.replace('\n', '').replace('"', '')
-        model = NewWebAssistant()
-        model.set_sys_prompt(sys_prompt)
-        model.add_context(context)
+    for file in files:
+        with open(file) as f:
+            context += str(json.load(f))
 
-        response = model("Какова обеспеченность объектами культуры и досуга?", as_json=True)
-        print(response)
+    model = NewWebAssistant()
+    model.set_sys_prompt(sys_prompt)
+    model.add_context(context)
+
+    response = model("Какова обеспеченность объектами культуры и досуга?", as_json=True)
+    print(response)
 
     # sys_prompt = strategy_sys_prompt
     #
