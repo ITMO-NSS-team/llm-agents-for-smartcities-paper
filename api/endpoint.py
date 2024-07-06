@@ -1,4 +1,5 @@
 import abc
+import json
 from string import Formatter
 from typing import Any, Collection, Dict
 
@@ -45,6 +46,7 @@ class Endpoint(abc.ABC):
     def __call__(self, **params) -> Any:
         self._check_params(params)
         url, params = self._parse_url_params(params)
+        params = json.dumps(params, ensure_ascii=False)  # This is needed to transform None into null in the payload
         result = self._execute_request(url, params)
         if result.status_code != 200:
             raise ValueError(result.status_code)
@@ -62,4 +64,4 @@ class GetEndpoint(Endpoint):
 
 class PostEndpoint(Endpoint):
     def _execute_request(self, url: str, params: Dict[str, Any]) -> requests.Request:
-        return requests.post(url, json=params, headers={'accept': 'application/json'})
+        return requests.post(url, data=params, headers={'accept': 'application/json'})

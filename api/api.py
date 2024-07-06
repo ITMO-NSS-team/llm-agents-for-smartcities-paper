@@ -1,5 +1,5 @@
 from inspect import ismethod
-from endpoint import GetEndpoint, PostEndpoint
+from api.endpoint import GetEndpoint, PostEndpoint
 
 
 class Api:
@@ -48,14 +48,12 @@ class Api:
 
     class EndpointsSummaryTables:
         _base_url = 'http://10.32.1.42'
-        get_table_by_geometry = PostEndpoint(
+        get_summary_table = PostEndpoint(
             url='/api_llm/context_by_geom/',
-            param_names=("table", "user_selection_zone"))
-        get_table_by_territory_name_id = PostEndpoint(
-            url='/api_llm/context_by_text/',
-            param_names=("table", "territory_name_id", "territory_type"))
+            param_names=("table", "territory_name_id", "territory_type", "selection_zone"))
 
-    # Process all endpoint groups to set base url
+
+# Process all endpoint groups to set base url
 for endpoint_group_name in dir(Api):
     if not endpoint_group_name.startswith('Endpoints'):
         continue

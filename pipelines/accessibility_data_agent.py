@@ -1,175 +1,20 @@
 import json
 import requests
 import csv
+import api.summary_tables_requests
 from pprint import pprint
 from typing import Dict, List
+from tools.accessibility_tools import *
 
 
-tools = [
-{
-  "type": "function",
-  "function": {
-    "name": "get_general_stats_city",
-    "description": "Get statistics for healthcare, population, housing facilities, recreation, playgrounds, "
-                   "education, public transport accessibility, churches and temples, sports infrastructure,"
-                   "cultural and leisure facilities in the given city.",
-    "parameters": {
-      "type": "object",
-      "properties": {
-        "coordinates": {
-          "type": "dict"
-        }
-      },
-      "required": [
-        "coordinates"
-      ]
-    }
-  }
-},
-{
-  "type": "function",
-  "function": {
-    "name": "get_general_stats_districs_mo",
-    "description": "Get statistics for healthcare, education, public transport accessibility, churches and "
-                   "temples, sports infrastructure, cultural and leisure facilities in the given district or "
-                   "municipality.",
-    "parameters": {
-      "type": "object",
-      "properties": {
-        "coordinates": {
-          "type": "dict"
-        }
-      },
-      "required": [
-        "coordinates"
-      ]
-    }
-  }
-},
-{
-  "type": "function",
-  "function": {
-    "name": "get_general_stats_block",
-    "description": "Get statistics for healthcare, population, housing facilities, recreation, playgrounds, "
-                   "education, public transport accessibility, churches and temples, sports infrastructure,"
-                   "cultural and leisure facilities in the given city.",
-    "parameters": {
-      "type": "object",
-      "properties": {
-        "coordinates": {
-          "type": "dict"
-        }
-      },
-      "required": [
-        "coordinates"
-      ]
-    }
-  }
-},
-{
-  "type": "function",
-  "function": {
-    "name": "get_general_stats_education",
-    "description": "Get statistics for the provision of educational facilities like kindergarten,"
-                   "schools, specialized educational institutions, higher education institution. Get"
-                   "statistics about public transport accessibility of educational institutions.",
-    "parameters": {
-      "type": "object",
-      "properties": {
-        "coordinates": {
-          "type": "dict"
-        }
-      },
-      "required": [
-        "coordinates"
-      ]
-    }
-  }
-},
-{
-  "type": "function",
-  "function": {
-    "name": "get_general_stats_healthcare",
-    "description": "Get statistics for various healthcare parameters like: provision of clinics, hospitals,"
-                   "trauma departments, maternity hospitals/wards, dental clinics, female consultation clinics,"
-                   "pharmacies, ambulances; get transport accessibility of all healthcare services.",
-    "parameters": {
-      "type": "object",
-      "properties": {
-        "coordinates": {
-          "type": "dict"
-        }
-      },
-      "required": [
-        "coordinates"
-      ]
-    }
-  }
-},
-{
-  "type": "function",
-  "function": {
-    "name": "get_general_stats_culture",
-    "description": "Get statistics for the provision of cultural and leisure facilities like: libraries, museums,"
-                   "botanical gardens, circuses, theaters, zoos, movie theaters, restaurants; get transport "
-                   "accessibility of all these facilities.",
-    "parameters": {
-      "type": "object",
-      "properties": {
-        "coordinates": {
-          "type": "dict"
-        }
-      },
-      "required": [
-        "coordinates"
-      ]
-    }
-  }
-},
-{
-  "type": "function",
-  "function": {
-    "name": "get_general_stats_sports",
-    "description": "Get statistics for the provision of sports infrastructure facilities like: swimming pools "
-                   "and gyms; get transport accessibility of all these facilities.",
-    "parameters": {
-      "type": "object",
-      "properties": {
-        "coordinates": {
-          "type": "dict"
-        }
-      },
-      "required": [
-        "coordinates"
-      ]
-    }
-  }
-},
-{
-  "type": "function",
-  "function": {
-    "name": "get_general_stats_services",
-    "description": "Get statistics for the provision of services like: grocery stores, clothing stores, "
-                   "home appliance stores, book stores, children's stores, banks, multifunctional centers for "
-                   "the provision of state and municipal services, hairdresser's and beauty salons, veterinarian "
-                   "clinics, dog playgrounds; get transport accessibility of all these facilities.",
-    "parameters": {
-      "type": "object",
-      "properties": {
-        "coordinates": {
-          "type": "dict"
-        }
-      },
-      "required": [
-        "coordinates"
-      ]
-    }
- }
-}
-]
 
+tools = [get_general_stats_education_tool,
+         get_general_stats_healthcare_tool,
+         get_general_stats_culture_tool,
+         get_general_stats_sports_tool,
+         get_general_stats_services_tool]
 
-def get_relevant_api_function_from_llm(model_url: str, tools: Dict, question: str, extra_data: str) -> str:
+def get_relevant_api_function_from_llm(model_url: str, tools: Dict, question: str) -> str:
     params = {
       # "model": "gpt-3.5-turbo",
       "messages": [
@@ -186,8 +31,7 @@ def get_relevant_api_function_from_llm(model_url: str, tools: Dict, question: st
           #            f"of territories. Please choose a function to extract information that is needed to answer the "
           #            f"following question: {question}\n"
           #            f"Extra information: {extra_data}"
-          "content": f"Extract all relevant data for answering this question: "
-                     f"{question}\n Extra information: {extra_data}"
+          "content": f"Extract all relevant data for answering this question: {question}\n"
                      f"Please only return the function call with parameters."
         }
       ]
@@ -217,7 +61,7 @@ def parse_function_names_from_llm_answer(llm_res: str) -> List:
     return res
 
 
-def get_metrics(model_url: str, test_data_file: str, tools: List, extra_data: str):
+def get_metrics(model_url: str, test_data_file: str, tools: List):
     all_questions = 0
     correct_answers = 0
     with open(test_data_file, newline='') as csvfile:
@@ -226,7 +70,7 @@ def get_metrics(model_url: str, test_data_file: str, tools: List, extra_data: st
             question = row['question']
             dataset = row['dataset']
             if dataset != '':
-                llm_res = get_relevant_api_function_from_llm(model_url, tools, question, extra_data)
+                llm_res = get_relevant_api_function_from_llm(model_url, tools, question)
                 res_funcs = parse_function_names_from_llm_answer(llm_res)
                 if dataset in res_funcs:
                     correct_answers += 1
@@ -238,16 +82,51 @@ def get_metrics(model_url: str, test_data_file: str, tools: List, extra_data: st
         print(f'All processed questions: {all_questions}')
         print(f'Questions with correct answers: {correct_answers}')
 
+def service_accessibility_pipeline(question: str, coordinates: List, t_type: str) -> str:
+    # add extra logic
+    res_funcs = []
+    if t_type == "city":
+        res_funcs.append('get_general_stats_city')
+    elif t_type == "mo" or t_type == "district":
+        res_funcs.append('get_general_stats_districts_mo')
+    elif t_type == "block":
+        res_funcs.append('get_general_stats_block')
+    # send request to agent llm
+    model_url = 'http://10.32.2.2:8673/v1/chat/completions'  # meta-llama3-8b-q8-function-calling
+    llm_res = get_relevant_api_function_from_llm(model_url, tools, question)
+    llm_res_funcs = parse_function_names_from_llm_answer(llm_res)
+    res_funcs = res_funcs + llm_res_funcs
+    if not res_funcs:
+        res_funcs.append('get_general_stats_city')
 
-model_url = 'http://10.32.2.2:8673/v1/chat/completions'  # meta-llama3-8b-q8-function-calling
-# model_url = 'http://10.32.2.2:8671/v1/chat/completions'  # Meta-Llama-3-70B-Instruct-v2.Q4_K_S
+    # call function
+    input_data = {"coordinates": coordinates, "type": "Polygon"}
+    context = ''
+    for func in res_funcs:
+        cur_handle = getattr(api.summary_tables_requests, func)
+        context += str(cur_handle(input_data))
 
-question = 'Насколько люди обеспечены объектами здравоохранения?'
-question = 'Какова средняя доступность травматологических отделений на общественном транспорте?'
-question = 'Какова средняя доступность магазинов детских товаров на общественном транспорте?'
+    # prep data for main call
+    # send request to 70b and parse answer
+    # return answer
+    pass
 
-extra_data = 'Coordinates: {"type": "polygon", "coords": [[[30.688828198781902, 59.775976109763285]]]}, territory type: city.'
 
-test_data_file = '/Users/lizzy/Downloads/accessibility_questions.csv'
+if __name__ == "__main__":
+    model_url = 'http://10.32.2.2:8673/v1/chat/completions'  # meta-llama3-8b-q8-function-calling
+    # model_url = 'http://10.32.2.2:8671/v1/chat/completions'  # Meta-Llama-3-70B-Instruct-v2.Q4_K_S
 
-get_metrics(model_url, test_data_file, tools, extra_data)
+    test_data_file = '/Users/lizzy/Downloads/accessibility_questions.csv'
+
+    # get_metrics(model_url, test_data_file, tools)
+    test_coord = {
+        "coordinates": [
+          [
+            [30.2679419, 60.1126515], [30.2679786, 60.112752], [30.2682489, 60.1127275], [30.2682122, 60.112627], [30.2679419, 60.1126515]
+          ]
+        ],
+        "type": "Polygon"
+    }
+    func_handle = getattr(api.summary_tables_requests, 'get_general_stats_city')
+    r = func_handle(test_coord)
+    pprint(r)
