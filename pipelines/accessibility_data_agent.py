@@ -109,9 +109,13 @@ def service_accessibility_pipeline(question: str, coordinates: List, t_type: str
     # Call functions and get context
     input_data = {"coordinates": coordinates, "type": "Polygon"}
     context = ''
-    for func in res_funcs:
-        cur_handle = getattr(api.summary_tables_requests, func)
-        context += str(cur_handle(input_data))
+    try:
+        for func in res_funcs:
+            cur_handle = getattr(api.summary_tables_requests, func)
+            context += str(cur_handle(input_data))
+    except ValueError as e:
+        logging.error(f'Accessibility agent: Could NOT retrieve context from API: {e}')
+
     logging.info(f'Accessibility agent: Context: {context}')
 
     # Send request to Llama 70B and parse final answer
