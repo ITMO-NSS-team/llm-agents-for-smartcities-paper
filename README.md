@@ -4,7 +4,8 @@
 
 Создать `config.env` в корне проекта:
 ```
-LLAMA_URL=http://10.32.2.2:8671/v1/chat/completions
+LLAMA_URL_8b=http://10.32.2.2:8671/v1/chat/completions
+LLAMA_URL=http://10.32.15.21:6672/generate
 ```
 
 Создать на сервере переменную окружения `$NSS_NPA_TOKEN` (гитхаб токен для пользователя `nss-npa`)

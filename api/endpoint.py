@@ -1,5 +1,6 @@
 import abc
 import json
+import logging
 from string import Formatter
 from typing import Any, Collection, Dict
 
@@ -49,6 +50,8 @@ class Endpoint(abc.ABC):
         params = json.dumps(params, ensure_ascii=False)  # This is needed to transform None into null in the payload
         result = self._execute_request(url, params)
         if result.status_code != 200:
+            logging.error(f'Api lib: url: {url}')
+            logging.error(f'Api lib: params: {params}')
             raise ValueError(result.status_code)
         return result.json()
 

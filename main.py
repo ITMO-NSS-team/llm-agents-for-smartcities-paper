@@ -1,19 +1,16 @@
 from fastapi import FastAPI
+import logging
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
-
-import chroma_rag.loading as chroma_connector
-from models.web_api import WebAssistant
-from models.prompts.buildings_prompt import buildings_sys_prompt
-from models.prompts.strategy_prompt import strategy_sys_prompt
+from pipelines.master_pipeline import answer_question_with_llm
 
 
 class Question(BaseModel):
     question_body: str = 'Какие проблемы демографического развития Санкт-Петербурга?'
-    chunk_num: int = 3
+    chunk_num: int = 4
     territory_name_id: str = 'Санкт-Петербург'
     territory_type: str = 'city'
-    user_selection_zone: list = [
+    selection_zone: list = [
       [
         [
           30.184679, 59.954721
@@ -49,21 +46,18 @@ async def read_item(question: Question):
         chunk_num (int): number of chunks that will be returned by the DB and used as a context
         territory_name_id (str): name of the territory
         territory_type (str): type of the territory
-        user_selection_zone (list): coordinates of the territory
+        selection_zone (list): coordinates of the territory
 
     Returns:
-        dict: llm_res - pipeline's answer to the user's question, context_list - context returned by DB
+        dict: llm_res - pipeline's answer to the user's question
     """
-    collection_name = 'strategy-spb'
-    res = chroma_connector.chroma_view(question.question_body, collection_name, question.chunk_num)
-    context = ''
-    context_list = []
-    for ind, chunk in enumerate(res):
-        context = f'{context}Отрывок {ind}: {chunk[0].page_content} '
-        context_list.append(chunk[0].page_content)
-
-    model = WebAssistant()
-    model.set_sys_prompt(strategy_sys_prompt)
-    model.add_context(context)
-    llm_res = model(question.question_body, as_json=True)
-    return {'llm_res': llm_res, 'context_list': context_list}
+    logging.basicConfig(level=logging.INFO)
+    logging.info(f'main: question: {question.question_body}')
+    logging.info(f'main: chunk_num: {question.chunk_num}')
+    logging.info(f'main: territory_name_id: {question.territory_name_id}')
+    logging.info(f'main: territory_type: {question.territory_type}')
+    logging.info(f'main: selection_zone: {question.selection_zone}')
+    llm_res = answer_question_with_llm(question.question_body, question.selection_zone,
+                                       question.territory_type, question.territory_name_id,
+                                       question.chunk_num)
+    return {'llm_res': llm_res}

@@ -2,7 +2,7 @@ import json
 from typing import Any
 import requests
 
-import web_api
+import models.web_api as web_api
 import uuid
 
 
@@ -44,7 +44,7 @@ class NewWebAssistant(web_api.WebAssistant):
         response = requests.post(url=self._url, json=formatted_prompt)
         if kwargs.get('as_json'):
             try:
-                res = json.loads(response.text)['content'].split('ANSWER: ')[1]
+                res = json.loads(response.text)['content'].split('ОТВЕТ: ')[1]
             except:
                 res = json.loads(response.text)['content']
             return res
