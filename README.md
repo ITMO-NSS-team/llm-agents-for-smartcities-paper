@@ -34,6 +34,7 @@ curl -v POST http://10.32.1.34:9951/question -H 'Content-Type: application/json'
 В браузере:
 ```
 http://10.32.1.34:9951/docs/
+http://10.32.1.34:9952/docs/
 ```
 
 ## Тестировать апи локально:
