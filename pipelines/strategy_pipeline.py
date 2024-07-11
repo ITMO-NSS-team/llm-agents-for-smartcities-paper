@@ -2,7 +2,7 @@ import logging
 import chroma_rag.loading as chroma_connector
 from models.new_web_api import NewWebAssistant
 from models.prompts.buildings_prompt import buildings_sys_prompt
-from models.prompts.strategy_prompt import strategy_sys_prompt
+from models.prompts.strategy_prompt import strategy_sys_prompt_new
 
 
 logging.basicConfig(level=logging.INFO)
@@ -23,7 +23,7 @@ def strategy_development_pipeline(question: str, chunk_num: int = 4) -> str:
     logging.info(f'Strategy RAG: Context: {context_list}')
     # Get question answer from Llama
     model = NewWebAssistant()
-    model.set_sys_prompt(strategy_sys_prompt)
+    model.set_sys_prompt(strategy_sys_prompt_new)
     model.add_context(context)
     response = model(question, as_json=True)
     logging.info(f'Strategy RAG: Final answer: {response}')
