@@ -1,4 +1,4 @@
-strategy_sys_prompt = '''Answer the question following rules below. For answer you must use provided by user context.
+accessibility_sys_prompt = '''Answer the question following rules below. For answer you must use provided by user context.
                          Rules:
                          1. You must use only provided information for the answer.
                          2. Add a unit of measurement to an answer.
@@ -10,7 +10,7 @@ strategy_sys_prompt = '''Answer the question following rules below. For answer y
                          For each sentence in English language you will be fined for 100$, so in answers you must use only Russian language.
                      '''
 
-strategy_sys_prompt_new = '''Answer the question following rules below. For answer you must use provided by user context.
+strategy_sys_prompt = '''Answer the question following rules below. For answer you must use provided by user context.
                              Rules:
                              1. You must use only provided information for the answer.
                              2. For answer you should take only that information from context, which is relevant to user's question.

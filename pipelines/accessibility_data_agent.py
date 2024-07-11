@@ -114,7 +114,7 @@ def service_accessibility_pipeline(question: str, coordinates: List, t_type: str
 
     # Send request to Llama 70B and parse final answer
     model = NewWebAssistant()
-    model.set_sys_prompt(strategy_sys_prompt)
+    model.set_sys_prompt(accessibility_sys_prompt)
     model.add_context(context)
     response = model(question, as_json=True)
     logging.info(f'Accessibility agent: Final answer: {response}')
@@ -169,7 +169,7 @@ def run_pipeline_on_local_data(question: str, table: str):
 
     # Send request to Llama 70B and parse final answer
     model = NewWebAssistant()
-    model.set_sys_prompt(strategy_sys_prompt)
+    model.set_sys_prompt(accessibility_sys_prompt)
     model.add_context(context)
     response = model(question, as_json=True)
     logging.info(f'Accessibility agent: Final answer: {response}')
