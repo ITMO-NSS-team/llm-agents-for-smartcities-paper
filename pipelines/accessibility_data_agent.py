@@ -2,7 +2,7 @@ import csv
 import logging
 import re
 from typing import Dict, List
-from tools.accessibility_tools import *
+from tools.accessibility_tools_rus import *
 
 import api.summary_tables_requests
 from models.new_web_api import *
