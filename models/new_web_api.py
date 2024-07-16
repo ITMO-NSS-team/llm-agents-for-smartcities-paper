@@ -49,4 +49,5 @@ class NewWebAssistant(web_api.WebAssistant):
                 res = json.loads(response.text)['content']
             return res
         else:
-            return response.text
+            res = json.loads(response.text)
+            return res['content']
