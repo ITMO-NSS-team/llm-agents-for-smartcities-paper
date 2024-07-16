@@ -34,7 +34,6 @@ class Api:
             '/api/city/{city}/blocks',
             param_names=('city', 'centers_only'))
 
-
     class EndpointsMetrics:
         _base_url = 'http://10.32.1.65:5000'
         blocks_accessibility = GetEndpoint(
@@ -44,7 +43,8 @@ class Api:
         _base_url = 'http://10.32.1.42:5000'
         get_provision = PostEndpoint(
             url='/api_v3/get_provision/',
-            param_names=("city", "service_types", "year", "calculation_type", "user_selection_zone", "valuation_type", "service_impotancy"))
+            param_names=("city", "service_types", "year", "calculation_type", "user_selection_zone", "valuation_type",
+                         "service_impotancy"))
 
     class EndpointsSummaryTables:
         _base_url = 'http://10.32.1.42'

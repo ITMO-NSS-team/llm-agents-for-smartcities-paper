@@ -66,7 +66,7 @@ def get_relevant_function_from_llm(model_url: str, tools: Dict, question: str, e
                 "content": f"Extract all relevant data for answering this question: "
                            f"{question}\n Extra information: {extra_data}."
                            f"You MUST return ONLY the function name. "
-                           # f"You MUST return ONLY the function call with parameters. "
+                # f"You MUST return ONLY the function call with parameters. "
                            f"Do NOT return any other additional text."
             }
         ]
@@ -93,7 +93,6 @@ def parse_function_names_from_llm_answer(llm_res: str) -> List:
 
 
 def check_choice_correctness(question: str, answer: str, tools: List):
-
     sys_prompt = "You are a knowledgeable, efficient, and direct AI assistant. Provide concise answers, " \
                  "focusing on the key information needed. Offer suggestions tactfully when appropriate to " \
                  "improve outcomes. Engage in productive collaboration with the user."
@@ -144,20 +143,22 @@ def get_metrics(model_url: str, test_data_file: str, tools: List, extra_data: st
         print(f'Incorrect answers:')
         for answer in incorrect_answers:
             print(answer)
-        print(f'Accuracy: {correct_answers/all_questions}')
+        print(f'Accuracy: {correct_answers / all_questions}')
 
 
 if __name__ == "__main__":
-
     sys_prompt = strategy_sys_prompt
 
     model_url = 'http://10.32.2.2:8673/v1/chat/completions'  # meta-llama3-8b-q8-function-calling
 
     extra_data = 'Coordinates: {"type": "polygon", "coords": [[[30.688828198781902, 59.775976109763285]]]}, territory type: city.'
-    
+
     # File with 10 questions for testing
     # test_data_file = './test_data/test_access_and_strategy_questions.csv'
-    
+
     test_data_file = './test_data/access_and_strategy_questions.csv'
 
     get_metrics(model_url, test_data_file, tools, extra_data)
+
+
+

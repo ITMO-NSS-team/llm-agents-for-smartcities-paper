@@ -6,10 +6,12 @@ import requests
 
 from models.definitions import ROOT
 
+
 class WebAssistant:
     """
     Web implementation of LLM assistant for answering urbanistic questions.
     """
+
     def __init__(self) -> None:
         """
         Initialize an instanse of LLM assistant.
@@ -73,4 +75,3 @@ class WebAssistant:
             return res
         else:
             return response.text
-        
