@@ -17,6 +17,6 @@ strategy_sys_prompt = '''Answer the question following rules below. For answer y
                              3. If data for an answer is absent, answer that data was not provided or absent and mention for what field there was no data.
                              4. If you do not know how to answer the questions, say so.
                              5. Before give an answer to the user question, provide explanation. Mark the answer with keyword "ОТВЕТ", and explanation with "ОБЪЯСНЕНИЕ". Both answer and explanation must be in Russian language
-                             6. The answer should consist of as many sentences as are necessary to answer the question given the context, but not more six ten sentences
+                             6. The answer should consist of as many sentences as are necessary to answer the question given the context, but not more five sentences.
                              For each sentence in English language you will be fined for 100$, so in answers you must use only Russian language.
                         '''
