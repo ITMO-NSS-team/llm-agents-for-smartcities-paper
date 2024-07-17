@@ -1,5 +1,6 @@
 import csv
 import json
+import re
 import logging
 import requests
 from typing import Dict, List
@@ -16,10 +17,11 @@ tools = [
         "name": "service_accessibility_pipeline",
         "description": "This pipeline returns detailed information about the accessibility of various urban "
                        "services and facilities. It evaluates the accessibility of healthcare, population, "
-                       "housing facilities, recreation, playgrounds, education, public transport, churches "
-                       "and temples, sports infrastructure, cultural and leisure facilities, and more. "
-                       "The tool takes geographical coordinates as input and provides comprehensive statistics "
-                       "for the specified area.",
+                       "housing facilities, recreation, playgrounds, education (schools, universities, etc.), "
+                       "public transport, churches and temples, sports infrastructure  (stadiums, etc.), "
+                       "cultural and leisure facilities (theatres, circuses, zoos, etc.), and more. "
+                       "The input usually contain words such as 'доступность', 'обеспеченность', 'доля', 'количество',  "
+                       "'средняя доступность', 'среднее время', 'общая площадь', 'численность', etc.",
         "parameters": {
             "type": "object",
             "properties": {
@@ -36,7 +38,8 @@ tools = [
                        "document. It uses Retrieval-Augmented Generation (RAG) to extract relevant "
                        "information from the provided document. The tool is designed to answer strategic "
                        "questions about urban development, including healthcare, education, infrastructure, "
-                       "and other aspects covered in the development strategy. The user must provide the question.",
+                       "and other aspects covered in the development strategy. The input usually contain words "
+                       "such as 'планируемый', 'меры', etc.",
         "parameters": {
             "type": "object",
             "properties": {
@@ -62,7 +65,8 @@ def get_relevant_function_from_llm(model_url: str, tools: Dict, question: str) -
                 "role": "user",
                 "content": f"Extract all relevant data for answering this question: "
                            f"{question}\n"
-                           f"You MUST return ONLY the function call with parameters. "
+                           f"You MUST return ONLY the function name. "
+                # f"You MUST return ONLY the function call with parameters. "
                            f"Do NOT return any other additional text."
             }
         ]
@@ -76,12 +80,24 @@ def get_relevant_function_from_llm(model_url: str, tools: Dict, question: str) -
     return res['choices'][0]['message']['content']
 
 
+# def parse_function_names_from_llm_answer_for_metrics(llm_res: str) -> List:
+#     res = []
+#     if 'service_accessibility_pipeline' in llm_res:
+#         res.append('api')
+#     if 'strategy_development_pipeline' in llm_res:
+#         res.append('rag')
+#     return res
+
+
 def parse_function_names_from_llm_answer_for_metrics(llm_res: str) -> List:
+    match = re.search(r'^\[Correct answer\]:.*', llm_res, re.MULTILINE)
     res = []
-    if 'service_accessibility_pipeline' in llm_res:
-        res.append('api')
-    if 'strategy_development_pipeline' in llm_res:
-        res.append('rag')
+    if match:
+        correct_answer_line = match.group(0)
+        if 'service_accessibility_pipeline' in correct_answer_line:
+            res.append('api')
+        if 'strategy_development_pipeline' in correct_answer_line:
+            res.append('rag')
     return res
 
 
@@ -117,21 +133,47 @@ def get_metrics(model_url: str, test_data_file: str, tools: List, extra_data: st
         print(f'Questions with correct answers: {correct_answers}')
 
 
+def check_choice_correctness(question: str, answer: str, tools: List):
+    sys_prompt = "You are a knowledgeable, efficient, and direct AI assistant. Provide concise answers, " \
+                 "focusing on the key information needed. Offer suggestions tactfully when appropriate to " \
+                 "improve outcomes. Engage in productive collaboration with the user."
+    model = NewWebAssistant()
+    model.set_sys_prompt(sys_prompt)
+    user_message = f"[Instruction]: You are given question, descriptions of 2 functions and an answer from another " \
+                   f"Llama model, which has chosen one of these functions. Your task is to compare " \
+                   f"the chosen function with the question and the descriptions and determine " \
+                   f"if the function was selected correctly. If the chosen function is correct, " \
+                   f"return the function name. If the function is selected incorrectly, return the name " \
+                   f"of another function.\n" \
+                   f"[Question]: {question}.\n" \
+                   f"[Answer]: {answer}.\n" \
+                   f"[Function Descriptions]: {tools}.\n" \
+                   f"[Task]: " \
+                   f"Compare the chosen function with the function descriptions and the question " \
+                   f"to determine if the function was selected correctly. Return the name of correct function in this format: " \
+                   f"[Correct answer]: correct function."
+    ans = model(user_message, as_json=False)
+
+    return ans
+
+
 def answer_question_with_llm(question: str, coordinates: List, t_type: str, t_id: str,  chunk_num: int) -> str:
     # add loading tools later
     # Send request to agent llm
     model_url = 'http://10.32.2.2:8673/v1/chat/completions'  # meta-llama3-8b-q8-function-calling
     llm_res = get_relevant_function_from_llm(model_url, tools, question)
     res_funcs = parse_function_names_from_llm_answer(llm_res)
-    if not res_funcs:
-        res_funcs.append('strategy_development_pipeline')
-    logging.info(f'Master pipeline: Functions list: {res_funcs}')
+    llm_check_res = check_choice_correctness(question, res_funcs[0], tools)
+    checked_res_funcs = parse_function_names_from_llm_answer(llm_check_res)
+    if not checked_res_funcs:
+        checked_res_funcs.append('strategy_development_pipeline')
+    logging.info(f'Master pipeline: Functions list: {checked_res_funcs}')
 
     # Call function -> just the first one TODO: think how to handle multiple replies from llm
-    if res_funcs[0] == 'strategy_development_pipeline':
+    if checked_res_funcs[0] == 'strategy_development_pipeline':
         fun_handle = getattr(pipelines.strategy_pipeline, 'strategy_development_pipeline')
         llm_res = str(fun_handle(question, chunk_num))
-    elif res_funcs[0] == 'service_accessibility_pipeline':
+    elif checked_res_funcs[0] == 'service_accessibility_pipeline':
         fun_handle = getattr(pipelines.accessibility_data_agent, 'service_accessibility_pipeline')
         llm_res = str(fun_handle(question, coordinates, t_type, t_id))
     logging.info(f'Master pipeline: Final answer: {llm_res}')

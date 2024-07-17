@@ -1,15 +1,10 @@
-import csv
 import logging
-import re
-import requests
 from typing import Dict, List
-from tools.accessibility_tools_rus import *
 
 import api.summary_tables_requests
 from models.new_web_api import *
 from models.prompts.strategy_prompt import *
 from pipelines.tools.accessibility_tools_rus import *
-from pipeline_test import *
 
 
 logging.basicConfig(level=logging.INFO)
