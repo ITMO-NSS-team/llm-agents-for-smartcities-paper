@@ -2,27 +2,30 @@
 
 ## Собрать образ для пайплайна с RAG и запустить контейнер:
 
+Создать на сервере переменную окружения `$NSS_NPA_TOKEN` (гитхаб токен для пользователя `nss-npa`)
+
+Подтянуть изменения:
+```
+cd /var/essdata/llm/project-2/BIAM-Urb
+git checkout <required_branch>
+git pull
+```
+
 Создать `config.env` в корне проекта:
 ```
 LLAMA_URL_8b=http://10.32.2.2:8671/v1/chat/completions
 LLAMA_URL=http://10.32.15.21:6672/generate
 ```
 
-Создать на сервере переменную окружения `$NSS_NPA_TOKEN` (гитхаб токен для пользователя `nss-npa`)
-
-Обновить приложение
+Пересобрать образ и запустить контейнер
 ```
-cd /var/essdata/llm/project/BIAM-Urb
-git checkout <required_branch>
-git pull
-
-docker container stop llm_city_app-container
-docker container rm llm_city_app-container
+docker container stop llm_city_app-container-agent-checks
+docker container rm llm_city_app-container-agent-checks
 
 # use --no-cache key if the entire image needs to be rebuilt (e.g. dependencies changed)
-docker build -t llm_city_app [--no-cache] --build-arg NSS_NPA_TOKEN=$NSS_NPA_TOKEN . 
+docker build -t llm_city_app-agent-checks [--no-cache] --build-arg NSS_NPA_TOKEN=$NSS_NPA_TOKEN . 
  
-docker run -d --restart always -p 9951:80 --name llm_city_app-container llm_city_app
+docker run -d --restart always -p 9953:80 --name llm_city_app-container-agent-checks llm_city_app-agent-checks
 ```
 
 ## Тестировать пайплайн на сервере:
@@ -33,8 +36,9 @@ curl -v POST http://10.32.1.34:9951/question -H 'Content-Type: application/json'
 ```
 В браузере:
 ```
-http://10.32.1.34:9951/docs/
-http://10.32.1.34:9952/docs/
+http://10.32.1.34:9951/docs/ - первая версия, где только rag 
+http://10.32.1.34:9952/docs/ - вторая версия с агентами
+http://10.32.1.34:9953/docs/ - последняя версия с доработками агента
 ```
 
 ## Тестировать апи локально:

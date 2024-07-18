@@ -1,6 +1,6 @@
 from pprint import pprint
 
-from api import Api
+from api.api import Api
 from api.test_data.districts import *
 from api.test_data.cities import *
 from api.test_data.blocks import *
