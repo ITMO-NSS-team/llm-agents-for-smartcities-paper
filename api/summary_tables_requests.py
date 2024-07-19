@@ -116,15 +116,47 @@ def get_general_stats_services(coordinates: List) -> Dict:
     )
 
 
+def get_general_stats_demography(coordinates: List) -> Dict:
+    return Api.EndpointsSummaryTables.get_summary_table(
+        table='Отраслевой контекст – демография',
+        territory_name_id=None,
+        territory_type=None,
+        selection_zone=coordinates
+    )
+
+
+def get_general_stats_housing_and_communal_services(coordinates: List) -> Dict:
+    return Api.EndpointsSummaryTables.get_summary_table(
+        table='Отраслевой контекст – Жилье и жилищно-коммунальное хозяйство',
+        territory_name_id=None,
+        territory_type=None,
+        selection_zone=coordinates
+    )
+
+
+def get_general_stats_object(coordinates: List) -> Dict:
+    return Api.EndpointsSummaryTables.get_summary_table(
+        table='Объекты контекст сводка по выбранному объекту',
+        territory_name_id=None,
+        territory_type=None,
+        selection_zone=coordinates
+    )
+
+
 if __name__ == "__main__":
-    tables = ['Общий контекст – общая таблица-сводка по городу',
-              'Территориальный контекст сводка по выбранному району или МО',
-              'Территориальный контекст сводка по выбранному кварталу',
-              'Отраслевой контекст – образование',
-              'Отраслевой контекст - здравоохранение',
-              'Отраслевой контекст – Культура и досуг',
-              'Отраслевой контекст – Физическая культура и спорт',
-              'Отраслевой контекст – Обслуживание населения']
+    tables = [
+        'Общий контекст – общая таблица-сводка по городу',
+        'Территориальный контекст сводка по выбранному району или МО',
+        'Территориальный контекст сводка по выбранному кварталу',
+        'Отраслевой контекст – образование',
+        'Отраслевой контекст - здравоохранение',
+        'Отраслевой контекст – Культура и досуг',
+        'Отраслевой контекст – Физическая культура и спорт',
+        'Отраслевой контекст – Обслуживание населения',
+        'Отраслевой контекст – демография',
+        'Отраслевой контекст – Жилье и жилищно-коммунальное хозяйство',
+        'Объекты контекст сводка по выбранному объекту'
+    ]
 
     coords = {'city': spb_coords,
               'district': vuborg_district_coords,
