@@ -158,23 +158,23 @@ if __name__ == "__main__":
         'Объекты контекст сводка по выбранному объекту'
     ]
 
-    coords = {'city': spb_coords,
-              'district': vuborg_district_coords,
-              'municipality': krasnoe_selo_mo_coords,
-              'block': block2_coords,
-              'house': house1_coords}
+    coords = [{'t': 'city', 'coords': spb_coords, 'type': 'MultiPolygon'},
+              {'t': 'district', 'coords': vuborg_district_coords, 'type': 'Polygon'},
+              {'t': 'municipality', 'coords': krasnoe_selo_mo_coords, 'type': 'MultiPolygon'},
+              {'t': 'block', 'coords': block2_coords, 'type': 'Polygon'},
+              {'t': 'house', 'coords': house1_coords, 'type': 'Point'}]
 
     # coords = {'blocks': block2_coords}
 
     for table in tables:
-        for type, coord in coords.items():
+        for element in coords:
             try:
-                input_data = {"coordinates": coord, "type": "Polygon"}
+                input_data = {"coordinates": element['coords'], "type": element['type']}
                 res = get_summary_table(table, coordinates=input_data)
-                print(f'{table} works well with {type} data')
+                print(f'{table} works well with {(element.get("t"))} data')
                 # pprint(res)
             except Exception as e:
                 pass
-                print(f'ERROR: {table} has issues with {type} data')
+                print(f'ERROR: {table} has issues with {(element.get("t"))} data')
                 print(e)
         print('-------------------------------------------------')
