@@ -89,7 +89,7 @@ def get_relevant_function_from_llm(model_url: str, tools: Dict, question: str) -
 #     return res
 
 
-def parse_function_names_from_llm_answer_for_metrics(llm_res: str) -> List:
+def parse_function_names_from_check_llm_answer_for_metrics(llm_res: str) -> List:
     match = re.search(r'^\[Correct answer\]:.*', llm_res, re.MULTILINE)
     res = []
     if match:
@@ -98,6 +98,18 @@ def parse_function_names_from_llm_answer_for_metrics(llm_res: str) -> List:
             res.append('api')
         if 'strategy_development_pipeline' in correct_answer_line:
             res.append('rag')
+    return res
+
+
+def parse_function_names_from_check_llm_answer(llm_res: str) -> List:
+    match = re.search(r'^\[Correct answer\]:.*', llm_res, re.MULTILINE)
+    res = []
+    if match:
+        correct_answer_line = match.group(0)
+        if 'service_accessibility_pipeline' in correct_answer_line:
+            res.append('service_accessibility_pipeline')
+        if 'strategy_development_pipeline' in correct_answer_line:
+            res.append('strategy_development_pipeline')
     return res
 
 
@@ -121,8 +133,10 @@ def get_metrics(model_url: str, test_data_file: str, tools: List, extra_data: st
             dataset = row['source']
             if dataset != '':
                 llm_res = get_relevant_function_from_llm(model_url, tools, question, extra_data)
-                res_funcs = parse_function_names_from_llm_answer_for_metrics(llm_res)
-                if dataset in res_funcs:
+                res_funcs = parse_function_names_from_llm_answer(llm_res)
+                llm_check_res = check_choice_correctness(question, res_funcs[0], tools)
+                checked_res_funcs = parse_function_names_from_check_llm_answer_for_metrics(llm_check_res)  # TODO: test this change
+                if dataset in checked_res_funcs:
                     correct_answers += 1
                 all_questions += 1
                 print(question)
@@ -164,7 +178,7 @@ def answer_question_with_llm(question: str, coordinates: List, t_type: str, t_id
     llm_res = get_relevant_function_from_llm(model_url, tools, question)
     res_funcs = parse_function_names_from_llm_answer(llm_res)
     llm_check_res = check_choice_correctness(question, res_funcs[0], tools)
-    checked_res_funcs = parse_function_names_from_llm_answer(llm_check_res)
+    checked_res_funcs = parse_function_names_from_check_llm_answer(llm_check_res)
     if not checked_res_funcs:
         checked_res_funcs.append('strategy_development_pipeline')
     logging.info(f'Master pipeline: Functions list: {checked_res_funcs}')
@@ -188,4 +202,10 @@ if __name__ == "__main__":
 
     question = 'Какие проблемы демографического развития Санкт-Петербурга?'
     chunk_num = 4
-    print(answer_question_with_llm(question, None, None, chunk_num))
+    coords = [
+        [
+            [30.2679419, 60.1126515], [30.2679786, 60.112752], [30.2682489, 60.1127275],
+            [30.2682122, 60.112627], [30.2679419, 60.1126515]
+        ]
+    ]
+    print(answer_question_with_llm(question, coords, None, None, chunk_num))
