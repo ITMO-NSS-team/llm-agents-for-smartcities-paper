@@ -17,7 +17,7 @@ tools = [
     get_general_stats_services_tool,
     get_general_stats_demography_tool,
     get_general_stats_housing_and_communal_services_tool,
-    get_general_stats_object_tool
+    # get_general_stats_object_tool
 ]
 
 
@@ -54,7 +54,7 @@ def parse_function_names_from_llm_answer(llm_res: str) -> List:
         'get_general_stats_services',
         'get_general_stats_demography',
         'get_general_stats_housing_and_communal_services',
-        'get_general_stats_object'
+        # 'get_general_stats_object'
     ]
     for api_func in functions:
         if api_func in llm_res:

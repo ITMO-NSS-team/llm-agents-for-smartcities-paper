@@ -20,8 +20,9 @@ tools = [
                        "housing facilities, recreation, playgrounds, education (schools, universities, etc.), "
                        "public transport, churches and temples, sports infrastructure  (stadiums, etc.), "
                        "cultural and leisure facilities (theatres, circuses, zoos, etc.), and more. "
-                       "The input usually contain words such as 'доступность', 'обеспеченность', 'доля', 'количество',  "
-                       "'средняя доступность', 'среднее время', 'общая площадь', 'численность', etc.",
+                       "It can also return information about the dissatisfaction of the population and information on various complaints. "
+                       "The input usually contain words such as 'доступность', 'обеспеченность', 'доля', 'количество', "
+                       "'средняя доступность', 'среднее время', 'общая площадь', 'численность', 'сколько' etc.",
         "parameters": {
             "type": "object",
             "properties": {
