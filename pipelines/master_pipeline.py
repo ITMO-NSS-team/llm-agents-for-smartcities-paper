@@ -16,7 +16,7 @@ tools = [
     {
         "name": "service_accessibility_pipeline",
         "description": "This pipeline returns detailed information about the accessibility of various urban "
-                       "services and facilities. It evaluates the accessibility of healthcare, population, "
+                       "services and facilities and their number. It evaluates the accessibility of healthcare, population, "
                        "housing facilities, recreation, playgrounds, education (schools, universities, etc.), "
                        "public transport, churches and temples, sports infrastructure  (stadiums, etc.), "
                        "cultural and leisure facilities (theatres, circuses, zoos, etc.), and more. "
