@@ -9,14 +9,19 @@ from pipelines.tools.accessibility_tools_rus import *
 
 logging.basicConfig(level=logging.INFO)
 
-tools = [get_general_stats_education_tool,
-         get_general_stats_healthcare_tool,
-         get_general_stats_culture_tool,
-         get_general_stats_sports_tool,
-         get_general_stats_services_tool]
+tools = [
+    get_general_stats_education_tool,
+    get_general_stats_healthcare_tool,
+    get_general_stats_culture_tool,
+    get_general_stats_sports_tool,
+    get_general_stats_services_tool,
+    get_general_stats_demography_tool,
+    get_general_stats_housing_and_communal_services_tool,
+    # get_general_stats_object_tool
+]
 
 
-def get_relevant_api_function_from_llm(model_url: str, tools: Dict, question: str) -> str:
+def get_relevant_api_function_from_llm(model_url: str, tools: List, question: str) -> str:
     params = {
         "messages": [
             {
@@ -38,14 +43,19 @@ def get_relevant_api_function_from_llm(model_url: str, tools: Dict, question: st
 
 def parse_function_names_from_llm_answer(llm_res: str) -> List:
     res = []
-    functions = ['get_general_stats_city',
-                 'get_general_stats_districts_mo',
-                 'get_general_stats_block',
-                 'get_general_stats_education',
-                 'get_general_stats_healthcare',
-                 'get_general_stats_culture',
-                 'get_general_stats_sports',
-                 'get_general_stats_services']
+    functions = [
+        'get_general_stats_city',
+        'get_general_stats_districts_mo',
+        'get_general_stats_block',
+        'get_general_stats_education',
+        'get_general_stats_healthcare',
+        'get_general_stats_culture',
+        'get_general_stats_sports',
+        'get_general_stats_services',
+        'get_general_stats_demography',
+        'get_general_stats_housing_and_communal_services',
+        # 'get_general_stats_object'
+    ]
     for api_func in functions:
         if api_func in llm_res:
             res.append(api_func)
