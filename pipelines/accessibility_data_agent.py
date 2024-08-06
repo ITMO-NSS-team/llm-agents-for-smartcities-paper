@@ -2,12 +2,17 @@ import csv
 import logging
 import re
 from typing import Dict, List
+import time
+import os
+from typing import List
+from dotenv import load_dotenv
 
 import api.summary_tables_requests
 from models.new_web_api import *
 from models.prompts.strategy_prompt import *
 from pipelines.tools.accessibility_tools_rus import *
 import numpy as np
+from models.definitions import ROOT
 
 logging.basicConfig(level=logging.INFO)
 
@@ -43,7 +48,7 @@ def get_relevant_api_function_from_llm(model_url: str, tools: Dict, question: st
     return res['choices'][0]['message']['content']
 
 
-def parse_function_names_from_llm_answer(llm_res: str) -> List:
+def parse_function_names_from_llm_answer(llm_res: str) -> List[str]:
     res = []
     functions = [
         'get_general_stats_city',
@@ -64,30 +69,6 @@ def parse_function_names_from_llm_answer(llm_res: str) -> List:
     return res
 
 
-def get_metrics(model_url: str, test_data_file: str, tools: List):
-    all_questions = 0
-    correct_answers = 0
-    with open(test_data_file, newline='') as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            question = row['question']
-            dataset = row['dataset']
-            if dataset != '':
-                llm_res = get_relevant_api_function_from_llm(model_url, tools, question)
-                res_funcs = parse_function_names_from_llm_answer(llm_res)
-                if dataset in res_funcs:
-                    correct_answers += 1
-                else:
-                    print(question)
-                    print(dataset)
-                    print(res_funcs)
-                    print('____________________________________')
-                all_questions += 1
-
-        print(f'All processed questions: {all_questions}')
-        print(f'Questions with correct answers: {correct_answers}')
-
-
 def get_territory_coordinate_type(coords: List) -> str:
     coords = np.array(coords)
 
@@ -101,7 +82,39 @@ def get_territory_coordinate_type(coords: List) -> str:
         raise Exception(f'Unexpected coordinates shape: {coords.shape}')
 
 
-def service_accessibility_pipeline(question: str, coordinates: List, t_type: str, t_id: str) -> str:
+def choose_functions(q: str) -> List[str]:
+    load_dotenv(ROOT / 'config.env')
+    model_url = os.environ.get('LLAMA_FC_URL')
+
+    llm_res = get_relevant_api_function_from_llm(model_url, tools, q)
+    llm_res_funcs = parse_function_names_from_llm_answer(llm_res)
+    return llm_res_funcs
+
+
+def retrieve_context_from_api(c: list, r_f: list) -> str:
+    input_data = {"coordinates": c, "type": "Polygon"}
+    context = ''
+    try:
+        for func in r_f:
+            cur_handle = getattr(api.summary_tables_requests, func)
+            context += str(cur_handle(input_data))
+    except ValueError as e:
+        logging.error(f'Accessibility agent: Could NOT retrieve context from API: {e}')
+    return context
+
+
+def generate_answer(q: str, s_p: str, c: str) -> str:
+    model = NewWebAssistant()
+    model.set_sys_prompt(s_p)
+    model.add_context(c)
+    response = model(q, as_json=True)
+    return response
+
+
+def service_accessibility_pipeline(question: str,
+                                   coordinates: List,
+                                   t_type: str,
+                                   t_id: str) -> str | tuple:
     # If territory type is specified, make sure to include the function for that type
     res_funcs = []
     if t_type == "city":
@@ -112,9 +125,7 @@ def service_accessibility_pipeline(question: str, coordinates: List, t_type: str
         res_funcs.append('get_general_stats_block')
 
     # Send request to agent llm
-    model_url = 'http://10.32.2.2:8673/v1/chat/completions'  # meta-llama3-8b-q8-function-calling
-    llm_res = get_relevant_api_function_from_llm(model_url, tools, question)
-    llm_res_funcs = parse_function_names_from_llm_answer(llm_res)
+    llm_res_funcs = choose_functions(question)
     res_funcs = res_funcs + llm_res_funcs
     if not res_funcs:
         res_funcs.append('get_general_stats_city')
@@ -131,14 +142,13 @@ def service_accessibility_pipeline(question: str, coordinates: List, t_type: str
     except ValueError as e:
         logging.error(f'Accessibility agent: Could NOT retrieve context from API: {e}')
 
+    context = retrieve_context_from_api(coordinates, res_funcs)
     logging.info(f'Accessibility agent: Context: {context}')
 
     # Send request to Llama 70B and parse final answer
-    model = NewWebAssistant()
-    model.set_sys_prompt(accessibility_sys_prompt)
-    model.add_context(context)
-    response = model(question, as_json=True)
+    response = generate_answer(question, strategy_sys_prompt, context)
     logging.info(f'Accessibility agent: Final answer: {response}')
+
     return response
 
 
@@ -240,7 +250,7 @@ def run_test_full_pipeline_with_local_data():
 
 if __name__ == "__main__":
     # Check how well the agent can identify the correct function for the job
-    model_url = 'http://10.32.2.2:8673/v1/chat/completions'  # meta-llama3-8b-q8-function-calling
+    # model_url = 'http://10.32.2.2:8673/v1/chat/completions'  # meta-llama3-8b-q8-function-calling
     # model_url = 'http://10.32.2.2:8671/v1/chat/completions'  # Meta-Llama-3-70B-Instruct-v2.Q4_K_S
 
     # test_data_file = 'test_data/accessibility_questions.csv'

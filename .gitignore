@@ -173,3 +173,5 @@ data/*
 .DS_Store
 
 .vscode/
+
+pipelines/test_results/

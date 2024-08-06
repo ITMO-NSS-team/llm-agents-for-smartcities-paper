@@ -7,6 +7,7 @@ from langchain_community.embeddings.huggingface_hub import HuggingFaceHubEmbeddi
 
 from chroma_rag.rag.stores.chroma.chroma_loader import load_documents_to_chroma_db
 from chroma_rag.rag.settings.settings import settings as default_settings
+from pipelines.utils.measure_time import measure_execution_time
 
 
 # TODO: add comments and docstrings to all parts of the chroma pipeline, possibly refactor
