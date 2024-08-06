@@ -3,58 +3,19 @@ import json
 import re
 import logging
 import requests
-from typing import Dict, List
+import os
+from typing import List
+from dotenv import load_dotenv
 
-from models.prompts.strategy_prompt import *
 from models.new_web_api import *
 from pipelines.accessibility_data_agent import service_accessibility_pipeline
 from pipelines.strategy_pipeline import strategy_development_pipeline
 import pipelines
+from models.definitions import ROOT
+from tools.master_tools import tools
 
 
-tools = [
-    {
-        "name": "service_accessibility_pipeline",
-        "description": "This pipeline returns detailed information about the accessibility of various urban "
-                       "services and facilities and their number. It evaluates the accessibility of healthcare, population, "
-                       "housing facilities, recreation, playgrounds, education (schools, universities, etc.), "
-                       "public transport, churches and temples, sports infrastructure  (stadiums, etc.), "
-                       "cultural and leisure facilities (theatres, circuses, zoos, etc.), and more. "
-                       "It can also return information about the dissatisfaction of the population and information on various complaints. "
-                       "The input usually contain words such as 'доступность', 'обеспеченность', 'доля', 'количество', "
-                       "'средняя доступность', 'среднее время', 'общая площадь', 'численность', 'сколько' etc.",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "coordinates": {
-                    "type": "dict",
-                }
-            },
-            "required": ["coordinates"]
-        }
-    },
-    {
-        "name": "strategy_development_pipeline",
-        "description": "This pipeline provides answers to questions based on the development strategy "
-                       "document. It uses Retrieval-Augmented Generation (RAG) to extract relevant "
-                       "information from the provided document. The tool is designed to answer strategic "
-                       "questions about urban development, including healthcare, education, infrastructure, "
-                       "and other aspects covered in the development strategy. The input usually contain words "
-                       "such as 'планируемый', 'меры', etc.",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "question": {
-                    "type": "string",
-                }
-            },
-            "required": ["question"]
-        }
-    }
-]
-
-
-def get_relevant_function_from_llm(model_url: str, tools: Dict, question: str) -> str:
+def get_relevant_function_from_llm(model_url: str, tools: List, question: str) -> str:
     params = {
         "messages": [
             {
@@ -72,22 +33,9 @@ def get_relevant_function_from_llm(model_url: str, tools: Dict, question: str) -
             }
         ]
     }
-
     response = requests.post(url=model_url, json=params)
     res = json.loads(response.text)
-
-    # pprint(res)
-    # pprint(type(res['choices'][0]['message']['content']))
     return res['choices'][0]['message']['content']
-
-
-# def parse_function_names_from_llm_answer_for_metrics(llm_res: str) -> List:
-#     res = []
-#     if 'service_accessibility_pipeline' in llm_res:
-#         res.append('api')
-#     if 'strategy_development_pipeline' in llm_res:
-#         res.append('rag')
-#     return res
 
 
 def parse_function_names_from_check_llm_answer_for_metrics(llm_res: str) -> List:
@@ -124,30 +72,6 @@ def parse_function_names_from_llm_answer(llm_res: str) -> List:
     return res
 
 
-def get_metrics(model_url: str, test_data_file: str, tools: List, extra_data: str) -> None:
-    all_questions = 0
-    correct_answers = 0
-    with open(test_data_file, newline='') as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            question = row['question']
-            dataset = row['source']
-            if dataset != '':
-                llm_res = get_relevant_function_from_llm(model_url, tools, question, extra_data)
-                res_funcs = parse_function_names_from_llm_answer(llm_res)
-                llm_check_res = check_choice_correctness(question, res_funcs[0], tools)
-                checked_res_funcs = parse_function_names_from_check_llm_answer_for_metrics(llm_check_res)  # TODO: test this change
-                if dataset in checked_res_funcs:
-                    correct_answers += 1
-                all_questions += 1
-                print(question)
-                print(dataset)
-                print(res_funcs)
-                print('____________________________________')
-        print(f'All processed questions: {all_questions}')
-        print(f'Questions with correct answers: {correct_answers}')
-
-
 def check_choice_correctness(question: str, answer: str, tools: List):
     sys_prompt = "You are a knowledgeable, efficient, and direct AI assistant. Provide concise answers, " \
                  "focusing on the key information needed. Offer suggestions tactfully when appropriate to " \
@@ -172,17 +96,35 @@ def check_choice_correctness(question: str, answer: str, tools: List):
     return ans
 
 
-def answer_question_with_llm(question: str, coordinates: List, t_type: str, t_id: str,  chunk_num: int) -> str:
+def choose_pipeline(q: str) -> List[str]:
+    load_dotenv(ROOT / 'config.env')
+    model_url = os.environ.get('LLAMA_FC_URL')
+
+    llm_res = get_relevant_function_from_llm(model_url, tools, q)
+    res_funcs = parse_function_names_from_llm_answer(llm_res)
+    return res_funcs
+
+
+def check_pipeline(q: str, r_f: List[str]) -> List[str]:
+    llm_check_res = check_choice_correctness(q, r_f[0], tools)
+    checked_res_funcs = parse_function_names_from_check_llm_answer(llm_check_res)
+    return checked_res_funcs
+
+
+def answer_question_with_llm(question: str,
+                             coordinates: List,
+                             t_type: str,
+                             t_id: str,
+                             chunk_num: int) -> str:
     # add loading tools later
     # Send request to agent llm
-    model_url = 'http://10.32.2.2:8673/v1/chat/completions'  # meta-llama3-8b-q8-function-calling
-    llm_res = get_relevant_function_from_llm(model_url, tools, question)
-    res_funcs = parse_function_names_from_llm_answer(llm_res)
-    llm_check_res = check_choice_correctness(question, res_funcs[0], tools)
-    checked_res_funcs = parse_function_names_from_check_llm_answer(llm_check_res)
+    res_funcs = choose_pipeline(question)
+    checked_res_funcs = check_pipeline(question, res_funcs)
     if not checked_res_funcs:
         checked_res_funcs.append('strategy_development_pipeline')
     logging.info(f'Master pipeline: Functions list: {checked_res_funcs}')
+
+    llm_res = ''
 
     # Call function -> just the first one TODO: think how to handle multiple replies from llm
     if checked_res_funcs[0] == 'strategy_development_pipeline':
@@ -191,15 +133,15 @@ def answer_question_with_llm(question: str, coordinates: List, t_type: str, t_id
     elif checked_res_funcs[0] == 'service_accessibility_pipeline':
         fun_handle = getattr(pipelines.accessibility_data_agent, 'service_accessibility_pipeline')
         llm_res = str(fun_handle(question, coordinates, t_type, t_id))
+
     logging.info(f'Master pipeline: Final answer: {llm_res}')
+
     return llm_res
 
 
 if __name__ == "__main__":
     # model_url = 'http://10.32.2.2:8673/v1/chat/completions'  # meta-llama3-8b-q8-function-calling
     # # model_url = 'http://10.32.2.2:8671/v1/chat/completions'  # Meta-Llama-3-70B-Instruct-v2.Q4_K_S
-    # test_data_file = './test_data/access_and_strategy_questions.csv'
-    # get_metrics(model_url, test_data_file, tools, extra_data)
 
     question = 'Какие проблемы демографического развития Санкт-Петербурга?'
     chunk_num = 4
