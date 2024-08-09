@@ -12,6 +12,7 @@ import requests
 import os
 from typing import List
 from dotenv import load_dotenv
+from pathlib import Path
 
 from models.new_web_api import *
 from pipelines.accessibility_data_agent import service_accessibility_pipeline
@@ -19,7 +20,10 @@ from pipelines.strategy_pipeline import strategy_development_pipeline
 from Levenshtein import distance as levenshtein_distance
 import pipelines
 from models.definitions import ROOT
-from tools.master_tools import tools
+from pipelines.tools.master_tools import tools
+
+
+path_to_config = Path(ROOT, 'config.env')
 
 
 def get_nearest_levenstein(string: str, correct_strings: List[str]) -> str:
@@ -104,7 +108,7 @@ def check_choice_correctness(question: str, answer: str, tools: List):
 
 
 def choose_pipeline(q: str) -> List[str]:
-    load_dotenv(ROOT / 'config.env')
+    load_dotenv(path_to_config)
     model_url = os.environ.get('LLAMA_FC_URL')
 
     llm_res = get_relevant_function_from_llm(model_url, tools, q)

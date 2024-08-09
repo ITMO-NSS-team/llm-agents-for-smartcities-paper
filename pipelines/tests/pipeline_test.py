@@ -1,21 +1,50 @@
-import re
+from deepeval.test_case import LLMTestCase, LLMTestCaseParams
+from deepeval.metrics import (AnswerRelevancyMetric,
+                              ContextualPrecisionMetric,
+                              ContextualRecallMetric,
+                              ContextualRelevancyMetric,
+                              FaithfulnessMetric,
+                              GEval)
 import pandas as pd
+from pathlib import Path
+import re
 from typing import List
 
+from models.definitions import ROOT
+from models.vsegpt_api import VseGPTConnector
+from models.prompts.strategy_prompt import accessibility_sys_prompt, strategy_sys_prompt
 from pipelines.master_pipeline import choose_pipeline, check_pipeline
 from pipelines.accessibility_data_agent import choose_functions, retrieve_context_from_api, generate_answer
 from pipelines.strategy_pipeline import retrieve_context_from_chroma
-from models.prompts.strategy_prompt import accessibility_sys_prompt, strategy_sys_prompt
 from utils.measure_time import Timer
 
-
-strategy_and_access_data = pd.read_csv('test_data/questions_for_test.csv')
-strategy_data = pd.read_csv('test_data/strategy_questions.csv')
-access_data = pd.read_csv('test_data/access_questions.csv')
+path_to_data = Path(ROOT, 'pipelines', 'tests')
+strategy_and_access_data = pd.read_csv(Path(path_to_data, 'test_data', 'questions_for_test.csv'))
+strategy_data = pd.read_csv(Path(path_to_data, 'test_data', 'strategy_questions.csv'))
+access_data = pd.read_csv(Path(path_to_data, 'test_data', 'access_questions.csv'))
 collection_name = 'strategy-spb'
 total_all_questions = strategy_and_access_data.shape[0]
 total_strategy_questions = strategy_data.shape[0]
 total_access_questions = access_data.shape[0]
+
+model = VseGPTConnector(model='openai/gpt-4o-mini')  # possible to change model for metric evaluation
+
+metrics_init_params = {'model': model, 'verbose_mode': True, 'async_mode': False}
+answer_relevancy = AnswerRelevancyMetric(**metrics_init_params)
+faithfulness = FaithfulnessMetric(**metrics_init_params)
+context_precision = ContextualPrecisionMetric(**metrics_init_params)
+context_recall = ContextualRecallMetric(**metrics_init_params)
+context_relevancy = ContextualRelevancyMetric(**metrics_init_params)
+correctness_metric = GEval(
+    name="Correctness",
+    # criteria="Correctness - determine if the actual output is correct according to the expected output.",  # more strictly evaluate consistency with the correct answer
+    criteria="Correctness - determine if the actual output is factually correct according to the expected output.",
+    evaluation_params=[
+        LLMTestCaseParams.ACTUAL_OUTPUT,
+        LLMTestCaseParams.EXPECTED_OUTPUT,
+    ],
+    **metrics_init_params
+)
 
 
 def choose_pipeline_test() -> None:
@@ -27,7 +56,7 @@ def choose_pipeline_test() -> None:
     Returns: None
     """
     print('Pipeline choosing test is running...')
-    path_to_results = 'test_results/pipeline_choose_test_results.txt'
+    path_to_results = Path(path_to_data, 'test_results', 'pipeline_choose_test_results.txt')
 
     total_correct_pipeline = 0
     total_choose_time = 0
@@ -65,7 +94,7 @@ def choose_functions_test() -> None:
     Returns: None
     """
     print('API functions choosing test is running...')
-    path_to_results = 'test_results/choose_functions_test_results.txt'
+    path_to_results = Path(path_to_data, 'test_results', 'choose_functions_test_results.txt')
 
     total_correct_functions = 0
     total_time = 0
@@ -105,7 +134,7 @@ def accessibility_pipeline_test(coordinates: list,
     Returns: None
     """
     print('Accessibility pipeline test is running...')
-    path_to_results = 'test_results/accessibility_pipeline_test_results.txt'
+    path_to_results = Path(path_to_data, 'test_results', 'accessibility_pipeline_test_results.txt')
 
     correct_function_choice = 0
     correct_accessibility_answer = 0
@@ -149,7 +178,7 @@ Average getting context from API time (accessibility): {avg_get_context_time}
 Average answer generation time: {avg_model_time}''', file=f)
 
 
-def strategy_pipeline_test(chunk_num: int = 4) -> None:
+def strategy_pipeline_test(metrics_to_calculate: List, chunk_num: int = 4) -> None:
     """ Tests strategy pipeline.
 
     Evaluate metrics for model answers using 'deepeval' and measures elapsed time for context retrieving and final
@@ -157,27 +186,60 @@ def strategy_pipeline_test(chunk_num: int = 4) -> None:
     Writes results to .txt file at the specified path.
 
     Args:
+        metrics_to_calculate: list of metrics to be calculated
         chunk_num: number of chunks to be extracted from vector storage
-
     Returns: None
     """
     print('Strategy pipeline test is running...')
-    path_to_results = 'test_results/strategy_pipeline_test_results.txt'
+    path_to_results = Path(path_to_data, 'test_results', 'strategy_pipeline_test_results.txt')
+    path_to_metrics = Path(path_to_data, 'test_results', 'strategy_pipeline_metrics_results.csv')
+
+    metrics_result = {'question': [], 'correct_answer': [], 'llm_ans': [], 'context': []}
+    for metric in metrics_to_calculate:
+        metrics_result[f'{metric.__name__}_score'] = []
+        metrics_result[f'{metric.__name__}_reason'] = []
 
     total_chroma_time = 0
     total_model_time = 0
 
     for i, row in strategy_data.iterrows():
         question = row['question']
-        # correct_answer = row['correct_answer']
+        correct_answer = row['correct_answer']
         print(f'Processing question {i}')
         with Timer() as t:
             context = retrieve_context_from_chroma(question, collection_name, chunk_num)
             total_chroma_time += t.seconds_from_start
         with Timer() as t:
-            answer = generate_answer(question, strategy_sys_prompt, context)
+            llm_ans = generate_answer(question, strategy_sys_prompt, context)
             total_model_time += t.seconds_from_start
-        # Possible to add deepeval metrics calculation here
+        metrics_result['question'].append(question)
+        metrics_result['correct_answer'].append(correct_answer)
+        metrics_result['llm_ans'].append(llm_ans)
+        metrics_result['context'].append(context)
+        test_case = LLMTestCase(
+            input=question,
+            actual_output=llm_ans,
+            expected_output=correct_answer,
+            retrieval_context=[context]
+        )
+        for metric in metrics_to_calculate:
+            try:
+                metric.measure(test_case)
+                metrics_result[f'{metric.__name__}_score'].append(metric.score)
+                metrics_result[f'{metric.__name__}_reason'].append(metric.reason)
+            except Exception as e:
+                metrics_result[f'{metric.__name__}_score'].append('-1')
+                metrics_result[f'{metric.__name__}_reason'].append(type(e).__name__ + ' - ' + str(e))
+                continue
+    metrics_result_df = pd.DataFrame.from_dict(metrics_result)
+    metrics_score_columns = list(filter(lambda x: 'score' in x, metrics_result_df.columns.tolist()))
+    metrics_to_print = []
+    for column in metrics_score_columns:
+        avg_score = metrics_result_df[metrics_result_df[column] != -1][column].mean()
+        success_metric = metrics_result_df[metrics_result_df[column] != -1].shape[0]
+        metrics_to_print.append(f'Average {column} is {avg_score}. Number of successfully processed questions {success_metric}')
+    short_metrics_result = '\n'.join(metrics_to_print)
+    metrics_result_df.to_csv(path_to_metrics, index=False)
 
     avg_get_context_time = round(total_chroma_time / total_strategy_questions, 2)
     avg_model_time = round(total_model_time / total_strategy_questions, 2)
@@ -185,7 +247,9 @@ def strategy_pipeline_test(chunk_num: int = 4) -> None:
     with open(path_to_results, 'w') as f:
         print(f'''Total strategy samples: {total_strategy_questions}
 Average getting context from ChromaDB time (strategy): {avg_get_context_time}
-Average answer generation time (strategy): {avg_model_time}''', file=f)
+Average answer generation time (strategy): {avg_model_time}
+Short metrics results: 
+{short_metrics_result}''', file=f)
 
 
 if __name__ == '__main__':
@@ -198,7 +262,8 @@ if __name__ == '__main__':
     ]
     ttype = ''
     tid = ''
+    metrics = [answer_relevancy, faithfulness, correctness_metric]
     # choose_pipeline_test()
     # choose_functions_test()
     # accessibility_pipeline_test(coords, ttype, tid)
-    strategy_pipeline_test(chunks)
+    # strategy_pipeline_test(metrics, chunks)

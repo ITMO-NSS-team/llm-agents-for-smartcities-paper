@@ -6,6 +6,7 @@ import time
 import os
 from typing import List
 from dotenv import load_dotenv
+from pathlib import Path
 
 import api.summary_tables_requests
 from Levenshtein import distance as levenshtein_distance
@@ -27,6 +28,8 @@ tools = [
     get_general_stats_housing_and_communal_services_tool,
     # get_general_stats_object_tool
 ]
+path_to_data = Path(ROOT, 'pipelines', 'tests', 'test_data')
+path_to_config = Path(ROOT, 'config.env')
 
 
 def get_nearest_levenstein(string: str, correct_strings: List[str]) -> str:
@@ -88,7 +91,7 @@ def get_territory_coordinate_type(coords: List) -> str:
 
 
 def choose_functions(q: str) -> List[str]:
-    load_dotenv(ROOT / 'config.env')
+    load_dotenv(path_to_config)
     model_url = os.environ.get('LLAMA_FC_URL')
 
     llm_res = get_relevant_api_function_from_llm(model_url, tools, q)
@@ -168,21 +171,21 @@ def read_json_file(filename):
 def run_pipeline_on_local_data(question: str, table: str):
     input_data = {
         'get_general_stats_city': read_json_file(
-            './test_data/summary_tables/get_general_stats_city.json'),
+            Path(path_to_data, 'summary_tables', 'get_general_stats_city.json')),
         'get_general_stats_districts_mo': read_json_file(
-            './test_data/summary_tables/get_general_stats_districts_mo.json'),
+            Path(path_to_data, 'summary_tables', 'get_general_stats_districts_mo.json')),
         'get_general_stats_block': read_json_file(
-            './test_data/summary_tables/get_general_stats_block.json'),
+            Path(path_to_data, 'summary_tables', 'get_general_stats_block.json')),
         'get_general_stats_education': read_json_file(
-            './test_data/summary_tables/get_general_stats_education.json'),
+            Path(path_to_data, 'summary_tables', 'get_general_stats_education.json')),
         'get_general_stats_healthcare': read_json_file(
-            './test_data/summary_tables/get_general_stats_healthcare.json'),
+            Path(path_to_data, 'summary_tables', 'get_general_stats_healthcare.json')),
         # 'get_general_stats_culture': json.loads(
-        #   './test_data/summary_tables/get_general_stats_culture.json'),
+        #   Path(path_to_data, 'summary_tables', 'get_general_stats_culture.json')),
         'get_general_stats_sports': read_json_file(
-            './test_data/summary_tables/get_general_stats_sports.json'),
+            Path(path_to_data, 'summary_tables', 'get_general_stats_sports.json')),
         'get_general_stats_services': read_json_file(
-            './test_data/summary_tables/get_general_stats_services.json')}
+            Path(path_to_data, 'summary_tables', 'get_general_stats_services.json'))}
 
     res_funcs = []
     if table == "Общий контекст – общая таблица сводка по городу":
@@ -245,7 +248,7 @@ def run_test_full_pipeline_with_local_data():
     start = time.time()
     end = time.time()
     print(end - start)
-    test_data = './test_data/urb_accessibility_questions.csv'
+    test_data = Path(path_to_data, 'urb_accessibility_questions.csv')
 
     all_questions: int = 0
     correct_answers: int = 0
