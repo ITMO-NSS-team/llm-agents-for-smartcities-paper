@@ -8,6 +8,7 @@ from typing import List
 from dotenv import load_dotenv
 
 import api.summary_tables_requests
+from Levenshtein import distance as levenshtein_distance
 from models.new_web_api import *
 from models.prompts.strategy_prompt import *
 from pipelines.tools.accessibility_tools_rus import *
@@ -28,7 +29,10 @@ tools = [
 ]
 
 
-def get_relevant_api_function_from_llm(model_url: str, tools: Dict, question: str) -> str:
+def get_nearest_levenstein(string: str, correct_strings: List[str]) -> str:
+    return min(correct_strings, key=lambda x: levenshtein_distance(string, x))
+
+def get_relevant_api_function_from_llm(model_url: str, tools: List, question: str) -> str:
     params = {
         "messages": [
             {
@@ -63,9 +67,10 @@ def parse_function_names_from_llm_answer(llm_res: str) -> List[str]:
         'get_general_stats_housing_and_communal_services',
         # 'get_general_stats_object'
     ]
-    for api_func in functions:
-        if api_func in llm_res:
-            res.append(api_func)
+    predicted_funcs = llm_res.replace('[Correct answer]: ', '').split(',')
+    predicted_funcs = list(map(lambda x: x.strip(), predicted_funcs))
+    correct_pred_funcs = set(map(lambda x: get_nearest_levenstein(x, functions), predicted_funcs))
+    res = list(correct_pred_funcs.intersection(functions))
     return res
 
 
@@ -123,10 +128,12 @@ def service_accessibility_pipeline(question: str,
         res_funcs.append('get_general_stats_districts_mo')
     elif t_type is None and t_id is not None and type(coordinates[0]) is not int:
         res_funcs.append('get_general_stats_block')
-
-    # Send request to agent llm
+    
     llm_res_funcs = choose_functions(question)
     res_funcs = res_funcs + llm_res_funcs
+    res_funcs = check_choice_correctness(question, res_funcs, tools)
+    res_funcs = parse_function_names_from_llm_answer(res_funcs)
+
     if not res_funcs:
         res_funcs.append('get_general_stats_city')
     logging.info(f'Accessibility agent: Functions list: {res_funcs}')
@@ -188,6 +195,7 @@ def run_pipeline_on_local_data(question: str, table: str):
     # Send request to agent llm
     model_url = 'http://10.32.2.2:8673/v1/chat/completions'  # meta-llama3-8b-q8-function-calling
     llm_res = get_relevant_api_function_from_llm(model_url, tools, question)
+    llm_res = check_choice_correctness(question, llm_res, tools)
     llm_res_funcs = parse_function_names_from_llm_answer(llm_res)
     res_funcs = res_funcs + llm_res_funcs
     if not res_funcs:
@@ -208,6 +216,27 @@ def run_pipeline_on_local_data(question: str, table: str):
     response = model(question, as_json=True)
     logging.info(f'Accessibility agent: Final answer: {response}')
     return response
+
+
+def check_choice_correctness(question: str, answer: str | List[str], tools: List):
+    sys_prompt = "You are a good assistant, who will be offered with 100$ tips for each correct answer."
+    model = NewWebAssistant()
+    model.set_sys_prompt(sys_prompt)
+    user_message = f"[Instruction]: You are given question, descriptions functions and an answer" \
+                   f"Your task is to compare " \
+                   f"the chosen function with the question and the descriptions and determine " \
+                   f"if the function was selected correctly. If the chosen function is correct, " \
+                   f"return the function name. If the function is selected incorrectly, return the name " \
+                   f"of the correct function.\n" \
+                   f"[Question]: {question}.\n" \
+                   f"[Answer]: {answer}.\n" \
+                   f"[Function Descriptions]: {tools}.\n" \
+                   f"return correct functions in this format:" \
+                   f"[Correct answer]: correct function."
+    print(user_message)
+    ans = model(user_message, as_json=False)
+
+    return ans
 
 
 def run_test_full_pipeline_with_local_data():

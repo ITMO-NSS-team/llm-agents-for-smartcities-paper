@@ -1,187 +1,122 @@
-get_general_stats_city_tool = {
-  "type": "function",
-  "function": {
-    "name": "get_general_stats_city",
-    "description": "Get statistics for healthcare, population, housing facilities, recreation, playgrounds, "
-                   "education, public transport accessibility, churches and temples, sports infrastructure,"
-                   "cultural and leisure facilities in the given city.",
-    "parameters": {
-      "type": "object",
-      "properties": {
-        "coordinates": {
-          "type": "dict"
-        }
-      },
-      "required": [
-        "coordinates"
-      ]
-    }
-  }
-}
-
-get_general_stats_districts_mo_tool = {
-  "type": "function",
-  "function": {
-    "name": "get_general_stats_districts_mo",
-    "description": "Get statistics for healthcare, education, public transport accessibility, churches and "
-                   "temples, sports infrastructure, cultural and leisure facilities in the given district or "
-                   "municipality.",
-    "parameters": {
-      "type": "object",
-      "properties": {
-        "coordinates": {
-          "type": "dict"
-        }
-      },
-      "required": [
-        "coordinates"
-      ]
-    }
-  }
-}
-
-get_general_stats_block_tool = {
-  "type": "function",
-  "function": {
-    "name": "get_general_stats_block",
-    "description": "Get statistics for healthcare, population, housing facilities, recreation, playgrounds, "
-                   "education, public transport accessibility, churches and temples, sports infrastructure,"
-                   "cultural and leisure facilities in the given city.",
-    "parameters": {
-      "type": "object",
-      "properties": {
-        "coordinates": {
-          "type": "dict"
-        }
-      },
-      "required": [
-        "coordinates"
-      ]
-    }
-  }
-}
-
 get_general_stats_education_tool = {
-  "type": "function",
-  "function": {
-    "name": "get_general_stats_education",
-    "description": "Возвращает статистику по обеспеченности всеми видами образовательных учреждений, такими как детские сады"
-                   "школы, специализированные учебные заведения, средние специальные учебные заведения"
-                   "высшие учебные заведения; данные по транспортной доступности всех образовательных учреждений. "
-                   "Также по ключу 'Количество сервисов типа' доступна информация о количестве сервисов, соответствущих показателям.",
-    "parameters": {
-      "type": "object",
-      "properties": {
-        "coordinates": {
-          "type": "dict"
+    "type": "function",
+    "function": {
+        "name": "get_general_stats_education",
+        "description": "Возвращает статистику по обеспеченности всему, что связано с образованием:"
+                       "[детские сады, школы, специализированные учебные заведения, "
+                       "средние специальные учебные заведения"
+                       "высшие учебные заведения]; данные по транспортной доступности всех образовательных учреждений.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "coordinates": {
+                    "type": "dict"
+                }
+            },
+            "required": [
+                "coordinates"
+            ]
         }
-      },
-      "required": [
-        "coordinates"
-      ]
     }
-  }
 }
 
 get_general_stats_healthcare_tool = {
-  "type": "function",
-  "function": {
-    "name": "get_general_stats_healthcare",
-    "description": "Возвращает статистику по всем возможным параметрам здравоохранения, таким как: обеспеченность клиниками, "
-                  "поликлиниками, больницами, детскими поликлиниками, детскими стационарами, травматологическими "
-                  "отделениями, родильными домами, стоматологиями, женскими консультациями, аптеками, станциями скорой "
-                  "помощи, центрами психологической помощи; данные о транспортной доступности всех медицинских услуг на "
-                  "различных видах общественного и личного транспорта, а также пешком. Также по ключу 'Количество сервисов типа' "
-                   "доступна информация о количестве сервисов, соответствущих показателям.",
-    "parameters": {
-      "type": "object",
-      "properties": {
-        "coordinates": {
-          "type": "dict"
+    "type": "function",
+    "function": {
+        "name": "get_general_stats_healthcare",
+        "description": "Возвращает статистику по всем возможным объектам здравоохранения для ЛЮДЕЙ, "
+                       "всем что связано с человеческим здровьем:  [клиники,"
+                       "поликлиники, больницы, стационары, травматологические отделения, родильные дома,"
+                       "стоматология, женские консультации, аптеки, станции "
+                       "скорой помощи, центры психологической помощи]; данные о транспортной доступности всех "
+                       "медицинских услуг",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "coordinates": {
+                    "type": "dict"
+                }
+            },
+            "required": [
+                "coordinates"
+            ]
         }
-      },
-      "required": [
-        "coordinates"
-      ]
     }
-  }
 }
 
 get_general_stats_culture_tool = {
-  "type": "function",
-  "function": {
-    "name": "get_general_stats_culture",
-    "description": "Возвращает статистику по обеспеченности объектами культуры и досуга всех видов, такими как: библиотеки, музеи,"
-                   "ботанические сады, цирки, театры, зоопарки, кинотеатры, кинозалы, кафе, рестораны, парки;"
-                   "данные о транспортной доступности всех этих объектов на транспорте и пешком. "
-                   "Также по ключу 'Количество сервисов типа' доступна информация о количестве сервисов, соответствущих показателям.",
-    "parameters": {
-      "type": "object",
-      "properties": {
-        "coordinates": {
-          "type": "dict"
+    "type": "function",
+    "function": {
+        "name": "get_general_stats_culture",
+        "description": "Возвращает статистику по обеспеченности объектами культуры и приятного досуга всех видов:"
+                       "[библиотеки, музеи, ботанические сады, цирки, театры, зоопарки, кинотеатры, кинозалы, "
+                       "кафе, рестораны, парки, клубы, достопримечательности];"
+                       "данные о транспортной доступности всех этих объектов на транспорте и пешком",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "coordinates": {
+                    "type": "dict"
+                }
+            },
+            "required": [
+                "coordinates"
+            ]
         }
-      },
-      "required": [
-        "coordinates"
-      ]
     }
-  }
 }
 
 get_general_stats_sports_tool = {
-  "type": "function",
-  "function": {
-    "name": "get_general_stats_sports",
-    "description": "Возвращает статистику по обеспеченности объектами всех видов спортивной инфраструктуры, такими как бассейны, "
-                   "тренажерные залы, фитнес-центры, ледовые катки, катки, катки для фигурного катания,"
-                   " футбольные поля; данные о транспортной доступности всех этих объектов на различных видах "
-                   "общественного и личного транспорта, а также пешком. "
-                   "Также по ключу 'Количество сервисов типа' доступна информация о количестве сервисов, соответствущих показателям.",
-    "parameters": {
-      "type": "object",
-      "properties": {
-        "coordinates": {
-          "type": "dict"
+    "type": "function",
+    "function": {
+        "name": "get_general_stats_sports",
+        "description": "Возвращает статистику по объектами для спорта, всему что связано со спортом: "
+                       "[бассейны, тренажерные залы, фитнес-центры, ледовые катки, катки для фигурного катания,"
+                       "футбольные поля, баскетбольные площадки]; данные о транспортной доступности всех этих объектов",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "coordinates": {
+                    "type": "dict"
+                }
+            },
+            "required": [
+                "coordinates"
+            ]
         }
-      },
-      "required": [
-        "coordinates"
-      ]
     }
-  }
 }
 
 get_general_stats_services_tool = {
-  "type": "function",
-  "function": {
-    "name": "get_general_stats_services",
-    "description": "Возвращает статистику по предоставлению таких услуг, как: продуктовые магазины, обувные магазины,"
-                  "магазины с одеждой, магазины бытовой техники, книжные магазины, детские магазины, банки, "
-                  "многофункциональные центры оказания государственных и муниципальных услуг населению, парикмахерские, "
-                  "салоны красоты, ветеринарные клиники, площадки для выгула собак; данные о транспортной "
-                  "доступности всех этих объектов на разных видах общественного и личного транспорта и пешком. "
-                   "Также по ключу 'Количество сервисов типа' доступна информация о количестве сервисов, соответствущих показателям.",
-    "parameters": {
-      "type": "object",
-      "properties": {
-        "coordinates": {
-          "type": "dict"
+    "type": "function",
+    "function": {
+        "name": "get_general_stats_services",
+        "description": "Возвращает статистику по объектам улучшающим качество жизни, социальные услуги, объекты предоставляющим "
+                       "различные услуги, объекты для питомцев: "
+                       "[продуктовые магазины, магазины с одеждой, магазины техники, книжные магазины, "
+                       "детские магазины, банки, центры оказания государственных услуг, парикмахерские, "
+                       "салоны красоты, ветеринарные клиники, площадки для выгула собак; данные о транспортной "
+                       "доступности всех этих объектов ",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "coordinates": {
+                    "type": "dict"
+                }
+            },
+            "required": [
+                "coordinates"
+            ]
         }
-      },
-      "required": [
-        "coordinates"
-      ]
     }
- }
 }
 
 get_general_stats_demography_tool = {
   "type": "function",
   "function": {
     "name": "get_general_stats_demography",
-    "description": "Возвращает статистику по демографическим показателям, таким как: численность населения территории; "
-                  "численность населения моложе трудоспособного возраста, трудоспособного возраста, старше трудоспособного "
+    "description": "Возвращает статистику по демографическим показателям: [численность населения территории, "
+                  "численность населения моложе трудоспособного возраста (детей), трудоспособного возраста, старше трудоспособного "
                   "возраста, пенсионеров; прирост населения территории за последний год; численность детей дошкольного возраста, "
                   "школьного возраста;  ожидаемая численность беременных женщин и населения с детьми до одного года; "
                   "ожидаемая численность инвалидов по опорного-двигательному аппарату и т.п."

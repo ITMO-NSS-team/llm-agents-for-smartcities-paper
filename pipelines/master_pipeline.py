@@ -1,7 +1,13 @@
 import csv
-import json
 import re
 import logging
+from typing import Dict, List
+
+import requests
+import os
+from typing import List
+from dotenv import load_dotenv
+
 import requests
 import os
 from typing import List
@@ -10,10 +16,14 @@ from dotenv import load_dotenv
 from models.new_web_api import *
 from pipelines.accessibility_data_agent import service_accessibility_pipeline
 from pipelines.strategy_pipeline import strategy_development_pipeline
+from Levenshtein import distance as levenshtein_distance
 import pipelines
 from models.definitions import ROOT
 from tools.master_tools import tools
 
+
+def get_nearest_levenstein(string: str, correct_strings: List[str]) -> str:
+    return min(correct_strings, key=lambda x: levenshtein_distance(string, x))
 
 def get_relevant_function_from_llm(model_url: str, tools: List, question: str) -> str:
     params = {
@@ -66,30 +76,27 @@ def parse_function_names_from_llm_answer(llm_res: str) -> List:
     res = []
     functions = ['service_accessibility_pipeline',
                  'strategy_development_pipeline']
-    for pipeline_func in functions:
-        if pipeline_func in llm_res:
-            res.append(pipeline_func)
+    predicted_funcs = llm_res.replace('[Correct answer]: ', '').split(',')
+    predicted_funcs = list(map(lambda x: x.strip(), predicted_funcs))
+    correct_pred_funcs = set(map(lambda x: get_nearest_levenstein(x, functions), predicted_funcs))
+    res = list(correct_pred_funcs.intersection(functions))
     return res
 
 
 def check_choice_correctness(question: str, answer: str, tools: List):
-    sys_prompt = "You are a knowledgeable, efficient, and direct AI assistant. Provide concise answers, " \
-                 "focusing on the key information needed. Offer suggestions tactfully when appropriate to " \
-                 "improve outcomes. Engage in productive collaboration with the user."
+    sys_prompt = "You are a good assistant, who will be offered with 100$ tips for each correct answer."
     model = NewWebAssistant()
     model.set_sys_prompt(sys_prompt)
-    user_message = f"[Instruction]: You are given question, descriptions of 2 functions and an answer from another " \
-                   f"Llama model, which has chosen one of these functions. Your task is to compare " \
+    user_message = f"[Instruction]: You are given question, descriptions functions and an answer" \
+                   f"Your task is to compare " \
                    f"the chosen function with the question and the descriptions and determine " \
                    f"if the function was selected correctly. If the chosen function is correct, " \
                    f"return the function name. If the function is selected incorrectly, return the name " \
-                   f"of another function.\n" \
+                   f"of the correct function.\n" \
                    f"[Question]: {question}.\n" \
                    f"[Answer]: {answer}.\n" \
                    f"[Function Descriptions]: {tools}.\n" \
-                   f"[Task]: " \
-                   f"Compare the chosen function with the function descriptions and the question " \
-                   f"to determine if the function was selected correctly. Return the name of correct function in this format: " \
+                   f"return correct functions in this format:" \
                    f"[Correct answer]: correct function."
     ans = model(user_message, as_json=False)
 
