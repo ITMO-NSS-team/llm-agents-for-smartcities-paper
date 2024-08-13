@@ -35,6 +35,7 @@ path_to_config = Path(ROOT, 'config.env')
 def get_nearest_levenstein(string: str, correct_strings: List[str]) -> str:
     return min(correct_strings, key=lambda x: levenshtein_distance(string, x))
 
+
 def get_relevant_api_function_from_llm(model_url: str, tools: List, question: str) -> str:
     params = {
         "messages": [
@@ -100,7 +101,8 @@ def choose_functions(q: str) -> List[str]:
 
 
 def retrieve_context_from_api(c: list, r_f: list) -> str:
-    input_data = {"coordinates": c, "type": "Polygon"}
+    coords_type = get_territory_coordinate_type(c)
+    input_data = {"coordinates": c, "type": coords_type}
     context = ''
     try:
         for func in r_f:
@@ -131,7 +133,7 @@ def service_accessibility_pipeline(question: str,
         res_funcs.append('get_general_stats_districts_mo')
     elif t_type is None and t_id is not None and type(coordinates[0]) is not int:
         res_funcs.append('get_general_stats_block')
-    
+
     llm_res_funcs = choose_functions(question)
     res_funcs = res_funcs + llm_res_funcs
     res_funcs = check_choice_correctness(question, res_funcs, tools)
@@ -140,17 +142,6 @@ def service_accessibility_pipeline(question: str,
     if not res_funcs:
         res_funcs.append('get_general_stats_city')
     logging.info(f'Accessibility agent: Functions list: {res_funcs}')
-
-    # Call functions and get context
-    coords_type = get_territory_coordinate_type(coordinates)
-    input_data = {"coordinates": coordinates, "type": coords_type}
-    context = ''
-    try:
-        for func in res_funcs:
-            cur_handle = getattr(api.summary_tables_requests, func)
-            context += str(cur_handle(input_data))
-    except ValueError as e:
-        logging.error(f'Accessibility agent: Could NOT retrieve context from API: {e}')
 
     context = retrieve_context_from_api(coordinates, res_funcs)
     logging.info(f'Accessibility agent: Context: {context}')

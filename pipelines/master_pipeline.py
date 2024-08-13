@@ -22,12 +22,12 @@ import pipelines
 from models.definitions import ROOT
 from pipelines.tools.master_tools import tools
 
-
 path_to_config = Path(ROOT, 'config.env')
 
 
 def get_nearest_levenstein(string: str, correct_strings: List[str]) -> str:
     return min(correct_strings, key=lambda x: levenshtein_distance(string, x))
+
 
 def get_relevant_function_from_llm(model_url: str, tools: List, question: str) -> str:
     params = {
@@ -65,7 +65,7 @@ def parse_function_names_from_check_llm_answer_for_metrics(llm_res: str) -> List
 
 
 def parse_function_names_from_check_llm_answer(llm_res: str) -> List:
-    match = re.search(r'^\[Correct answer\]:.*', llm_res, re.MULTILINE)
+    match = re.search(r'^\[Correct answer]:.*', llm_res, re.MULTILINE)
     res = []
     if match:
         correct_answer_line = match.group(0)
