@@ -2,10 +2,9 @@ import os
 from typing import Any
 
 from dotenv import load_dotenv
-from transformers import AutoModelForCausalLM
-from transformers import AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
-from models.definitions import ROOT
+from modules.models.definitions import ROOT
 
 
 class UrbAssistant:

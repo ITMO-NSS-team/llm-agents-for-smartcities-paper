@@ -1,10 +1,10 @@
 import json
-from typing import Any
 import uuid
+from typing import Any
 
 import requests
 
-import models.web_api as web_api
+import modules.models.web_api as web_api
 
 
 class NewWebAssistant(web_api.WebAssistant):

@@ -2,21 +2,25 @@ import json
 import os
 from typing import Any
 
-from dotenv import load_dotenv
 import requests
+from dotenv import load_dotenv
 
-from models.definitions import ROOT
+from modules.models.definitions import ROOT
 
 
 class WebAssistant:
-    """Web implementation of LLM assistant for answering urbanistic questions."""
+    """
+    Web implementation of LLM assistant for answering urbanistic questions.
+    """
 
     def __init__(self) -> None:
-        """Initialize an instanse of LLM assistant."""
-        load_dotenv(ROOT / "config.env")
+        """
+        Initialize an instanse of LLM assistant.
+        """
+        load_dotenv(ROOT / 'config.env')
         self._system_prompt = None
         self._context = None
-        self._url = os.environ.get("LLAMA_URL")
+        self._url = os.environ.get('LLAMA_URL')
 
     def set_sys_prompt(self, new_prompt: str) -> None:
         """Set model's role and generation instructions.
@@ -34,43 +38,41 @@ class WebAssistant:
         """
         self._context = context
 
-    def __call__(
-        self,
-        user_question: str,
-        temperature: float = 0.015,
-        top_p: float = 0.5,
-        *args: Any,
-        **kwargs: Any,
-    ) -> str:
+    def __call__(self, user_question: str,
+                 temperature: float = .015,
+                 top_p: float = .5,
+                 *args: Any,
+                 **kwargs: Any) -> str:
         """Get a response from model for given question.
 
         Args:
             user_question (str): A user's prompt. Question that requires an answer.
-            temperature (float, optional): Generation temperature.
+            temperature (float, optional): Generation temperature. 
             The higher ,the less stable answers will be. Defaults to 0.015.
-            top_p (float, optional): Nuclear sampling. Selects the most likely tokens from a probability distribution,
+            top_p (float, optional): Nuclear sampling. Selects the most likely tokens from a probability distribution, 
             considering the cumulative probability until it reaches a predefined threshold “top_p”. Defaults to 0.5.
 
         Returns:
-            str: Model's answer to user's question.
+            str: Model's answer to user's question. 
         """
         formatted_prompt = {
             "messages": [
-                {"role": "system", "content": self._system_prompt},
+                {
+                    "role": "system",
+                    "content": self._system_prompt
+                },
                 {
                     "role": "user",
-                    "content": f"Question: {user_question} Context: {self._context}",
-                },
+                    "content": f"Question: {user_question} Context: {self._context}"
+                }
             ]
         }
         response = requests.post(url=self._url, json=formatted_prompt)
-        if kwargs.get("as_json"):
+        if kwargs.get('as_json'):
             try:
-                res = json.loads(response.text)["choices"][0]["message"]["content"].split(
-                    "ANSWER: "
-                )[1]
+                res = json.loads(response.text)['choices'][0]['message']['content'].split('ANSWER: ')[1]
             except:
-                res = json.loads(response.text)["choices"][0]["message"]["content"]
+                res = json.loads(response.text)['choices'][0]['message']['content']
             return res
         else:
             return response.text

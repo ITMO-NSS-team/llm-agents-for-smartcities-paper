@@ -2,8 +2,8 @@ import logging
 import os
 
 import chroma_rag.loading as chroma_connector
-from models.new_web_api import NewWebAssistant
-from models.prompts.strategy_prompt import strategy_sys_prompt
+from modules.models.new_web_api import NewWebAssistant
+from modules.models.prompts.strategy_prompt import strategy_sys_prompt
 
 
 logger = logging.getLogger(__name__)
