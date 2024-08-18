@@ -10,6 +10,7 @@ logger = logging.getLogger(__name__)
 
 
 def retrieve_context_from_chroma(q: str, collect_name: str, c_num: int) -> str:
+    """Retrieves the given number of chunks from ChromaDB based on the user question"""
     res = chroma_connector.chroma_view(q, collect_name, c_num)
     context = ""
     context_list = []
@@ -27,7 +28,9 @@ def retrieve_context_from_chroma(q: str, collect_name: str, c_num: int) -> str:
     return context
 
 
+# TODO: move function to another module
 def generate_answer(q: str, s_p: str, c: str) -> str:
+    """Calls LLM with correct params and returns the answer"""
     model = NewWebAssistant()
     model.set_sys_prompt(s_p)
     model.add_context(c)
@@ -35,14 +38,21 @@ def generate_answer(q: str, s_p: str, c: str) -> str:
     return response
 
 
-def strategy_development_pipeline(
-    question: str,
-    chunk_num: int = 4,
-) -> str:
-    collection_name = "strategy-spb"
-    logger.info(f"Chroma collection name: {collection_name}")
-    logger.info(f"Question: {question}")
-    logger.info(f"Chunks num: {chunk_num}")
+def strategy_development_pipeline(question: str,
+                                  chunk_num: int = 4,) -> str:
+    """ Pipeline designed to handle strategy development data.
+    Extracts the context from ChromaDB and passes it to the LLM to answer the question.
+
+    Args:
+        question: a question from the user
+        chunk_num: number of chunks that will be returned by the DB
+
+    Returns: answer to the question
+    """
+    collection_name = 'strategy-spb'
+    logging.info(f'Strategy RAG: Chroma collection name: {collection_name}')
+    logging.info(f'Strategy RAG: Question: {question}')
+    logging.info(f'Strategy RAG: Chunks num: {chunk_num}')
     # Get context from ChromaDB
     context = retrieve_context_from_chroma(
         question, collection_name, chunk_num

@@ -5,6 +5,7 @@ from string import Formatter
 from typing import Any, Collection, Dict
 
 import requests
+from requests import RequestException
 
 
 logger = logging.getLogger(__name__)
@@ -58,7 +59,7 @@ class Endpoint(abc.ABC):
         if result.status_code != 200:
             logger.error(f"url: {url}")
             logger.error(f"params: {params}")
-            raise ValueError(result.status_code)
+            raise RequestException(result.status_code)
         return result.json()
 
     @abc.abstractmethod
