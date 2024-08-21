@@ -4,7 +4,6 @@ import re
 from typing import Dict, List
 import time
 import os
-from typing import List
 from dotenv import load_dotenv
 from pathlib import Path
 
@@ -16,7 +15,7 @@ from pipelines.tools.accessibility_tools_rus import *
 import numpy as np
 from models.definitions import ROOT
 
-logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 tools = [
     get_general_stats_education_tool,
@@ -109,7 +108,7 @@ def retrieve_context_from_api(c: list, r_f: list) -> str:
             cur_handle = getattr(api.summary_tables_requests, func)
             context += str(cur_handle(input_data))
     except ValueError as e:
-        logging.error(f'Accessibility agent: Could NOT retrieve context from API: {e}')
+        logger.error(f'Could NOT retrieve context from API: {e}')
     return context
 
 
@@ -141,14 +140,13 @@ def service_accessibility_pipeline(question: str,
 
     if not res_funcs:
         res_funcs.append('get_general_stats_city')
-    logging.info(f'Accessibility agent: Functions list: {res_funcs}')
+    logger.info(f'Selected functions: {res_funcs}')
 
     context = retrieve_context_from_api(coordinates, res_funcs)
-    logging.info(f'Accessibility agent: Context: {context}')
+    # logger.info(f'Context: {context}')
 
     # Send request to Llama 70B and parse final answer
     response = generate_answer(question, strategy_sys_prompt, context)
-    logging.info(f'Accessibility agent: Final answer: {response}')
 
     return response
 
@@ -194,21 +192,21 @@ def run_pipeline_on_local_data(question: str, table: str):
     res_funcs = res_funcs + llm_res_funcs
     if not res_funcs:
         res_funcs.append('get_general_stats_city')
-    logging.info(f'Accessibility agent: Functions list: {res_funcs}')
+    logger.info(f'Functions list: {res_funcs}')
     if 'get_general_stats_culture' in res_funcs:
         res_funcs.remove('get_general_stats_culture')
 
     context = ''
     for func in res_funcs:
         context += str(input_data[func])
-    logging.info(f'Accessibility agent: Context: {context}')
+    logger.info(f'Context: {context}')
 
     # Send request to Llama 70B and parse final answer
     model = NewWebAssistant()
     model.set_sys_prompt(accessibility_sys_prompt)
     model.add_context(context)
     response = model(question, as_json=True)
-    logging.info(f'Accessibility agent: Final answer: {response}')
+    logger.info(f'Final answer: {response}')
     return response
 
 
@@ -227,7 +225,7 @@ def check_choice_correctness(question: str, answer: str | List[str], tools: List
                    f"[Function Descriptions]: {tools}.\n" \
                    f"return correct functions in this format:" \
                    f"[Correct answer]: correct function."
-    print(user_message)
+    # print(user_message)
     ans = model(user_message, as_json=False)
 
     return ans
@@ -280,16 +278,16 @@ if __name__ == "__main__":
     # get_metrics(model_url, test_data_file, tools)
 
     # # Test the pipeline on one question
-    # question = 'Каково среднее время доступности школ?'
-    # coords = [
-    #     [
-    #         [30.2679419, 60.1126515], [30.2679786, 60.112752], [30.2682489, 60.1127275], [30.2682122, 60.112627],
-    #         [30.2679419, 60.1126515]
-    #     ]
-    # ]
-    # ttype = 'city'
-    # t_id = 'saint-petersburg'
-    # service_accessibility_pipeline(question, coords, ttype, t_id)
+    question = 'Каково среднее время доступности школ?'
+    coords = [
+        [
+            [30.2679419, 60.1126515], [30.2679786, 60.112752], [30.2682489, 60.1127275], [30.2682122, 60.112627],
+            [30.2679419, 60.1126515]
+        ]
+    ]
+    ttype = 'city'
+    t_id = 'saint-petersburg'
+    service_accessibility_pipeline(question, coords, ttype, t_id)
 
     # Test the whole pipeline on data from files (instead of api)
-    run_test_full_pipeline_with_local_data()
+    # run_test_full_pipeline_with_local_data()

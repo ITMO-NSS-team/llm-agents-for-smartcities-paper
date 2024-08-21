@@ -7,6 +7,9 @@ from typing import Any, Collection, Dict
 import requests
 
 
+logger = logging.getLogger(__name__)
+
+
 class Endpoint(abc.ABC):
     def __init__(self, url: str, param_names: Collection[str] = None):
         if param_names is not None:
@@ -50,8 +53,8 @@ class Endpoint(abc.ABC):
         params = json.dumps(params, ensure_ascii=False)  # This is needed to transform None into null in the payload
         result = self._execute_request(url, params)
         if result.status_code != 200:
-            logging.error(f'Api lib: url: {url}')
-            logging.error(f'Api lib: params: {params}')
+            logger.error(f'url: {url}')
+            logger.error(f'params: {params}')
             raise ValueError(result.status_code)
         return result.json()
 

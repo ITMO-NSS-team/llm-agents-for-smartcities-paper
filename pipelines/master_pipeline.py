@@ -2,15 +2,8 @@ import csv
 import re
 import logging
 from typing import Dict, List
-
 import requests
 import os
-from typing import List
-from dotenv import load_dotenv
-
-import requests
-import os
-from typing import List
 from dotenv import load_dotenv
 from pathlib import Path
 
@@ -22,7 +15,9 @@ import pipelines
 from models.definitions import ROOT
 from pipelines.tools.master_tools import tools
 
+
 path_to_config = Path(ROOT, 'config.env')
+logger = logging.getLogger(__name__)
 
 
 def get_nearest_levenstein(string: str, correct_strings: List[str]) -> str:
@@ -133,7 +128,7 @@ def answer_question_with_llm(question: str,
     checked_res_funcs = check_pipeline(question, res_funcs)
     if not checked_res_funcs:
         checked_res_funcs.append('strategy_development_pipeline')
-    logging.info(f'Master pipeline: Functions list: {checked_res_funcs}')
+    logger.info(f'Selected pipeline: {checked_res_funcs}')
 
     llm_res = ''
 
@@ -145,7 +140,7 @@ def answer_question_with_llm(question: str,
         fun_handle = getattr(pipelines.accessibility_data_agent, 'service_accessibility_pipeline')
         llm_res = str(fun_handle(question, coordinates, t_type, t_id))
 
-    logging.info(f'Master pipeline: Final answer: {llm_res}')
+    logger.info(f'Final answer: {llm_res}')
 
     return llm_res
 
