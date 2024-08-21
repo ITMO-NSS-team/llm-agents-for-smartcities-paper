@@ -7,6 +7,7 @@ from deepeval.metrics import (AnswerRelevancyMetric,
                               ContextualRelevancyMetric,
                               FaithfulnessMetric,
                               GEval)
+import numpy as np
 import pandas as pd
 from pathlib import Path
 import re
@@ -28,7 +29,7 @@ from utils.measure_time import Timer
 path_to_data = Path(ROOT, 'pipelines', 'tests')
 strategy_and_access_data = pd.read_csv(Path(path_to_data, 'test_data', 'questions_for_test.csv'))
 strategy_data = pd.read_csv(Path(path_to_data, 'test_data', 'strategy_questions.csv'))
-access_data = pd.read_csv(Path(path_to_data, 'test_data', 'access_questions.csv'))
+access_data = pd.read_csv(Path(path_to_data, 'test_data', 'urb_accessibility_questions.csv'))
 collection_name = 'strategy-spb'
 total_all_questions = strategy_and_access_data.shape[0]
 total_strategy_questions = strategy_data.shape[0]
@@ -111,25 +112,37 @@ def choose_functions_test() -> None:
     os.makedirs(os.path.dirname(path_to_results), exist_ok=True)
 
     total_correct_functions = 0
-    total_time = 0
+    total_function_choose_time = 0
+    total_check_function_time = 0
 
     for i, row in access_data.iterrows():
-        question = row['question']
-        correct_functions = row['correct_functions']
+        question = row['Вопрос']
+        correct_function = row['Датасет']
+        t_type = row['Тип территории']
+        t_name = row['Название территории']
+        coordinates = None if row['Геометрия'] == 'null' else row['Геометрия']
         print(f'Processing question {i}')
         agent = Agent('LLAMA_FC_URL', accessibility_tools)
         with Timer() as t:
             functions = agent.choose_functions(question, fc_sys_prompt_template, fc_user_prompt_template)
-            total_time += t.seconds_from_start
-        if functions[0] == correct_functions:
+            total_function_choose_time += t.seconds_from_start
+        with Timer() as t:
+            corrected_functions = agent.check_functions(question, functions, base_sys_prompt,
+                                                        ac_cor_user_prompt_template)
+            total_check_function_time += t.seconds_from_start
+        final_res = corrected_functions + define_default_functions(t_type, t_name, coordinates)
+        final_res = set_default_value_if_empty(final_res)
+        if correct_function in final_res:
             total_correct_functions += 1
 
     corr_func_percent = round(total_correct_functions / total_access_questions * 100, 2)
-    avg_func_choose_time = round(total_time / total_access_questions, 2)
+    avg_func_choose_time = round(total_function_choose_time / total_access_questions, 2)
+    avg_func_check_time = round(total_check_function_time / total_access_questions, 2)
 
     with open(path_to_results, 'w') as f:
         print(f'''Percentage of correctly chosen functions: {corr_func_percent}
-Average function choosing time: {avg_func_choose_time}''', file=f)
+Average function choosing time: {avg_func_choose_time}
+Average function checking time: {avg_func_check_time}''', file=f)
 
 
 def accessibility_pipeline_test(coordinates: list,
@@ -290,7 +303,7 @@ if __name__ == '__main__':
     ttype = ''
     tid = ''
     metrics = [answer_relevancy, faithfulness, correctness_metric]
-    choose_pipeline_test()
+    # choose_pipeline_test()
     choose_functions_test()
-    accessibility_pipeline_test(coords, ttype, tid)
+    # accessibility_pipeline_test(coords, ttype, tid)
     # strategy_pipeline_test(metrics, chunks)
