@@ -120,7 +120,7 @@ def choose_functions_test() -> None:
         correct_function = row['Датасет']
         t_type = row['Тип территории']
         t_name = row['Название территории']
-        coordinates = None if row['Геометрия'] == 'null' else row['Геометрия']
+        coordinates = row['Геометрия']
         print(f'Processing question {i}')
         agent = Agent('LLAMA_FC_URL', accessibility_tools)
         with Timer() as t:
@@ -209,12 +209,12 @@ def accessibility_pipeline_test(coordinates: list,
 
     with open(path_to_results, 'w') as f:
         print(f'''Total accessibility samples: {total_access_questions}
-                  Percentage of correctly chosen functions: {corr_func_percent}
-                  Percentage of correct accessibility answers: {corr_answer_percent}
-                  Average function choosing time (accessibility): {avg_func_choose_time}
-                  Average functions checking time (accessibility): {avg_func_check_time}
-                  Average getting context from API time (accessibility): {avg_get_context_time}
-                  Average answer generation time: {avg_model_time}''', file=f)
+Percentage of correctly chosen functions: {corr_func_percent}
+Percentage of correct accessibility answers: {corr_answer_percent}
+Average function choosing time (accessibility): {avg_func_choose_time}
+Average functions checking time (accessibility): {avg_func_check_time}
+Average getting context from API time (accessibility): {avg_get_context_time}
+Average answer generation time: {avg_model_time}''', file=f)
 
 
 def strategy_pipeline_test(metrics_to_calculate: List, chunk_num: int = 4) -> None:
@@ -303,7 +303,7 @@ if __name__ == '__main__':
     ttype = ''
     tid = ''
     metrics = [answer_relevancy, faithfulness, correctness_metric]
-    # choose_pipeline_test()
+    choose_pipeline_test()
     choose_functions_test()
     # accessibility_pipeline_test(coords, ttype, tid)
     # strategy_pipeline_test(metrics, chunks)
