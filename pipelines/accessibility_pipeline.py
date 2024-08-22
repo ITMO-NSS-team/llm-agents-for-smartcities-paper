@@ -9,9 +9,8 @@ from models.definitions import ROOT
 from models.prompts.strategy_prompt import *
 
 
-logging.basicConfig(level=logging.INFO)
-
 path_to_config = Path(ROOT, 'config.env')
+logger = logging.getLogger(__name__)
 
 
 # TODO: move this to api module/tools
@@ -32,7 +31,7 @@ def set_default_value_if_empty(res_funcs: List[str]) -> List[str]:
     """Sets a default value in case no functions were selected by the LLM."""
     if not res_funcs:
         res_funcs.append('get_general_stats_city')
-    logging.info(f'Accessibility agent: Functions list: {res_funcs}')
+    logger.info(f'Selected functions: {res_funcs}')
     return res_funcs
 
 
@@ -60,9 +59,6 @@ def service_accessibility_pipeline(question: str,
     res_funcs = set_default_value_if_empty(res_funcs)
 
     context = agent.retrieve_context_from_api(coordinates, res_funcs)
-    logging.info(f'Accessibility agent: Context: {context}')
-
     response = agent.generate_llm_answer(question, accessibility_sys_prompt, context)
-    logging.info(f'Accessibility agent: Final answer: {response}')
 
     return response

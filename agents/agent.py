@@ -11,9 +11,8 @@ from models.definitions import ROOT
 from models.new_web_api import *
 
 
-logging.basicConfig(level=logging.INFO)
-
 path_to_config = Path(ROOT, 'config.env')
+logger = logging.getLogger(__name__)
 
 
 class Agent:
@@ -75,7 +74,7 @@ class Agent:
                 context += str(cur_handle(input_data))
         except Exception as e:
             # TODO: send these logs to frontend
-            logging.error(f'Could NOT retrieve context from API: {e}')
+            logger.error(f'Could NOT retrieve context from API: {e}')
         return context
 
     def get_relevant_functions(self, question: str,

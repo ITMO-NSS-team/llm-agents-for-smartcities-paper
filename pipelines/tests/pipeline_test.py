@@ -24,7 +24,7 @@ from models.vsegpt_api import VseGPTConnector
 from models.prompts.strategy_prompt import accessibility_sys_prompt, strategy_sys_prompt
 from pipelines.accessibility_pipeline import define_default_functions, set_default_value_if_empty
 from pipelines.strategy_pipeline import retrieve_context_from_chroma, generate_answer
-from utils.measure_time import Timer
+from pipelines.tests.utils.measure_time import Timer
 
 path_to_data = Path(ROOT, 'pipelines', 'tests')
 strategy_and_access_data = pd.read_csv(Path(path_to_data, 'test_data', 'questions_for_test.csv'))
@@ -67,8 +67,6 @@ def choose_pipeline_test() -> None:
     path_to_results = Path(
         path_to_data, "test_results", "pipeline_choose_test_results.txt"
     )
-    print('Pipeline choosing test is running...')
-    path_to_results = Path(path_to_data, 'test_results', 'pipeline_choose_test_results.txt')
     os.makedirs(os.path.dirname(path_to_results), exist_ok=True)
 
     total_correct_pipeline = 0

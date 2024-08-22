@@ -12,7 +12,6 @@ from pipelines.accessibility_pipeline import service_accessibility_pipeline
 from pipelines.strategy_pipeline import strategy_development_pipeline
 
 
-
 path_to_config = Path(ROOT, "config.env")
 logger = logging.getLogger(__name__)
 
