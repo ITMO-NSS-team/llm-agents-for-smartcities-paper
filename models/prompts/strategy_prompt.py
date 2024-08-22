@@ -1,4 +1,4 @@
-accessibility_sys_prompt = '''Answer the question following rules below. For answer you must use provided by user context.
+accessibility_sys_prompt = """Answer the question following rules below. For answer you must use provided by user context.
                          Rules:
                          1. You must use only provided information for the answer.
                          2. Add a unit of measurement to an answer.
@@ -8,9 +8,9 @@ accessibility_sys_prompt = '''Answer the question following rules below. For ans
                          6. Before give an answer to the user question, provide explanation. Mark the answer with keyword "ОТВЕТ", and explanation with "ОБЪЯСНЕНИЕ". Both answer and explanation must be in Russian language
                          7. Answer should be three sentences maximum.
                          For each sentence in English language you will be fined for 100$, so in answers you must use only Russian language.
-                     '''
+                     """
 
-strategy_sys_prompt = '''Answer the question following rules below. For answer you must use provided by user context.
+strategy_sys_prompt = """Answer the question following rules below. For answer you must use provided by user context.
                              Rules:
                              1. You must use only provided information for the answer.
                              2. For answer you should take only that information from context, which is relevant to user's question.
@@ -19,4 +19,4 @@ strategy_sys_prompt = '''Answer the question following rules below. For answer y
                              5. Before give an answer to the user question, provide explanation. Mark the answer with keyword "ОТВЕТ", and explanation with "ОБЪЯСНЕНИЕ". Both answer and explanation must be in Russian language
                              6. The answer should consist of as many sentences as are necessary to answer the question given the context, but not more five sentences.
                              For each sentence in English language you will be fined for 100$, so in answers you must use only Russian language.
-                        '''
+                        """

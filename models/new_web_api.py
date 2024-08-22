@@ -1,20 +1,23 @@
 import json
 from typing import Any
+import uuid
+
 import requests
 
 import models.web_api as web_api
-import uuid
 
 
 class NewWebAssistant(web_api.WebAssistant):
-    """Extends base """
+    """Extends base"""
+
     def __call__(
-        self, user_question: str,
-        temperature: float = .015,
-        top_p: float = .5,
+        self,
+        user_question: str,
+        temperature: float = 0.015,
+        top_p: float = 0.5,
         token_limits: int = 8000,
         *args: Any,
-        ** kwargs: Any
+        **kwargs: Any,
     ) -> str:
         """Get a response from model for given question.
 
@@ -29,25 +32,23 @@ class NewWebAssistant(web_api.WebAssistant):
             str: Model's answer to user's question.
         """
         job_id = str(uuid.uuid4())
-        content = f'<|begin_of_text|><|start_header_id|>system<|end_header_id|> {self._system_prompt} <|eot_id|><|start_header_id|>user<|end_header_id|> Question: {user_question} Context: {self._context} <|eot_id|><|start_header_id|>assistant<|end_header_id|>'
+        content = f"<|begin_of_text|><|start_header_id|>system<|end_header_id|> {self._system_prompt} <|eot_id|><|start_header_id|>user<|end_header_id|> Question: {user_question} Context: {self._context} <|eot_id|><|start_header_id|>assistant<|end_header_id|>"
         formatted_prompt = {
             "job_id": job_id,
             "meta": {
                 "temperature": temperature,
                 "tokens_limit": token_limits,
-                "stop_words": [
-                    "string"
-                ]
+                "stop_words": ["string"],
             },
-            "content": content
+            "content": content,
         }
         response = requests.post(url=self._url, json=formatted_prompt)
-        if kwargs.get('as_json'):
+        if kwargs.get("as_json"):
             try:
-                res = json.loads(response.text)['content'].split('ОТВЕТ: ')[1]
+                res = json.loads(response.text)["content"].split("ОТВЕТ: ")[1]
             except:
-                res = json.loads(response.text)['content']
+                res = json.loads(response.text)["content"]
             return res
         else:
             res = json.loads(response.text)
-            return res['content']
+            return res["content"]

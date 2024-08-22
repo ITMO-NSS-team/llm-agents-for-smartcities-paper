@@ -1,5 +1,5 @@
-import time
 import datetime
+import time
 
 
 def measure_execution_time(func):
@@ -9,6 +9,7 @@ def measure_execution_time(func):
         end_time = time.perf_counter()
         elapsed = end_time - start_time
         return result, elapsed
+
     return wrapper
 
 

@@ -1,23 +1,25 @@
-from deepeval.models.base_model import DeepEvalBaseLLM
-from dotenv import load_dotenv
-from models.definitions import ROOT
-from openai import OpenAI
 import os
 from pathlib import Path
 
+from deepeval.models.base_model import DeepEvalBaseLLM
+from dotenv import load_dotenv
+from openai import OpenAI
 
-path_to_config = Path(ROOT, 'config.env')
+from models.definitions import ROOT
+
+
+path_to_config = Path(ROOT, "config.env")
 
 
 class VseGPTConnector(DeepEvalBaseLLM):
-    """
-    Implementation of Evaluation agent based on large language model for Assistant's answers evaluation.
-    """
+    """Implementation of Evaluation agent based on large language model for Assistant's answers evaluation."""
 
-    def __init__(self,
-                 model: str,
-                 sys_prompt: str = '',
-                 base_url='https://api.vsegpt.ru/v1'):
+    def __init__(
+        self,
+        model: str,
+        sys_prompt: str = "",
+        base_url="https://api.vsegpt.ru/v1",
+    ):
         """Initialize instance with evaluation LLM.
 
         Args:
@@ -32,13 +34,20 @@ class VseGPTConnector(DeepEvalBaseLLM):
         self.model = self.load_model()
 
     def load_model(self) -> OpenAI:
-        """
-        Load model's instance.
-        """
+        """Load model's instance."""
         # TODO extend pull of possible LLMs (Not only just OpenAI's models)
-        return OpenAI(api_key=os.environ.get('VSE_GPT_KEY'), base_url=self.base_url)
+        return OpenAI(
+            api_key=os.environ.get("VSE_GPT_KEY"), base_url=self.base_url
+        )
 
-    def generate(self, prompt: str, context: str = None, temperature: float = .015, *args, **kwargs) -> str:
+    def generate(
+        self,
+        prompt: str,
+        context: str = None,
+        temperature: float = 0.015,
+        *args,
+        **kwargs,
+    ) -> str:
         """Get a response form LLM to given question.
 
         Args:
@@ -50,17 +59,32 @@ class VseGPTConnector(DeepEvalBaseLLM):
         Returns:
             str: Model's response for user's question.
         """
-        usr_msg_template = prompt if context is None else f'Вопрос:{prompt} Контекст:{context}'
-        formatted_message = [{'role': 'system', 'content': self._sys_prompt},
-                             {'role': 'user', 'content': usr_msg_template}]
-        response = self.model.chat.completions.create(model=self._model_name,
-                                                      messages=formatted_message,
-                                                      temperature=temperature,
-                                                      n=1,
-                                                      max_tokens=8182)
+        usr_msg_template = (
+            prompt
+            if context is None
+            else f"Вопрос:{prompt} Контекст:{context}"
+        )
+        formatted_message = [
+            {"role": "system", "content": self._sys_prompt},
+            {"role": "user", "content": usr_msg_template},
+        ]
+        response = self.model.chat.completions.create(
+            model=self._model_name,
+            messages=formatted_message,
+            temperature=temperature,
+            n=1,
+            max_tokens=8182,
+        )
         return response.choices[0].message.content
 
-    async def a_generate(self, prompt: str, context: str = None, temperature: float = .015, *args, **kwargs) -> str:
+    async def a_generate(
+        self,
+        prompt: str,
+        context: str = None,
+        temperature: float = 0.015,
+        *args,
+        **kwargs,
+    ) -> str:
         return self.generate(prompt, context, temperature, *args, **kwargs)
 
     def get_model_name(self, *args, **kwargs) -> str:

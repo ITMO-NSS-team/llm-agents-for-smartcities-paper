@@ -1,3 +1,4 @@
+---
 version: '3.0'
 
 networks:
@@ -19,8 +20,10 @@ services:
       - net
 
   embedding_server:
-    image: ${EMBEDDING_IMAGE:-ghcr.io/huggingface/text-embeddings-inference:cpu-0.3.0} #default image with CPU support
-    command: --model-id ${ST_MODEL:-intfloat/multilingual-e5-large} --revision ${ST_MODEL_REVISION:-main} #configure model and model revision paramters
+    image: ${EMBEDDING_IMAGE:-ghcr.io/huggingface/text-embeddings-inference
+      :cpu-0.3.0} #default image with CPU support
+    command: --model-id ${ST_MODEL:-intfloat/multilingual-e5-large} --revision
+      ${ST_MODEL_REVISION:-main} #configure model and model revision paramters
     ports:
       - 9942:80
     networks:

@@ -1,10 +1,11 @@
 from typing import Any
+
 from pydantic import BaseModel
 
 
 class ConfigLoader(BaseModel):
-    doc_path: str = ''
-    save_path: str = ''
+    doc_path: str = ""
+    save_path: str = ""
     loader_name: str
     parsing_params: dict[str, Any] = dict()
 

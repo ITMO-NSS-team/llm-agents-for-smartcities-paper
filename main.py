@@ -1,23 +1,32 @@
-from fastapi import FastAPI
 import logging
-from pydantic import BaseModel
-from fastapi.middleware.cors import CORSMiddleware
+
 from asgi_correlation_id import CorrelationIdMiddleware
 from asgi_correlation_id.context import correlation_id
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 
 from pipelines.master_pipeline import answer_question_with_llm
+from utils.get_logs import filter_records
+from utils.get_logs import get_records_by_id
 from utils.logging_config import configure_logging
-from utils.get_logs import get_records_by_id, filter_records
 
 
 class Question(BaseModel):
-    question_body: str = 'Какие проблемы демографического развития Санкт-Петербурга?'
+    question_body: str = (
+        "Какие проблемы демографического развития Санкт-Петербурга?"
+    )
     chunk_num: int = 4
-    territory_name_id: str = 'Санкт-Петербург'
-    territory_type: str = 'city'
+    territory_name_id: str = "Санкт-Петербург"
+    territory_type: str = "city"
     selection_zone: list = [
-        [30.2679419, 60.1126515], [30.2679786, 60.112752], [30.2682489, 60.1127275],
-        [30.2682122, 60.112627], [30.2679419, 60.1126515]
+        [
+            [30.2679419, 60.1126515],
+            [30.2679786, 60.112752],
+            [30.2682489, 60.1127275],
+            [30.2682122, 60.112627],
+            [30.2679419, 60.1126515],
+        ]
     ]
 
 
@@ -30,7 +39,7 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=['*'],
+    allow_origins=["*"],
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -40,7 +49,7 @@ app.add_middleware(CorrelationIdMiddleware)
 logger = logging.getLogger(__name__)
 
 
-@app.post('/question')
+@app.post("/question")
 async def read_item(question: Question):
     """Get a response for a given question using a RAG pipeline with a vector DB and LLM.
 
@@ -54,14 +63,18 @@ async def read_item(question: Question):
     Returns:
         dict: llm_res - pipeline's answer to the user's question
     """
-    logger.info(f'Query: {question.question_body}')
-    logger.info(f'Number of chunks: {question.chunk_num}')
-    logger.info(f'Territory name: {question.territory_name_id}')
-    logger.info(f'Territory type: {question.territory_type}')
-    logger.info(f'Selected zone: {question.selection_zone}')
-    llm_res = answer_question_with_llm(question.question_body, question.selection_zone,
-                                       question.territory_type, question.territory_name_id,
-                                       question.chunk_num)
+    logger.info(f"Query: {question.question_body}")
+    logger.info(f"Number of chunks: {question.chunk_num}")
+    logger.info(f"Territory name: {question.territory_name_id}")
+    logger.info(f"Territory type: {question.territory_type}")
+    logger.info(f"Selected zone: {question.selection_zone}")
+    llm_res = answer_question_with_llm(
+        question.question_body,
+        question.selection_zone,
+        question.territory_type,
+        question.territory_name_id,
+        question.chunk_num,
+    )
     cid = correlation_id.get()
     request_logs = filter_records(get_records_by_id(cid))
-    return {'llm_res': llm_res, 'request_logs': request_logs}
+    return {"llm_res": llm_res, "request_logs": request_logs}

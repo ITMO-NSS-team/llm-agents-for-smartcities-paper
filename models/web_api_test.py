@@ -1,16 +1,19 @@
 import json
 
-from web_api import WebAssistant
 from new_web_api import NewWebAssistant
+
 from models.prompts.strategy_prompt import accessibility_sys_prompt
-from pprint import pprint
+
 
 if __name__ == "__main__":
-
     sys_prompt = accessibility_sys_prompt
-    path_to_file_with_context = '/home/kolyan288/Data/Отраслевой_контекст_–_Культура_и_досуг.json'
-    files = [path_to_file_with_context]  # если нужно собрать контекст с нескольких файлов, добавить пути
-    context = ''
+    path_to_file_with_context = (
+        "/home/kolyan288/Data/Отраслевой_контекст_–_Культура_и_досуг.json"
+    )
+    files = [
+        path_to_file_with_context
+    ]  # если нужно собрать контекст с нескольких файлов, добавить пути
+    context = ""
 
     for file in files:
         with open(file) as f:
@@ -20,7 +23,9 @@ if __name__ == "__main__":
     model.set_sys_prompt(sys_prompt)
     model.add_context(context)
 
-    response = model("Какова обеспеченность объектами культуры и досуга?", as_json=True)
+    response = model(
+        "Какова обеспеченность объектами культуры и досуга?", as_json=True
+    )
     print(response)
 
     # sys_prompt = accessibility_sys_prompt
