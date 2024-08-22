@@ -3,7 +3,7 @@ from typing import List
 from pathlib import Path
 
 from agents.agent import Agent
-from agents.prompts import fc_sys_prompt_template, fc_user_prompt_template, base_sys_prompt, ac_cor_user_prompt_template
+from agents.prompts import fc_sys_prompt, fc_user_prompt, base_sys_prompt, ac_cor_user_prompt
 from agents.tools.accessibility_tools import accessibility_tools
 from models.definitions import ROOT
 from models.prompts.strategy_prompt import *
@@ -54,8 +54,8 @@ def service_accessibility_pipeline(question: str,
     Returns: Answer to the question.
     """
     agent = Agent('LLAMA_FC_URL', accessibility_tools)
-    llm_res_funcs = agent.choose_functions(question, fc_sys_prompt_template, fc_user_prompt_template)
-    res_funcs = agent.check_functions(question, llm_res_funcs, base_sys_prompt, ac_cor_user_prompt_template)
+    llm_res_funcs = agent.choose_functions(question, fc_sys_prompt, fc_user_prompt)
+    res_funcs = agent.check_functions(question, llm_res_funcs, base_sys_prompt, ac_cor_user_prompt)
     res_funcs = res_funcs + define_default_functions(t_type, t_id, coordinates)
     res_funcs = set_default_value_if_empty(res_funcs)
 

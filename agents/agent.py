@@ -1,9 +1,9 @@
 import logging
 import os
 from dotenv import load_dotenv
-from langchain_core.prompts import PromptTemplate
 from Levenshtein import distance as levenshtein_distance
 from pathlib import Path
+from string import Template
 from typing import Dict, List
 
 import api.summary_tables_requests
@@ -79,8 +79,8 @@ class Agent:
         return context
 
     def get_relevant_functions(self, question: str,
-                               sys_prompt: PromptTemplate,
-                               user_prompt: PromptTemplate) -> List[str]:
+                               sys_prompt: str,
+                               user_prompt: str) -> List[str]:
         """Sends a request to a function calling LLM to choose the most suitable functions
         to get the context for the given question. Possible functions must be defined in the
         current tools.
@@ -98,11 +98,11 @@ class Agent:
             "messages": [
                 {
                     "role": "system",
-                    "content":  sys_prompt.format(tools=str(self.tools))
+                    "content":  Template(sys_prompt).safe_substitute(tools=str(self.tools))
                 },
                 {
                     "role": "user",
-                    "content": user_prompt.format(question=question)
+                    "content": Template(user_prompt).safe_substitute(question=question)
                 }
             ]
         }
@@ -110,7 +110,7 @@ class Agent:
         res = json.loads(response.text)
         return res['choices'][0]['message']['content']
 
-    def choose_functions(self, question: str, sys_prompt: PromptTemplate, user_prompt: PromptTemplate) -> List[str]:
+    def choose_functions(self, question: str, sys_prompt: str, user_prompt: str) -> List[str]:
         """Chooses the most suitable functions to get the context for the given question."""
         llm_res = self.get_relevant_functions(question, sys_prompt, user_prompt)
         llm_res_funcs = self.parse_function_names_from_agent_answer(llm_res)
@@ -127,7 +127,7 @@ class Agent:
         return response
 
     def check_choice_correctness(self, question: str, answer: str | List[str],
-                                 sys_prompt: str, user_prompt: PromptTemplate) -> str:
+                                 sys_prompt: str, user_prompt: str) -> str:
         """Checks if the list of functions returned by the LLM is accurate. If it is not,
         returns a better choice for the given question. The validation is done by another LLM.
 
@@ -139,11 +139,11 @@ class Agent:
 
         Returns: A string that contains the corrected names of the chosen functions in a free format.
         """
-        user_message = user_prompt.format(question=question, answer=answer, tools=self.tools)
+        user_message = Template(user_prompt).safe_substitute(question=question, answer=answer, tools=self.tools)
         return self.generate_llm_answer(user_message, sys_prompt, '', False)
 
     def check_functions(self, question: str, answer: str | List[str],
-                        sys_prompt: str, user_prompt: PromptTemplate) -> List[str]:
+                        sys_prompt: str, user_prompt: str) -> List[str]:
         """Corrects the list of functions returned by the function calling LLM."""
         llm_check_res = self.check_choice_correctness(question, answer, sys_prompt, user_prompt)
         return self.parse_function_names_from_agent_answer(llm_check_res)

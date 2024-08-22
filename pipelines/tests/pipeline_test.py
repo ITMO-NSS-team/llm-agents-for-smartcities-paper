@@ -14,9 +14,9 @@ import re
 from typing import List
 
 from agents.agent import Agent
-from agents.prompts import fc_sys_prompt_template, binary_fc_user_prompt_template, \
-                           fc_user_prompt_template, base_sys_prompt, \
-                           pip_cor_user_prompt_template, ac_cor_user_prompt_template
+from agents.prompts import fc_sys_prompt, binary_fc_user_prompt, \
+                           fc_user_prompt, base_sys_prompt, \
+                           pip_cor_user_prompt, ac_cor_user_prompt
 from agents.tools.accessibility_tools import accessibility_tools
 from agents.tools.pipeline_tools import pipeline_tools
 from models.definitions import ROOT
@@ -81,10 +81,10 @@ def choose_pipeline_test() -> None:
         print(f'Processing question {i}')
         agent = Agent('LLAMA_FC_URL', pipeline_tools)
         with Timer() as t:
-            raw_pipeline = agent.choose_functions(question, fc_sys_prompt_template, binary_fc_user_prompt_template)
+            raw_pipeline = agent.choose_functions(question, fc_sys_prompt, binary_fc_user_prompt)
             total_choose_time += t.seconds_from_start
         with Timer() as t:
-            checked_pipeline = agent.check_functions(question, raw_pipeline, base_sys_prompt, pip_cor_user_prompt_template)
+            checked_pipeline = agent.check_functions(question, raw_pipeline, base_sys_prompt, pip_cor_user_prompt)
             total_check_time += t.seconds_from_start
         if checked_pipeline[0] == correct_pipeline:
             total_correct_pipeline += 1
@@ -124,11 +124,11 @@ def choose_functions_test() -> None:
         print(f'Processing question {i}')
         agent = Agent('LLAMA_FC_URL', accessibility_tools)
         with Timer() as t:
-            functions = agent.choose_functions(question, fc_sys_prompt_template, fc_user_prompt_template)
+            functions = agent.choose_functions(question, fc_sys_prompt, fc_user_prompt)
             total_function_choose_time += t.seconds_from_start
         with Timer() as t:
             corrected_functions = agent.check_functions(question, functions, base_sys_prompt,
-                                                        ac_cor_user_prompt_template)
+                                                        ac_cor_user_prompt)
             total_check_function_time += t.seconds_from_start
         final_res = corrected_functions + define_default_functions(t_type, t_name, coordinates)
         final_res = set_default_value_if_empty(final_res)
@@ -179,11 +179,11 @@ def accessibility_pipeline_test(coordinates: list,
         print(f'Processing question {i}')
         agent = Agent('LLAMA_FC_URL', accessibility_tools)
         with Timer() as t:
-            functions = agent.choose_functions(question, fc_sys_prompt_template, fc_user_prompt_template)
+            functions = agent.choose_functions(question, fc_sys_prompt, fc_user_prompt)
             total_function_choose_time += t.seconds_from_start
         with Timer() as t:
             corrected_functions = agent.check_functions(question, functions, base_sys_prompt,
-                                                        ac_cor_user_prompt_template)
+                                                        ac_cor_user_prompt)
             total_check_function_time += t.seconds_from_start
         res_funcs = corrected_functions + define_default_functions(t_type, t_id, coordinates)
         res_funcs = set_default_value_if_empty(res_funcs)

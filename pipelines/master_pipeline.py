@@ -4,8 +4,8 @@ from typing import List
 
 import pipelines
 from agents.agent import Agent
-from agents.prompts import fc_sys_prompt_template, binary_fc_user_prompt_template, \
-                           base_sys_prompt, pip_cor_user_prompt_template
+from agents.prompts import fc_sys_prompt, binary_fc_user_prompt, \
+                           base_sys_prompt, pip_cor_user_prompt
 from agents.tools.pipeline_tools import pipeline_tools
 from models.definitions import ROOT
 from pipelines.accessibility_pipeline import service_accessibility_pipeline
@@ -35,8 +35,8 @@ def answer_question_with_llm(question: str,
     Returns: Answer to the question.
     """
     agent = Agent('LLAMA_FC_URL', pipeline_tools)
-    res_funcs = agent.choose_functions(question, fc_sys_prompt_template, binary_fc_user_prompt_template)
-    checked_res_funcs = agent.check_functions(question, res_funcs, base_sys_prompt, pip_cor_user_prompt_template)
+    res_funcs = agent.choose_functions(question, fc_sys_prompt, binary_fc_user_prompt)
+    checked_res_funcs = agent.check_functions(question, res_funcs, base_sys_prompt, pip_cor_user_prompt)
 
     # Set a default value if the LLM could not come up with an answer
     if not checked_res_funcs:
