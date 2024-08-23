@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 import re
 from typing import List
@@ -12,17 +13,24 @@ from deepeval.test_case import LLMTestCase
 from deepeval.test_case import LLMTestCaseParams
 import pandas as pd
 
+from agents.agent import Agent
+from agents.prompts import ac_cor_user_prompt
+from agents.prompts import base_sys_prompt
+from agents.prompts import binary_fc_user_prompt
+from agents.prompts import fc_sys_prompt
+from agents.prompts import fc_user_prompt
+from agents.prompts import pip_cor_user_prompt
+from agents.tools.accessibility_tools import accessibility_tools
+from agents.tools.pipeline_tools import pipeline_tools
 from models.definitions import ROOT
 from models.prompts.strategy_prompt import accessibility_sys_prompt
 from models.prompts.strategy_prompt import strategy_sys_prompt
 from models.vsegpt_api import VseGPTConnector
-from pipelines.accessibility_data_agent import choose_functions
-from pipelines.accessibility_data_agent import generate_answer
-from pipelines.accessibility_data_agent import retrieve_context_from_api
-from pipelines.master_pipeline import check_pipeline
-from pipelines.master_pipeline import choose_pipeline
+from pipelines.accessibility_pipeline import define_default_functions
+from pipelines.accessibility_pipeline import set_default_value_if_empty
+from pipelines.strategy_pipeline import generate_answer
 from pipelines.strategy_pipeline import retrieve_context_from_chroma
-from utils.measure_time import Timer
+from pipelines.tests.utils.measure_time import Timer
 
 
 path_to_data = Path(ROOT, "pipelines", "tests")
@@ -33,7 +41,7 @@ strategy_data = pd.read_csv(
     Path(path_to_data, "test_data", "strategy_questions.csv")
 )
 access_data = pd.read_csv(
-    Path(path_to_data, "test_data", "access_questions.csv")
+    Path(path_to_data, "test_data", "urb_accessibility_questions.csv")
 )
 collection_name = "strategy-spb"
 total_all_questions = strategy_and_access_data.shape[0]
@@ -78,6 +86,7 @@ def choose_pipeline_test() -> None:
     path_to_results = Path(
         path_to_data, "test_results", "pipeline_choose_test_results.txt"
     )
+    os.makedirs(os.path.dirname(path_to_results), exist_ok=True)
 
     total_correct_pipeline = 0
     total_choose_time = 0
@@ -87,11 +96,16 @@ def choose_pipeline_test() -> None:
         question = row["question"]
         correct_pipeline = row["correct_pipeline"]
         print(f"Processing question {i}")
+        agent = Agent("LLAMA_FC_URL", pipeline_tools)
         with Timer() as t:
-            raw_pipeline = choose_pipeline(question)
+            raw_pipeline = agent.choose_functions(
+                question, fc_sys_prompt, binary_fc_user_prompt
+            )
             total_choose_time += t.seconds_from_start
         with Timer() as t:
-            checked_pipeline = check_pipeline(question, raw_pipeline)
+            checked_pipeline = agent.check_functions(
+                question, raw_pipeline, base_sys_prompt, pip_cor_user_prompt
+            )
             total_check_time += t.seconds_from_start
         if checked_pipeline[0] == correct_pipeline:
             total_correct_pipeline += 1
@@ -123,29 +137,52 @@ def choose_functions_test() -> None:
     path_to_results = Path(
         path_to_data, "test_results", "choose_functions_test_results.txt"
     )
+    os.makedirs(os.path.dirname(path_to_results), exist_ok=True)
 
     total_correct_functions = 0
-    total_time = 0
+    total_function_choose_time = 0
+    total_check_function_time = 0
 
     for i, row in access_data.iterrows():
-        question = row["question"]
-        correct_functions = row["correct_functions"]
+        question = row["Вопрос"]
+        correct_function = row["Датасет"]
+        t_type = row["Тип территории"]
+        t_name = row["Название территории"]
+        coordinates = row["Геометрия"]
         print(f"Processing question {i}")
+        agent = Agent("LLAMA_FC_URL", accessibility_tools)
         with Timer() as t:
-            functions = choose_functions(question)
-            total_time += t.seconds_from_start
-        if functions[0] == correct_functions:
+            functions = agent.choose_functions(
+                question, fc_sys_prompt, fc_user_prompt
+            )
+            total_function_choose_time += t.seconds_from_start
+        with Timer() as t:
+            corrected_functions = agent.check_functions(
+                question, functions, base_sys_prompt, ac_cor_user_prompt
+            )
+            total_check_function_time += t.seconds_from_start
+        final_res = corrected_functions + define_default_functions(
+            t_type, t_name, coordinates
+        )
+        final_res = set_default_value_if_empty(final_res)
+        if correct_function in final_res:
             total_correct_functions += 1
 
     corr_func_percent = round(
         total_correct_functions / total_access_questions * 100, 2
     )
-    avg_func_choose_time = round(total_time / total_access_questions, 2)
+    avg_func_choose_time = round(
+        total_function_choose_time / total_access_questions, 2
+    )
+    avg_func_check_time = round(
+        total_check_function_time / total_access_questions, 2
+    )
 
     with open(path_to_results, "w") as f:
         print(
             f"""Percentage of correctly chosen functions: {corr_func_percent}
-Average function choosing time: {avg_func_choose_time}""",
+Average function choosing time: {avg_func_choose_time}
+Average function checking time: {avg_func_check_time}""",
             file=f,
         )
 
@@ -170,11 +207,13 @@ def accessibility_pipeline_test(
     path_to_results = Path(
         path_to_data, "test_results", "accessibility_pipeline_test_results.txt"
     )
+    os.makedirs(os.path.dirname(path_to_results), exist_ok=True)
 
     correct_function_choice = 0
     correct_accessibility_answer = 0
     total_model_time = 0
     total_function_choose_time = 0
+    total_check_function_time = 0
     total_get_context_time = 0
 
     for i, row in access_data.iterrows():
@@ -182,14 +221,26 @@ def accessibility_pipeline_test(
         correct_answer = row["correct_answer"]
         correct_functions = row["correct_functions"]
         print(f"Processing question {i}")
+        agent = Agent("LLAMA_FC_URL", accessibility_tools)
         with Timer() as t:
-            functions = choose_functions(question)
+            functions = agent.choose_functions(
+                question, fc_sys_prompt, fc_user_prompt
+            )
             total_function_choose_time += t.seconds_from_start
         with Timer() as t:
-            context = retrieve_context_from_api(coordinates, functions)
+            corrected_functions = agent.check_functions(
+                question, functions, base_sys_prompt, ac_cor_user_prompt
+            )
+            total_check_function_time += t.seconds_from_start
+        res_funcs = corrected_functions + define_default_functions(
+            t_type, t_id, coordinates
+        )
+        res_funcs = set_default_value_if_empty(res_funcs)
+        with Timer() as t:
+            context = agent.retrieve_context_from_api(coordinates, res_funcs)
             total_get_context_time += t.seconds_from_start
         with Timer() as t:
-            llm_res = generate_answer(
+            llm_res = agent.generate_llm_answer(
                 question, accessibility_sys_prompt, context
             )
             total_model_time += t.seconds_from_start
@@ -214,6 +265,9 @@ def accessibility_pipeline_test(
     avg_func_choose_time = round(
         total_function_choose_time / total_access_questions, 2
     )
+    avg_func_check_time = round(
+        total_check_function_time / total_access_questions, 2
+    )
     avg_get_context_time = round(
         total_get_context_time / total_access_questions, 2
     )
@@ -225,6 +279,7 @@ def accessibility_pipeline_test(
 Percentage of correctly chosen functions: {corr_func_percent}
 Percentage of correct accessibility answers: {corr_answer_percent}
 Average function choosing time (accessibility): {avg_func_choose_time}
+Average functions checking time (accessibility): {avg_func_check_time}
 Average getting context from API time (accessibility): {avg_get_context_time}
 Average answer generation time: {avg_model_time}""",
             file=f,
@@ -252,6 +307,7 @@ def strategy_pipeline_test(
     path_to_metrics = Path(
         path_to_data, "test_results", "strategy_pipeline_metrics_results.csv"
     )
+    os.makedirs(os.path.dirname(path_to_results), exist_ok=True)
 
     metrics_result = {
         "question": [],
@@ -349,7 +405,7 @@ if __name__ == "__main__":
     ttype = ""
     tid = ""
     metrics = [answer_relevancy, faithfulness, correctness_metric]
-    # choose_pipeline_test()
-    # choose_functions_test()
+    choose_pipeline_test()
+    choose_functions_test()
     # accessibility_pipeline_test(coords, ttype, tid)
     # strategy_pipeline_test(metrics, chunks)
