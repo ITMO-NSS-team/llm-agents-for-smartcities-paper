@@ -1,65 +1,14 @@
 import os
 import uuid
 from abc import ABCMeta, abstractmethod
-from typing import Dict, Iterable
+from typing import Optional
 
 import requests
 from dotenv import load_dotenv
 from openai import OpenAI
-from openai.types.chat.chat_completion_message_param import ChatCompletionMessageParam
 
-from modules.models.definitions import ROOT
 from modules.preprocessing.text_preprocessor import TextProcessorInterface
-
-
-def get_base_message_form(prompt: str, **kwargs) -> Iterable[ChatCompletionMessageParam]:
-    """Build a basic message form for further LLM calling. Takes system prompt(optional),
-    prompt and creates request form from them.
-
-    Args:
-        prompt (Optional[str], optional): User's question. May include additional context. Defaults to None.
-
-    Raises:
-        ValueError: If neither of the prompts were specified.
-
-    Returns:
-        List[Dict]: Request form for a LLM calling
-    """
-
-    def fun(role: str, content: str) -> Dict[str, str]:
-        return {"role": role, "content": content}
-
-    messages = []
-    system_prompt = kwargs.get("system_prompt")
-
-    if system_prompt is not None:
-        messages.append(fun("system", system_prompt))
-    if prompt is not None:
-        messages.append(fun("user", prompt))
-    return messages
-
-
-def get_advanced_message_form(prompt: str, **kwargs) -> Dict:
-    """Build a message form for LLM calling. Intended to use in cases when prompt includes system instruction,
-    user message and context.
-
-    Args:
-        prompt (str): Prompt for LLM. Includes system instruction, user message, and context (if specified).
-        Also can be formatted to LLM required format.
-
-    Returns:
-        Dict: Request form for a LLM calling
-    """
-    messages = {
-        "job_id": kwargs.get("job_id", str(uuid.uuid4())),
-        "meta": {
-            "temperature": kwargs.get("temperature", 0.5),
-            "tokens_limit": kwargs.get("token_limits", 8000),
-            "stop_words": ["string"],
-        },
-        "content": prompt,
-    }
-    return messages
+from modules.variables.definitions import ROOT
 
 
 class BaseLanguageModelInterface(metaclass=ABCMeta):

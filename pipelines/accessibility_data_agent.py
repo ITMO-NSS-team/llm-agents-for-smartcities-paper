@@ -8,9 +8,9 @@ import numpy as np
 from dotenv import load_dotenv
 
 import api.summary_tables_requests
-from modules.models.definitions import ROOT
 from modules.models.new_web_api import *
 from modules.models.prompts.strategy_prompt import *
+from modules.variables.definitions import ROOT
 from pipelines.tools.accessibility_tools_rus import *
 
 logging.basicConfig(level=logging.INFO)

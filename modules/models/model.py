@@ -4,8 +4,7 @@ from typing import Any
 from dotenv import load_dotenv
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-from modules.models.definitions import ROOT
-
+from modules.variables.definitions import ROOT
 
 class UrbAssistant:
     """LLM assistant for answering questions about city objects."""

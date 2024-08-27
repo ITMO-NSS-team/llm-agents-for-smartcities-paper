@@ -5,7 +5,7 @@ from typing import Any
 import requests
 from dotenv import load_dotenv
 
-from modules.models.definitions import ROOT
+from modules.variables.definitions import ROOT
 
 
 class WebAssistant:
