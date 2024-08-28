@@ -124,15 +124,13 @@ class WEBLanguageModel(BaseLanguageModelInterface):
         else:
             formatted_prompt = f"Context: {context}. Question: {prompt}"
 
-        message = self.text_processor.preprocess_input(
-            job_id=job_id,
-            temperature=temperature,
-            token_limit=token_limit,
-            top_p=top_p,
-            top_k=top_k,
-            system_prompt=self.system_prompt,
-            user_prompt=formatted_prompt,
-        )
+        message = self.text_processor.preprocess_input(job_id=job_id,
+                                                       temperature=temperature,
+                                                       token_limit=token_limit,
+                                                       top_p=top_p,
+                                                       top_k=top_k,
+                                                       system_prompt=self.system_prompt,
+                                                       user_prompt=formatted_prompt)
         response = requests.post(url=self.url, json=message)
         return self.text_processor.preprocess_output(response)
 
@@ -176,14 +174,12 @@ class GPTWebLanguageModel(BaseLanguageModelInterface):
         if context is None:
             prompt = f"Question: {prompt}"
         else:
-            prompt = f"Context: {context}. Question: {prompt}"
-        message = self.text_processor.preprocess_input(
-            system_prompt=self.system_prompt,
-            user_prompt=prompt,
-            temperature=temperature,
-            top_k=top_k,
-            top_p=top_p,
-        )
+            prompt = f'Context: {context}. Question: {prompt}'
+        message = self.text_processor.preprocess_input(system_prompt=self.system_prompt,
+                                                       user_prompt=prompt,
+                                                       temperature=temperature,
+                                                       top_k=top_k,
+                                                       top_p=top_p)
         response = self._model.chat.completions.create(
             model=self._model_name,
             messages=message,
