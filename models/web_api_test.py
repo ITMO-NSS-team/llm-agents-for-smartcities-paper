@@ -1,7 +1,6 @@
 import json
 
-from new_web_api import NewWebAssistant
-
+from models.new_web_api import NewWebAssistant
 from models.prompts.strategy_prompt import accessibility_sys_prompt
 
 

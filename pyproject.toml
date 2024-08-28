@@ -37,21 +37,21 @@ target-version = "py310"
 
 [tool.ruff.lint]
 select = [
-    "A",  # rules from flake8-builtins
-    "ANN",  # rules from  flake8-annotations
-    "D",  # rules from pydocstyle
-    "E",  # rules from  pycodestyle 'error'
-    "F",  # rules from Pyflakes
-    "N",  # rules from pep8-naming
-    "UP",  # rules from pyupgrade
-    "W",  # pycodestyle 'warning'
+    "A", # rules from flake8-builtins
+    "ANN", # rules from  flake8-annotations
+    "D", # rules from pydocstyle
+    "E", # rules from  pycodestyle 'error'
+    "F", # rules from Pyflakes
+    "N", # rules from pep8-naming
+    "UP", # rules from pyupgrade
+    "W", # pycodestyle 'warning'
 ]
 ignore = [
-    "D100",  # Missing docstring in public module
-    "D105",  # Missing docstring in magic method
-    "UP006",  # Use {to} instead of {from} for type annotation
-    "UP035",  # Import from {target} instead: {names}
-    "ANN101",  # Deprecated
+    "D100", # Missing docstring in public module
+    "D105", # Missing docstring in magic method
+    "UP006", # Use {to} instead of {from} for type annotation
+    "UP035", # Import from {target} instead: {names}
+    "ANN101", # Deprecated
 ]
 
 # Allow fix for all enabled rules (when `--fix`) is provided.
