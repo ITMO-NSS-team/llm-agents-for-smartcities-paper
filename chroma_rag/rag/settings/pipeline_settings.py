@@ -18,11 +18,30 @@ class Singleton:
 
 
 class PipelineSettings(Singleton):
+    """
+    Singleton class that manages configuration settings and initializes document transformers
+    for a document processing pipeline.
+
+    This class loads configuration from a file, validates it, and sets up the necessary document
+    transformers based on the configuration.
+    """
+
     def __init__(self):
         self._config_dict: ConfigFile | None = None
         self._transformers: list[BaseDocumentTransformer] | None = None
 
     def make_config_structure(self, config_file: str | TextIO):
+        """
+        Loads and validates the configuration structure from a YAML file or stream,
+        and initializes the document transformers based on the configuration.
+
+        Args:
+            config_file (str | TextIO): Path to the YAML configuration file or a text stream containing the configuration.
+
+        Raises:
+            TransformerNameError: If the specified transformer name in the configuration is not recognized.
+        """
+
         if isinstance(config_file, str):
             with open(config_file) as f:
                 yaml_config = yaml.safe_load(f)
