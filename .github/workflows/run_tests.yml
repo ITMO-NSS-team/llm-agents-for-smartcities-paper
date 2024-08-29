@@ -1,0 +1,14 @@
+name: Run tests
+
+on: [push]
+
+jobs:
+  connect_to_vpn:
+    uses: ./.github/workflows/connect_to_vpn.yml
+    secrets:
+      VPN_HOST: ${{ secrets.VPN_HOST }}
+      VPN_PORT: ${{ secrets.VPN_PORT }}
+      VPN_USER: ${{ secrets.VPN_USER }}
+      VPN_PWD: ${{ secrets.VPN_PWD }}
+      VPN_CERT: ${{ secrets.VPN_CERT }}
+      LLM_APP: ${{ secrets.LLM_APP }}

@@ -1,0 +1,275 @@
+question,source
+Какова обеспеченность населения объектами здравоохранения?,service_accessibility_pipeline
+Каково среднее время доступности объектов здравоохранения?,service_accessibility_pipeline
+Какова обеспеченность населения поликлиниками?,service_accessibility_pipeline
+Какова средняя доступность поликлиник на общественном транспорте?,service_accessibility_pipeline
+Какова средняя доступность поликлиник на личном транспорте?,service_accessibility_pipeline
+Какова средняя доступность поликлиник пешком?,service_accessibility_pipeline
+Какова средняя доступность детских поликлиник на общественном транспорте?,service_accessibility_pipeline
+Какова средняя доступность детских поликлиник на личном транспорте?,service_accessibility_pipeline
+Какова средняя доступность детских поликлиник пешком?,service_accessibility_pipeline
+Какова обеспеченность населения больницами?,service_accessibility_pipeline
+Какова средняя доступность больниц на личном транспорте?,service_accessibility_pipeline
+Какова обеспеченность населения травматологическими отделениями?,service_accessibility_pipeline
+Какова средняя доступность травматологических отделений на общественном транспорте?,service_accessibility_pipeline
+Какова средняя доступность травматологических отделений на личном транспорте?,service_accessibility_pipeline
+Какова средняя доступность травматологических отделений пешком?,service_accessibility_pipeline
+Какова обеспеченность населения родильными домами?,service_accessibility_pipeline
+Каково среднее время доступности родильных домов?,service_accessibility_pipeline
+Какова обеспеченность населения стоматологиями?,service_accessibility_pipeline
+Каково среднее время доступности стоматологий на общественном транспорте?,service_accessibility_pipeline
+Каково среднее время доступности стоматологий на личном транспорте?,service_accessibility_pipeline
+Какова обеспеченность населения женскими консультациями?,service_accessibility_pipeline
+Каково среднее время доступности женских консультаций на общественном транспорте?,service_accessibility_pipeline
+Каково среднее время доступности женских консультаций на личном транспорте?,service_accessibility_pipeline
+Каково среднее время доступности женских консультаций пешком?,service_accessibility_pipeline
+Каково среднее время доступности аптек пешком?,service_accessibility_pipeline
+Какова обеспеченность населения станциями скорой помощи?,service_accessibility_pipeline
+Каково среднее время доступности детских больниц на личном транспорте?,service_accessibility_pipeline
+Какова средняя доступность продовольственных магазинов пешком?,service_accessibility_pipeline
+Какова средняя доступность магазинов одежды и обуви пешком?,service_accessibility_pipeline
+Какова средняя доступность магазинов бытовой техники на личном транспорте?,service_accessibility_pipeline
+Какова средняя доступность книжных магазинов на личном транспорте?,service_accessibility_pipeline
+Какова средняя доступность магазинов детских товаров пешком?,service_accessibility_pipeline
+Какова средняя доступность магазинов детских товаров на общественном транспорте?,service_accessibility_pipeline
+Какова средняя доступность магазинов детских товаров на личном транспорте?,service_accessibility_pipeline
+Какова средняя доступность отделений банков на личном транспорте?,service_accessibility_pipeline
+Какова средняя доступность многофункциональных центров оказания государственных и муниципальных услуг пешком?,service_accessibility_pipeline
+Какова средняя доступность многофункциональных центров оказания государственных и муниципальных услуг на общественном транспорте?,service_accessibility_pipeline
+Какова средняя доступность многофункциональных центров оказания государственных и муниципальных услуг на личном транспорте?,service_accessibility_pipeline
+Какова средняя доступность парикмахерских и салонов красоты пешком?,service_accessibility_pipeline
+Какова средняя доступность ветеринарных клиник на личном транспорте?,service_accessibility_pipeline
+Какова средняя доступность площадок для выгула собак пешком?,service_accessibility_pipeline
+Какова обеспеченность объектами культуры и досуга?,service_accessibility_pipeline
+Какова обеспеченность населения библиотеками?,service_accessibility_pipeline
+Каково среднее время доступности библиотек пешком?,service_accessibility_pipeline
+Какова обеспеченность населения музеями?,service_accessibility_pipeline
+Каково среднее время доступности музеев пешком?,service_accessibility_pipeline
+Каково среднее время доступности ботанического сада?,service_accessibility_pipeline
+Каково среднее время доступности цирка?,service_accessibility_pipeline
+Каково среднее время доступности театров?,service_accessibility_pipeline
+Каково среднее время доступности зоопарка?,service_accessibility_pipeline
+Какова обеспеченность населения кинотеатрами?,service_accessibility_pipeline
+Каково среднее время доступности кинотеатров?,service_accessibility_pipeline
+Каково среднее время доступности кафе и ресторанов пешком?,service_accessibility_pipeline
+Каково среднее время доступности кафе и ресторанов на транспорте?,service_accessibility_pipeline
+Какова обеспеченность населения объектами образования?,service_accessibility_pipeline
+Каково среднее время доступности детских садов?,service_accessibility_pipeline
+Какова обеспеченность населения детскими садами?,service_accessibility_pipeline
+Какова обеспеченность населения школами?,service_accessibility_pipeline
+Каково среднее время доступности школ?,service_accessibility_pipeline
+Какова обеспеченность населения высшими учебными заведениями?,service_accessibility_pipeline
+Какова обеспеченность населения средними специальными учебными заведениями?,service_accessibility_pipeline
+Какова обеспеченность объектами спортивной инфраструктуры?,service_accessibility_pipeline
+Какова обеспеченность населения бассейнами?,service_accessibility_pipeline
+Каково среднее время доступности бассейнов на личном транспорте?,service_accessibility_pipeline
+Каково среднее время доступности бассейнов на общественном транспорте?,service_accessibility_pipeline
+Какова обеспеченность населения спортивными залами?,service_accessibility_pipeline
+Каково среднее время доступности спортивных залов на личном транспорте?,service_accessibility_pipeline
+Каково среднее время доступности спортивных залов на общественном транспорте?,service_accessibility_pipeline
+Какова численность проживающего населения территории?,service_accessibility_pipeline
+Какова общая площадь жилых помещений?,service_accessibility_pipeline
+"Какова общая площадь жилых помещений, приходящаяся в среднем на одного жителя?",service_accessibility_pipeline
+Какова доля ветхого и аварийного жилищного фонда в общем объеме жилищного фонда?,service_accessibility_pipeline
+"Какова доля жилых домов, обеспеченных центральным холодным водоснабжением?",service_accessibility_pipeline
+"Какова доля жилых домов, обеспеченных центральным горячим водоснабжением?",service_accessibility_pipeline
+"Какова доля жилых домов, обеспеченных центральной канализацией?",service_accessibility_pipeline
+Какова обеспеченность населения рекреационными зонами?,service_accessibility_pipeline
+Какова обеспеченность населения детскими площадками?,service_accessibility_pipeline
+Какова обеспеченность населения объектами здравоохранения?,service_accessibility_pipeline
+Каково среднее время доступности объектов здравоохранения?,service_accessibility_pipeline
+Какова обеспеченность населения поликлиниками?,service_accessibility_pipeline
+Какова обеспеченность населения больницами?,service_accessibility_pipeline
+Какова обеспеченность населения травматологическими отделениями?,service_accessibility_pipeline
+Какова обеспеченность населения родильными домами?,service_accessibility_pipeline
+Каково среднее время доступности родильных домов?,service_accessibility_pipeline
+Какова обеспеченность населения объектами образования?,service_accessibility_pipeline
+Каково среднее время доступности детских садов?,service_accessibility_pipeline
+Какова обеспеченность населения детскими садами?,service_accessibility_pipeline
+Какова обеспеченность населения школами?,service_accessibility_pipeline
+Каково среднее время доступности школ?,service_accessibility_pipeline
+Какова пешеходная доступность остановок общественного транспорта?,service_accessibility_pipeline
+Какова доступность остановок метро?,service_accessibility_pipeline
+Какова доступность православных храмов и церквей?,service_accessibility_pipeline
+Какова обеспеченность объектами культуры и досуга?,service_accessibility_pipeline
+Какова обеспеченность объектами спортивной инфраструктуры?,service_accessibility_pipeline
+Какова численность населения?,service_accessibility_pipeline
+"Какова общая площадь жилых помещений, приходящаяся в среднем на одного жителя?",service_accessibility_pipeline
+Какова доля ветхого и аварийного жилищного фонда в общем объеме жилищного фонда?,service_accessibility_pipeline
+"Какова доля жилых домов, обеспеченных центральным холодным водоснабжением?",service_accessibility_pipeline
+"Какова доля жилых домов, обеспеченных центральным горячим водоснабжением?",service_accessibility_pipeline
+"Какова доля жилых домов, обеспеченных центральной канализацией?",service_accessibility_pipeline
+Какова обеспеченность населения рекреационными зонами?,service_accessibility_pipeline
+Какова обеспеченность населения детскими площадками?,service_accessibility_pipeline
+Какова обеспеченность населения объектами здравоохранения?,service_accessibility_pipeline
+Каково среднее время доступности объектов здравоохранения?,service_accessibility_pipeline
+Какова обеспеченность населения поликлиниками?,service_accessibility_pipeline
+Какова обеспеченность населения больницами?,service_accessibility_pipeline
+Какова обеспеченность населения травматологическими отделениями?,service_accessibility_pipeline
+Какова обеспеченность населения родильными домами?,service_accessibility_pipeline
+Каково среднее время доступности родильных домов?,service_accessibility_pipeline
+Какова обеспеченность населения объектами образования?,service_accessibility_pipeline
+Каково среднее время доступности детских садов?,service_accessibility_pipeline
+Какова обеспеченность населения детскими садами?,service_accessibility_pipeline
+Какова обеспеченность населения школами?,service_accessibility_pipeline
+Каково среднее время доступности школ?,service_accessibility_pipeline
+Каково среднее время корреспонденции в районе на общественном транспорте?,service_accessibility_pipeline
+Какова пешеходная доступность остановок общественного транспорта?,service_accessibility_pipeline
+Каково среднее время корреспонденции в районе на личном транспорте?,service_accessibility_pipeline
+Какова средняя доступность центра города?,service_accessibility_pipeline
+Какова доступность православных храмов и церквей?,service_accessibility_pipeline
+Какова обеспеченность объектами культуры и досуга?,service_accessibility_pipeline
+Какова обеспеченность объектами спортивной инфраструктуры?,service_accessibility_pipeline
+Какова численность населения?,service_accessibility_pipeline
+"Какова общая площадь жилых помещений, приходящаяся в среднем на одного жителя?",service_accessibility_pipeline
+Какова доля ветхого и аварийного жилищного фонда в общем объеме жилищного фонда?,service_accessibility_pipeline
+Какова обеспеченность населения рекреационными зонами?,service_accessibility_pipeline
+Какова обеспеченность населения детскими площадками?,service_accessibility_pipeline
+Какова обеспеченность населения объектами здравоохранения?,service_accessibility_pipeline
+Какова обеспеченность населения поликлиниками?,service_accessibility_pipeline
+Какова обеспеченность населения больницами?,service_accessibility_pipeline
+Какова обеспеченность населения травматологическими отделениями?,service_accessibility_pipeline
+Какова обеспеченность населения родильными домами?,service_accessibility_pipeline
+Какова обеспеченность населения объектами образования?,service_accessibility_pipeline
+Какова обеспеченность населения детскими садами?,service_accessibility_pipeline
+Какова обеспеченность населения школами?,service_accessibility_pipeline
+Каково среднее время корреспонденции в городе на общественном транспорте?,service_accessibility_pipeline
+Какова пешеходная доступность остановок общественного транспорта?,service_accessibility_pipeline
+Каково среднее время корреспонденции в городе на личном транспорте?,service_accessibility_pipeline
+Какова средняя доступность центра города?,service_accessibility_pipeline
+Какова доступность православных храмов и церквей?,service_accessibility_pipeline
+Какова обеспеченность объектами культуры и досуга?,service_accessibility_pipeline
+Какова обеспеченность объектами спортивной инфраструктуры?,service_accessibility_pipeline
+Какова доля рекреационных зон в общей площади территории города?,service_accessibility_pipeline
+Каково среднее время доступности парков пешком?,service_accessibility_pipeline
+Каково среднее время доступности пляжей на транспорте?,service_accessibility_pipeline
+Каково среднее время доступности набережных пешком?,service_accessibility_pipeline
+Какова обеспеченность населения города катками?,service_accessibility_pipeline
+Каково среднее время доступности катков на личном транспорте?,service_accessibility_pipeline
+Каково среднее время доступности катков на общественном транспорте?,service_accessibility_pipeline
+Какова обеспеченность населения футбольными полями?,service_accessibility_pipeline
+Каково среднее время доступности футбольных полей пешком?,service_accessibility_pipeline
+Какова обеспеченность населения площадками для выгула собак?,service_accessibility_pipeline
+Какова обеспеченность населения аптеками?,service_accessibility_pipeline
+Какова обеспеченность населения детскими поликлиниками?,service_accessibility_pipeline
+Какова обеспеченность населения организациями детского отдыха?,service_accessibility_pipeline
+Какова связанность территории с городом?,service_accessibility_pipeline
+Какова обеспеченноть населения кафе и ресторанами?,service_accessibility_pipeline
+Какова обеспеченность населения театрами?,service_accessibility_pipeline
+Какова обеспеченность населения ботаническими садами?,service_accessibility_pipeline
+Какова обеспеченность населения цирками?,service_accessibility_pipeline
+Какова обеспеченность населения парками?,service_accessibility_pipeline
+Какова обеспеченность населения зоопарками?,service_accessibility_pipeline
+Какова численность проживающего населения территории?,service_accessibility_pipeline
+Какое количество населения моложе трудоспособного возраста?,service_accessibility_pipeline
+Какое количество населения трудоспособного возраста?,service_accessibility_pipeline
+Какое количество населения старше трудоспособного возраста?,service_accessibility_pipeline
+Каков прирост населения на территории за последний год?,service_accessibility_pipeline
+Какова численность детей дошкольного возраста?,service_accessibility_pipeline
+Какова численность детей школьного возраста?,service_accessibility_pipeline
+Какова численность пенсионеров по возрасту?,service_accessibility_pipeline
+Какова общая площадь жилых помещений?,service_accessibility_pipeline
+"Какова общая площадь жилых помещений, приходящаяся в среднем на одного жителя?",service_accessibility_pipeline
+Какова доля ветхого и аварийного жилищного фонда в общем объеме жилищного фонда?,service_accessibility_pipeline
+"Какова доля жилых домов, обеспеченных центральным холодным водоснабжением?",service_accessibility_pipeline
+"Какова доля жилых домов, обеспеченных центральным горячим водоснабжением?",service_accessibility_pipeline
+"Какова доля жилых домов, обеспеченных центральной канализацией?",service_accessibility_pipeline
+Каков средний возраст жилых домов на территории?,service_accessibility_pipeline
+"Какого количество жилых домов на территории, признанных аварийными?",service_accessibility_pipeline
+Какова обеспеченноть населения многофункциональными центрами (МФЦ)?,service_accessibility_pipeline
+Какова средняя доступность МФЦ на общественном транспорте?,service_accessibility_pipeline
+Какова средняя доступность МФЦ на личном транспорте?,service_accessibility_pipeline
+Какова обеспеченноть населения отделениями Пенсионного фонда?,service_accessibility_pipeline
+Какова средняя доступность отделений Пенсионного фонда на общественном транспорте?,service_accessibility_pipeline
+Какова средняя доступность отделений Пенсионного фонда на личном транспорте?,service_accessibility_pipeline
+Какова средняя доступность отделений Пенсионного фонда пешком?,service_accessibility_pipeline
+Какова обеспеченноть населения гостиницами?,service_accessibility_pipeline
+Какова средняя доступность гостиниц на личном транспорте?,service_accessibility_pipeline
+Какова обеспеченность населения центрами психологической помощи?,service_accessibility_pipeline
+Какова средняя доступность центров психологической помощи на личном транспорте?,service_accessibility_pipeline
+Какова обеспеченноть населения торговыми центрами?,service_accessibility_pipeline
+Какова средняя доступность торговых центров на личном транспорте?,service_accessibility_pipeline
+Какова средняя доступность торговых центров на общественном транспорте?,service_accessibility_pipeline
+Какова обеспеченноть населения коворкингами?,service_accessibility_pipeline
+Какова средняя доступность коворкингов на личном транспорте?,service_accessibility_pipeline
+Какова средняя доступность коворкингов на общественном транспорте?,service_accessibility_pipeline
+Какова средняя доступность коворкингов пешком?,service_accessibility_pipeline
+Какова обеспеченноть населения фитнес-центрами?,service_accessibility_pipeline
+Какова средняя доступность фитнес-центров на личном транспорте?,service_accessibility_pipeline
+Какова средняя доступность фитнес-центров на общественном транспорте?,service_accessibility_pipeline
+Какова обеспеченность населения социальными центрами для пожилых людей и инвалидов?,service_accessibility_pipeline
+Какова средняя доступность населения социальных центров для пожилых людей и инвалидов на личном транспорте?,service_accessibility_pipeline
+Какова средняя доступность населения социальных центров для пожилых людей и инвалидов на общественном транспорте?,service_accessibility_pipeline
+Какая средняя обеспеченность города дошкольными учреждениями?,strategy_development_pipeline
+Какие проблемы демографического развития Санкт-Петербурга?,strategy_development_pipeline
+Какие работы должны быть выполнены в части системы газоснабжения?,strategy_development_pipeline
+Какие отрасли внесли наибольший вклад в формирование ВРП?,strategy_development_pipeline
+Как изменилась структура инвестиций в основной капитал города?,strategy_development_pipeline
+Какие меры планируется предпринять для повышения качества городской среды?,strategy_development_pipeline
+Каких результатов планируется достичь в области жилищного строительства?,strategy_development_pipeline
+Каковы планы по развитию транспортной инфраструктуры в Санкт-Петербурге?,strategy_development_pipeline
+Каких результатов планируется достичь в области науки и инноваций?,strategy_development_pipeline
+Какие промышленные кластеры формируются в Санкт-Петербурге и каковы их функции?,strategy_development_pipeline
+Как развивается система информационных технологий в городе?,strategy_development_pipeline
+Каковы планы по улучшению экологической обстановки в Санкт-Петербурге?,strategy_development_pipeline
+Какие меры предпринимаются для повышения энергоэффективности городского хозяйства?,strategy_development_pipeline
+"Каковы основные проблемы и вызовы, связанные с развитием транспортного комплекса города?",strategy_development_pipeline
+Какие мероприятия запланированы для улучшения условий для малого и среднего предпринимательства?,strategy_development_pipeline
+Каковы основные приоритеты и цели социально-экономического развития Санкт-Петербурга до 2035 года?,strategy_development_pipeline
+Какие меры запланированы для повышения конкурентоспособности промышленного комплекса Санкт-Петербурга?,strategy_development_pipeline
+Какова роль высокотехнологичных производств в экономике Санкт-Петербурга?,strategy_development_pipeline
+"Какие кластеры промышленных производств существуют в Санкт-Петербурге, и как они способствуют развитию региона?",strategy_development_pipeline
+Каких результатов планируется достичь в сфере инновационной деятельности в Санкт-Петербурге?,strategy_development_pipeline
+Какие меры предпринимаются для поддержки инновационной активности малых и средних предприятий в Санкт-Петербурге?,strategy_development_pipeline
+Как должна измениться доля инновационной продукции в общем объеме продукции обрабатывающих производств?,strategy_development_pipeline
+Какие основные вызовы стоят перед сферой науки и инноваций в Санкт-Петербурге?,strategy_development_pipeline
+Какие достижения отмечены в сфере информационных технологий в Санкт-Петербурге за последние годы?,strategy_development_pipeline
+Каковы планируемые основные показатели использования информационных и коммуникационных технологий организациями Санкт-Петербурга?,strategy_development_pipeline
+Как планируется изменить структуру затрат на информационные и коммуникационные технологии?,strategy_development_pipeline
+Какие меры предпринимаются для поддержки и развития строительного комплекса в Санкт-Петербурге?,strategy_development_pipeline
+Какие меры предпринимаются для улучшения качества городской среды в Санкт-Петербурге?,strategy_development_pipeline
+Каких результатов планируется достичь в области транспортной инфраструктуры Санкт-Петербурга?,strategy_development_pipeline
+Какие основные проблемы остаются в транспортной системе Санкт-Петербурга?,strategy_development_pipeline
+Какие меры предпринимаются для улучшения пассажирских перевозок в Санкт-Петербурге?,strategy_development_pipeline
+Каковы основные направления развития городской инженерной и коммунальной инфраструктуры?,strategy_development_pipeline
+Как планируется изменить уровень износа объектов инженерно-энергетического комплекса в Санкт-Петербурге?,strategy_development_pipeline
+Какие меры предпринимаются для повышения энергетической эффективности и ресурсосбережения в Санкт-Петербурге?,strategy_development_pipeline
+Какова планируемая степень удовлетворенности населения уровнем жилищно-коммунального обслуживания?,strategy_development_pipeline
+Какие мероприятия реализуются для улучшения экологической безопасности и благоустройства территорий в Санкт-Петербурге?,strategy_development_pipeline
+Какие меры предпринимаются для снижения уровня загрязнения водного бассейна в Санкт-Петербурге?,strategy_development_pipeline
+Каковы основные источники загрязнения окружающей среды в Санкт-Петербурге?,strategy_development_pipeline
+Какие меры принимаются для улучшения системы водоснабжения и водоотведения в Санкт-Петербурге?,strategy_development_pipeline
+Как планируется изменить ситуацию с обеспечением населения качественной питьевой водой?,strategy_development_pipeline
+Каких показателей планируется достичь в сфере обращения с твердыми коммунальными отходами в Санкт-Петербурге?,strategy_development_pipeline
+Какие меры предпринимаются для поддержки малого и среднего предпринимательства в Санкт-Петербурге?,strategy_development_pipeline
+Какова планируемая доля субъектов малого предпринимательства в экономике Санкт-Петербурга?,strategy_development_pipeline
+Какие отрасли экономики вносят наибольший вклад в обеспечение занятости населения?,strategy_development_pipeline
+Каковы планируемые основные меры поддержки высококвалифицированных работников в Санкт-Петербурге?,strategy_development_pipeline
+Как планируется изменить уровень заработной платы в Санкт-Петербурге?,strategy_development_pipeline
+Какие основные направления внешнеэкономической деятельности развиваются в Санкт-Петербурге?,strategy_development_pipeline
+Каковы планируемые основные торговые партнеры Санкт-Петербурга и как планируется изменить структуру внешнеторгового оборота?,strategy_development_pipeline
+Какие меры предпринимаются для развития транспортно-логистической инфраструктуры в Санкт-Петербурге?,strategy_development_pipeline
+"Каковы основные товарные группы, экспортируемые из Санкт-Петербурга?",strategy_development_pipeline
+Какие меры предпринимаются для поддержки и развития внешнеэкономической деятельности малых и средних предприятий?,strategy_development_pipeline
+Какие меры предпринимаются для улучшения качества образования в Санкт-Петербурге?,strategy_development_pipeline
+Какова роль высших учебных заведений в экономическом развитии Санкт-Петербурга?,strategy_development_pipeline
+Каковы основные направления развития культурной инфраструктуры в Санкт-Петербурге?,strategy_development_pipeline
+Какие меры предпринимаются для повышения туристической привлекательности Санкт-Петербурга?,strategy_development_pipeline
+Как планируется изменить объем инвестиций в основной капитал в Санкт-Петербурге?,strategy_development_pipeline
+Какие меры предпринимаются для привлечения инвестиций в экономику Санкт-Петербурга?,strategy_development_pipeline
+Какова планируемая роль иностранных инвестиций в экономическом развитии Санкт-Петербурга?,strategy_development_pipeline
+Какие меры предпринимаются для улучшения демографической ситуации в Санкт-Петербурге?,strategy_development_pipeline
+Какая планируемая численность населения Санкт-Петербурга?,strategy_development_pipeline
+Какие основные направления социальной политики реализуются в Санкт-Петербурге?,strategy_development_pipeline
+Какие меры принимаются для поддержки семей и детей в Санкт-Петербурге?,strategy_development_pipeline
+Какие меры предпринимаются для улучшения доступности и качества медицинских услуг?,strategy_development_pipeline
+Как планируется изменить уровень заболеваемости населения в Санкт-Петербурге?,strategy_development_pipeline
+Какие меры предпринимаются для развития спортивной инфраструктуры в Санкт-Петербурге?,strategy_development_pipeline
+Какова роль общественных организаций и инициатив в социально-экономическом развитии Санкт-Петербурга?,strategy_development_pipeline
+Какие меры предпринимаются для повышения эффективности управления и развития гражданского общества?,strategy_development_pipeline
+Как планируется изменить уровень жизни населения в Санкт-Петербурге?,strategy_development_pipeline
+Какие меры принимаются для поддержки малообеспеченных и уязвимых слоев населения?,strategy_development_pipeline
+Каковы основные направления развития городской инфраструктуры в Санкт-Петербурге?,strategy_development_pipeline
+Какие меры предпринимаются для улучшения транспортной доступности отдаленных районов?,strategy_development_pipeline
+Каковы основные достижения в сфере жилищного строительства и улучшения жилищных условий?,strategy_development_pipeline
+Какие меры предпринимаются для улучшения качества жизни и благосостояния населения Санкт-Петербурга?,strategy_development_pipeline

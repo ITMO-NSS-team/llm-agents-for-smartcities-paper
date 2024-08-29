@@ -1,9 +1,9 @@
-from transformers import BitsAndBytesConfig
 from model import UrbAssistant
+from transformers import BitsAndBytesConfig
 
 
-if __name__ == '__main__':
-    sys_prompt = '''Your name is Larry. You are smart AI assistant, You have high experitce in field of city building, 
+if __name__ == "__main__":
+    sys_prompt = """Your name is Larry. You are smart AI assistant, You have high experitce in field of city building, 
     urbanistic and Structure of St. Petersburg. 
     Answer the question following rules below. For answer you must use provided by user context.
     Rules:
@@ -22,20 +22,26 @@ if __name__ == '__main__':
     9. If you do not know how to answer the questions, say so.
     10. Before give an answer to the user question, provide explanation. Mark the answer with keyword "ANSWER", 
     and explanation with "EXPLANATION". Both answer and explanation must be in Russian language
-    11. Answer should be three sentences maximum.'''
-    context = '''В настоящее время уровень конкурентоспособности становится базовым условием успешности
+    11. Answer should be three sentences maximum."""
+    context = """В настоящее время уровень конкурентоспособности становится базовым условием успешности
     и устойчивости функционирования социально-экономических систем субъектов Российской Федерации, 
     которые постепенно становятся самостоятельными экономическими субъектами национальной экономики, 
     участниками глобальных международных экономических процессов. 
     Выявление и развитие конкурентных преимуществ способствует активизации внутренних возможностей Санкт-Петербурга 
-    для достижения целей социально-экономического развития, более эффективному и рациональному использованию имеющегося ресурсного потенциала его территории. Конкурентные преимущества Санкт-Петербурга определены исходя из анализа сильных и слабых сторон социально-экономического развития Санкт-Петербурга, возможностей и факторов, влияющих на уровень его конкурентоспособности, которые в совокупности создают для Санкт-Петербурга определенное превосходство по сравнению с другими российскими и зарубежными городами, а также другими субъектами Российской Федерации, располагающими сходными характеристиками. Определение сильных и слабых сторон социально-экономического развития Санкт-Петербурга базируется на выводах и сравнениях, сделанных в результате оценки достигнутых целей социально-экономического развития, и представлено в разрезе отраслей, сфер и направлений социально-экономического развития Санкт-Петербурга.'''
-    question = 'Как оценивается конкурентоспособность Санкт-Петербурга на глобальном уровне?'
-    
-    bnb_config = BitsAndBytesConfig(load_in_8bit=True, llm_int8_enable_fp32_cpu_offload=True)
-    
-    assistant = UrbAssistant('meta-llama/Meta-Llama-3-8B-Instruct', quantization_config=bnb_config)
+    для достижения целей социально-экономического развития, более эффективному и рациональному использованию имеющегося ресурсного потенциала его территории. Конкурентные преимущества Санкт-Петербурга определены исходя из анализа сильных и слабых сторон социально-экономического развития Санкт-Петербурга, возможностей и факторов, влияющих на уровень его конкурентоспособности, которые в совокупности создают для Санкт-Петербурга определенное превосходство по сравнению с другими российскими и зарубежными городами, а также другими субъектами Российской Федерации, располагающими сходными характеристиками. Определение сильных и слабых сторон социально-экономического развития Санкт-Петербурга базируется на выводах и сравнениях, сделанных в результате оценки достигнутых целей социально-экономического развития, и представлено в разрезе отраслей, сфер и направлений социально-экономического развития Санкт-Петербурга."""
+    question = (
+        "Как оценивается конкурентоспособность Санкт-Петербурга на глобальном уровне?"
+    )
+
+    bnb_config = BitsAndBytesConfig(
+        load_in_8bit=True, llm_int8_enable_fp32_cpu_offload=True
+    )
+
+    assistant = UrbAssistant(
+        "meta-llama/Meta-Llama-3-8B-Instruct", quantization_config=bnb_config
+    )
     assistant.set_sys_prompt(sys_prompt)
-    user_message = f'Question:{question}\nContext:{context}'
-    ans = assistant(user_message, temperature=0.015, top_p=.05)
-    print(ans.split('ANSWER: ')[-1])
-    print('Done.')
+    user_message = f"Question:{question}\nContext:{context}"
+    ans = assistant(user_message, temperature=0.015, top_p=0.05)
+    print(ans.split("ANSWER: ")[-1])
+    print("Done.")

@@ -1,3 +1,4 @@
+asgi-correlation-id~=4.3.2
 geojson~=3.1.0
 langchain~=0.1.14
 langchain_community~=0.0.31
@@ -16,5 +17,6 @@ langchain-experimental~=0.0.55
 sentence-transformers~=2.6.1
 pydantic-settings~=2.2.1
 pytest~=8.2.0
+deepeval~=1.0.4
 
 git+https://github.com/aimclub/stairs-pdf-parsing@4ed49f34832af7bf310beed094091451f9f5b21b

@@ -1,6 +1,6 @@
 import json
-from typing import Any, Optional, Callable, Union, Iterator
 from pathlib import Path
+from typing import Any, Callable, Iterator
 
 from langchain_community.document_loaders import JSONLoader
 from langchain_core.documents import Document
@@ -11,14 +11,13 @@ from chroma_rag.rag.loaders.utilities import get_text
 class CustomJSONLoader(JSONLoader):
     def __init__(
         self,
-        file_path: Union[str, Path],
-        content_key: Optional[str] = None,
-        metadata_func: Optional[Callable[[dict, dict], dict]] = None,
+        file_path: str | Path,
+        content_key: str | None = None,
+        metadata_func: Callable[[dict, dict], dict] | None = None,
         text_content: bool = True,
         json_lines: bool = False,
     ):
-        """
-        Initializes the JSONLoader
+        """Initializes the JSONLoader
         Args:
             file_path (Union[str, Path]): The path to the JSON or JSON Lines file.
             content_key (str): The key to use to extract the content from
@@ -71,9 +70,10 @@ class CustomJSONLoader(JSONLoader):
 
         return get_text(content)
 
-    def _get_metadata(self, sample: dict[str, Any], **additional_fields: Any) -> dict[str, Any]:
-        """
-        Return a metadata dictionary base on the existence of metadata_func
+    def _get_metadata(
+        self, sample: dict[str, Any], **additional_fields: Any
+    ) -> dict[str, Any]:
+        """Return a metadata dictionary base on the existence of metadata_func
         :param sample: single data payload
         :param additional_fields: key-word arguments to be added as metadata values
         :return: metadata for Document

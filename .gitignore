@@ -174,4 +174,4 @@ data/*
 
 .vscode/
 
-pipelines/test_results/
+pipelines/tests/test_results/
