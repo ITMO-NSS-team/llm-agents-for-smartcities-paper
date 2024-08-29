@@ -56,9 +56,7 @@ def strategy_development_pipeline(
     logger.info(f"Question: {question}")
     logger.info(f"Chunks num: {chunk_num}")
     # Get context from ChromaDB
-    context = retrieve_context_from_chroma(
-        question, collection_name, chunk_num
-    )
+    context = retrieve_context_from_chroma(question, collection_name, chunk_num)
     # Get question answer from Llama
     response = generate_answer(question, strategy_sys_prompt, context)
 

@@ -2,15 +2,11 @@ from copy import deepcopy
 from typing import List
 
 import chromadb
-from langchain_community.embeddings.huggingface_hub import (
-    HuggingFaceHubEmbeddings,
-)
+from langchain_community.embeddings.huggingface_hub import HuggingFaceHubEmbeddings
 from langchain_community.vectorstores.chroma import Chroma
 
 from chroma_rag.rag.settings.settings import settings as default_settings
-from chroma_rag.rag.stores.chroma.chroma_loader import (
-    load_documents_to_chroma_db,
-)
+from chroma_rag.rag.stores.chroma.chroma_loader import load_documents_to_chroma_db
 
 
 # TODO: add comments and docstrings to all parts of the chroma pipeline, possibly refactor
@@ -38,9 +34,7 @@ def chroma_view(query: str, collection: str, k: int = 1) -> List:
         settings=chromadb.Settings(allow_reset=default_settings.allow_reset),
     )
     # embedding_function = HuggingFaceEmbeddings(model_name=default_settings.embedding_host)
-    embedding_function = HuggingFaceHubEmbeddings(
-        model=default_settings.embedding_host
-    )
+    embedding_function = HuggingFaceHubEmbeddings(model=default_settings.embedding_host)
 
     default_settings.collection_name = collection
 
@@ -60,9 +54,7 @@ def delete_collection(collection: str) -> None:
         port=default_settings.chroma_port,
         settings=chromadb.Settings(allow_reset=default_settings.allow_reset),
     )
-    chroma_client.delete_collection(
-        collection
-    )  # TODO: check if collection exists first
+    chroma_client.delete_collection(collection)  # TODO: check if collection exists first
 
 
 def list_collections() -> List:

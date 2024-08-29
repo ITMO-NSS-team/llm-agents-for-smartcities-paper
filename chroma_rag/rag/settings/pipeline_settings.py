@@ -5,12 +5,8 @@ from langchain_core.documents import BaseDocumentTransformer
 from transformers import AutoTokenizer
 import yaml
 
-from chroma_rag.rag.pipeline.docs_processing.entities import (
-    transformer_object_dict,
-)
-from chroma_rag.rag.pipeline.docs_processing.exceptions import (
-    TransformerNameError,
-)
+from chroma_rag.rag.pipeline.docs_processing.entities import transformer_object_dict
+from chroma_rag.rag.pipeline.docs_processing.exceptions import TransformerNameError
 from chroma_rag.rag.pipeline.docs_processing.models import ConfigFile
 
 
@@ -36,22 +32,14 @@ class PipelineSettings(Singleton):
 
         splitter_params = self._config_dict.splitter.splitter_params
 
-        if (
-            self._config_dict.splitter.splitter_name
-            not in transformer_object_dict
-        ):
+        if self._config_dict.splitter.splitter_name not in transformer_object_dict:
             raise TransformerNameError(
                 f'There is no DocumentTransformer related to the name: "{self._config_dict.splitter}"'
             )
         else:
             transformer_names = ["recursive_character"]
-            if (
-                self._config_dict.splitter.splitter_name
-                != "recursive_character"
-            ):
-                transformer_names.append(
-                    self._config_dict.splitter.splitter_name
-                )
+            if self._config_dict.splitter.splitter_name != "recursive_character":
+                transformer_names.append(self._config_dict.splitter.splitter_name)
             self._transformers = []
             transformer_params = []
             for transformer_name in transformer_names:
@@ -66,14 +54,10 @@ class PipelineSettings(Singleton):
                     }
                 )
 
-                self._transformers.append(
-                    transformer_class(**transformer_params[-1])
-                )
+                self._transformers.append(transformer_class(**transformer_params[-1]))
 
         if self._config_dict.tokenizer is not None:
-            tokenizer = AutoTokenizer.from_pretrained(
-                self._config_dict.tokenizer
-            )
+            tokenizer = AutoTokenizer.from_pretrained(self._config_dict.tokenizer)
 
             for i in range(len(self._transformers)):
                 transformer = self._transformers[i]

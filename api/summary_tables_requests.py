@@ -26,27 +26,19 @@ def get_summary_table(
         raise ValueError("Expected name_id and type or coordinates, ")
 
 
-get_general_stats_city = partial(
-    get_summary_table, table=possible_tables["city"]
-)
+get_general_stats_city = partial(get_summary_table, table=possible_tables["city"])
 get_general_stats_districts_mo = partial(
     get_summary_table, table=possible_tables["district"]
 )
-get_general_stats_block = partial(
-    get_summary_table, table=possible_tables["block"]
-)
+get_general_stats_block = partial(get_summary_table, table=possible_tables["block"])
 get_general_stats_education = partial(
     get_summary_table, table=possible_tables["education"]
 )
 get_general_stats_healthcare = partial(
     get_summary_table, table=possible_tables["healthcare"]
 )
-get_general_stats_culture = partial(
-    get_summary_table, table=possible_tables["culture"]
-)
-get_general_stats_sports = partial(
-    get_summary_table, table=possible_tables["sport"]
-)
+get_general_stats_culture = partial(get_summary_table, table=possible_tables["culture"])
+get_general_stats_sports = partial(get_summary_table, table=possible_tables["sport"])
 get_general_stats_services = partial(
     get_summary_table, table=possible_tables["government_services"]
 )
@@ -62,6 +54,4 @@ get_general_stats_transport = partial(
 get_general_stats_communal_services = partial(
     get_summary_table, table=possible_tables["housing_services"]
 )
-get_general_stats_object = partial(
-    get_summary_table, table=possible_tables["object"]
-)
+get_general_stats_object = partial(get_summary_table, table=possible_tables["object"])

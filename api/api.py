@@ -8,16 +8,12 @@ class Api:
     class EndpointsListings:
         _base_url = "http://10.32.1.107:1244"
         cities = GetEndpoint("/api/list/cities", param_names=("centers_only",))
-        cities_statistics = GetEndpoint(
-            "/api/list/cities_statistics", param_names=()
-        )
+        cities_statistics = GetEndpoint("/api/list/cities_statistics", param_names=())
         city_service_type_living_situations = GetEndpoint(
             "/api/list/city_service_type/{city_service_type_id}/living_situations",
             param_names=("city_service_type_id",),
         )
-        city_service_types = GetEndpoint(
-            "/api/list/city_service_types", param_names=()
-        )
+        city_service_types = GetEndpoint("/api/list/city_service_types", param_names=())
 
     class EndpointsCity:
         _base_url = "http://10.32.1.107:1244"
@@ -89,9 +85,9 @@ for endpoint_group_name in dir(Api):
     endpoint_group = getattr(Api, endpoint_group_name)
 
     for endpoint_name in dir(endpoint_group):
-        if ismethod(
-            getattr(endpoint_group, endpoint_name)
-        ) or endpoint_name.startswith("_"):
+        if ismethod(getattr(endpoint_group, endpoint_name)) or endpoint_name.startswith(
+            "_"
+        ):
             continue
         endpoint = getattr(endpoint_group, endpoint_name)
         endpoint.url = endpoint_group._base_url + endpoint.url

@@ -134,9 +134,7 @@ def get_metrics(
                 llm_res_to_check = get_relevant_function_from_llm(
                     model_url, tools, question, extra_data
                 )
-                llm_res = check_choice_correctness(
-                    question, llm_res_to_check, tools
-                )
+                llm_res = check_choice_correctness(question, llm_res_to_check, tools)
                 res_funcs = parse_function_names_from_llm_answer(llm_res)
                 if dataset in res_funcs:
                     correct_answers += 1
@@ -158,7 +156,9 @@ def get_metrics(
 if __name__ == "__main__":
     sys_prompt = strategy_sys_prompt
 
-    model_url = "http://10.32.2.2:8673/v1/chat/completions"  # meta-llama3-8b-q8-function-calling
+    model_url = (
+        "http://10.32.2.2:8673/v1/chat/completions"  # meta-llama3-8b-q8-function-calling
+    )
 
     extra_data = 'Coordinates: {"type": "polygon", "coords": [[[30.688828198781902, 59.775976109763285]]]}, territory type: city.'
 

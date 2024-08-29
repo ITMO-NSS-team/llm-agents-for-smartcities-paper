@@ -36,9 +36,7 @@ class VseGPTConnector(DeepEvalBaseLLM):
     def load_model(self) -> OpenAI:
         """Load model's instance."""
         # TODO extend pull of possible LLMs (Not only just OpenAI's models)
-        return OpenAI(
-            api_key=os.environ.get("VSE_GPT_KEY"), base_url=self.base_url
-        )
+        return OpenAI(api_key=os.environ.get("VSE_GPT_KEY"), base_url=self.base_url)
 
     def generate(
         self,
@@ -60,9 +58,7 @@ class VseGPTConnector(DeepEvalBaseLLM):
             str: Model's response for user's question.
         """
         usr_msg_template = (
-            prompt
-            if context is None
-            else f"Вопрос:{prompt} Контекст:{context}"
+            prompt if context is None else f"Вопрос:{prompt} Контекст:{context}"
         )
         formatted_message = [
             {"role": "system", "content": self._sys_prompt},

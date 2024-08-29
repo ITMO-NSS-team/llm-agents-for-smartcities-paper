@@ -18,11 +18,7 @@ class ChromaSettings(BaseSettings):
 
     # Documents' processing settings
     docs_processing_config: str = str(
-        Path(
-            dirname(dirname(__file__))
-            + "/configs/"
-            + "docs_processing_config.yaml"
-        )
+        Path(dirname(dirname(__file__)) + "/configs/" + "docs_processing_config.yaml")
     )
     # docs_collection_path: str = str(Path(Path(__file__).parent.parent.parent, 'docs', 'strategy.pdf'))
     docs_collection_path: str = str(

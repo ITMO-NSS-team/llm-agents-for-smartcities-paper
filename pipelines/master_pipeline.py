@@ -32,9 +32,7 @@ def answer_question_with_llm(
     Returns: Answer to the question.
     """
     agent = Agent("LLAMA_FC_URL", pipeline_tools)
-    res_funcs = agent.choose_functions(
-        question, fc_sys_prompt, binary_fc_user_prompt
-    )
+    res_funcs = agent.choose_functions(question, fc_sys_prompt, binary_fc_user_prompt)
     checked_res_funcs = agent.check_functions(
         question, res_funcs, base_sys_prompt, pip_cor_user_prompt
     )
@@ -48,9 +46,7 @@ def answer_question_with_llm(
         fun_handle = getattr(pipelines.strategy_pipeline, checked_res_funcs[0])
         llm_res = str(fun_handle(question, chunk_num))
     elif checked_res_funcs[0] == "service_accessibility_pipeline":
-        fun_handle = getattr(
-            pipelines.accessibility_pipeline, checked_res_funcs[0]
-        )
+        fun_handle = getattr(pipelines.accessibility_pipeline, checked_res_funcs[0])
         llm_res = str(fun_handle(question, coordinates, t_type, t_id))
 
     logger.info(f"Final answer: {llm_res}")

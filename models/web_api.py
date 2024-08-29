@@ -66,13 +66,11 @@ class WebAssistant:
         response = requests.post(url=self._url, json=formatted_prompt)
         if kwargs.get("as_json"):
             try:
-                res = json.loads(response.text)["choices"][0]["message"][
-                    "content"
-                ].split("ANSWER: ")[1]
+                res = json.loads(response.text)["choices"][0]["message"]["content"].split(
+                    "ANSWER: "
+                )[1]
             except:
-                res = json.loads(response.text)["choices"][0]["message"][
-                    "content"
-                ]
+                res = json.loads(response.text)["choices"][0]["message"]["content"]
             return res
         else:
             return response.text

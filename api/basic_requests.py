@@ -40,17 +40,13 @@ def get_house_coordinates(city_id: int, address: str) -> List:
 
 
 def get_municipalities_coordinates(city: str, mun_name: str) -> List:
-    municipalities = Api.EndpointsCity.municipalities(
-        city=city, centers_only=False
-    )
+    municipalities = Api.EndpointsCity.municipalities(city=city, centers_only=False)
     for municipality in municipalities:
         if municipality["name"] == mun_name:
             return municipality["geometry"]
 
 
-def get_provision_data(
-    city: str, service_id: int, area_coordinates: List, year: int
-):
+def get_provision_data(city: str, service_id: int, area_coordinates: List, year: int):
     return Api.EndpointsProvision.get_provision(
         city=city,
         service_types=[service_id],
@@ -65,26 +61,20 @@ def get_provision_data(
 def get_houses_provision_data(
     city: str, service_id: int, area_coordinates: List, year: int
 ) -> List:
-    provision_result = get_provision_data(
-        city, service_id, area_coordinates, year
-    )
+    provision_result = get_provision_data(city, service_id, area_coordinates, year)
     return provision_result["houses"]["features"]
 
 
 def get_services_provision_data(
     city: str, service_id: int, area_coordinates: List, year: int
 ) -> List:
-    provision_result = get_provision_data(
-        city, service_id, area_coordinates, year
-    )
+    provision_result = get_provision_data(city, service_id, area_coordinates, year)
     return provision_result["services"]["features"]
 
 
 # Methods for buildings
 def get_general_demand(city, service_id, area_coordinates, year):
-    houses = get_houses_provision_data(
-        city, service_id, area_coordinates, year
-    )
+    houses = get_houses_provision_data(city, service_id, area_coordinates, year)
     length = len(houses)
     sum = round(sum(map(lambda house: house["properties"]["demand"], houses)))
     avg = sum / length
@@ -92,33 +82,25 @@ def get_general_demand(city, service_id, area_coordinates, year):
 
 
 def get_demand_left(city, service_id, area_coordinates, year):
-    houses = get_houses_provision_data(
-        city, service_id, area_coordinates, year
-    )
+    houses = get_houses_provision_data(city, service_id, area_coordinates, year)
     len = len(houses)
-    sum = round(
-        sum(map(lambda house: house["properties"]["demand_left"], houses))
-    )
+    sum = round(sum(map(lambda house: house["properties"]["demand_left"], houses)))
     avg = sum / len
     return f"Всего в этой местности не хватает {sum} мест, в среднем в каждом доме не хватает {avg} мест."
 
 
 def get_provison_value(city, service_id, area_coordinates, year):
-    houses = get_houses_provision_data(
-        city, service_id, area_coordinates, year
-    )
+    houses = get_houses_provision_data(city, service_id, area_coordinates, year)
     len = len(houses)
-    sum = round(
-        sum(map(lambda house: house["properties"]["provison_value"], houses))
-    )
+    sum = round(sum(map(lambda house: house["properties"]["provison_value"], houses)))
     avg_percentage = sum / len * 100
-    return f"Обеспеченность сервисом в этой местности составляет {avg_percentage} процентов."
+    return (
+        f"Обеспеченность сервисом в этой местности составляет {avg_percentage} процентов."
+    )
 
 
 def get_demand_within(city, service_id, area_coordinates, year):
-    houses = get_houses_provision_data(
-        city, service_id, area_coordinates, year
-    )
+    houses = get_houses_provision_data(city, service_id, area_coordinates, year)
     len = len(houses)
     sum = round(
         sum(
@@ -136,9 +118,7 @@ def get_demand_within(city, service_id, area_coordinates, year):
 
 
 def get_demand_without(city, service_id, area_coordinates, year):
-    houses = get_houses_provision_data(
-        city, service_id, area_coordinates, year
-    )
+    houses = get_houses_provision_data(city, service_id, area_coordinates, year)
     len = len(houses)
     sum = round(
         sum(
@@ -157,13 +137,9 @@ def get_demand_without(city, service_id, area_coordinates, year):
 
 # Methods for services
 def get_capacity(city, service_id, area_coordinates, year):
-    houses = get_services_provision_data(
-        city, service_id, area_coordinates, year
-    )
+    houses = get_services_provision_data(city, service_id, area_coordinates, year)
     len = len(houses)
-    sum = round(
-        sum(map(lambda house: house["properties"]["capacity"], houses))
-    )
+    sum = round(sum(map(lambda house: house["properties"]["capacity"], houses)))
     avg = sum / len
     return (
         f"Всего в заданной местности доступно {sum} мест,"
@@ -172,13 +148,9 @@ def get_capacity(city, service_id, area_coordinates, year):
 
 
 def get_capacity_left(city, service_id, area_coordinates, year):
-    houses = get_services_provision_data(
-        city, service_id, area_coordinates, year
-    )
+    houses = get_services_provision_data(city, service_id, area_coordinates, year)
     len = len(houses)
-    sum = round(
-        sum(map(lambda house: house["properties"]["capacity_left"], houses))
-    )
+    sum = round(sum(map(lambda house: house["properties"]["capacity_left"], houses)))
     avg = sum / len
     return (
         f"На данный момент в заданной местности свободно {sum} мест,"
@@ -187,9 +159,7 @@ def get_capacity_left(city, service_id, area_coordinates, year):
 
 
 def get_capacity_within(city, service_id, area_coordinates, year):
-    houses = get_services_provision_data(
-        city, service_id, area_coordinates, year
-    )
+    houses = get_services_provision_data(city, service_id, area_coordinates, year)
     len = len(houses)
     sum = round(
         sum(
@@ -207,9 +177,7 @@ def get_capacity_within(city, service_id, area_coordinates, year):
 
 
 def get_capacity_without(city, service_id, area_coordinates, year):
-    houses = get_services_provision_data(
-        city, service_id, area_coordinates, year
-    )
+    houses = get_services_provision_data(city, service_id, area_coordinates, year)
     len = len(houses)
     sum = round(
         sum(
@@ -227,13 +195,9 @@ def get_capacity_without(city, service_id, area_coordinates, year):
 
 
 def get_service_load(city, service_id, area_coordinates, year):
-    houses = get_services_provision_data(
-        city, service_id, area_coordinates, year
-    )
+    houses = get_services_provision_data(city, service_id, area_coordinates, year)
     len = len(houses)
-    sum = round(
-        sum(map(lambda house: house["properties"]["service_load"], houses))
-    )
+    sum = round(sum(map(lambda house: house["properties"]["service_load"], houses)))
     avg = sum / len
     return (
         f"На данный момент в заданной местности занято {sum} мест,"

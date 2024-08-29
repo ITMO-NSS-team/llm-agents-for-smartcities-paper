@@ -68,18 +68,10 @@ class Endpoint(abc.ABC):
 
 
 class GetEndpoint(Endpoint):
-    def _execute_request(
-        self, url: str, params: Dict[str, Any]
-    ) -> requests.Request:
-        return requests.get(
-            url, params=params, headers={"accept": "application/json"}
-        )
+    def _execute_request(self, url: str, params: Dict[str, Any]) -> requests.Request:
+        return requests.get(url, params=params, headers={"accept": "application/json"})
 
 
 class PostEndpoint(Endpoint):
-    def _execute_request(
-        self, url: str, params: Dict[str, Any]
-    ) -> requests.Request:
-        return requests.post(
-            url, data=params, headers={"accept": "application/json"}
-        )
+    def _execute_request(self, url: str, params: Dict[str, Any]) -> requests.Request:
+        return requests.post(url, data=params, headers={"accept": "application/json"})

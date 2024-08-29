@@ -22,9 +22,7 @@ if __name__ == "__main__":
     model.set_sys_prompt(sys_prompt)
     model.add_context(context)
 
-    response = model(
-        "Какова обеспеченность объектами культуры и досуга?", as_json=True
-    )
+    response = model("Какова обеспеченность объектами культуры и досуга?", as_json=True)
     print(response)
 
     # sys_prompt = accessibility_sys_prompt

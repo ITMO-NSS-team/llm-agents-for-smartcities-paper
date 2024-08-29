@@ -68,9 +68,7 @@ def get_records_by_query(query: str) -> Dict[str, str]:
         for corr_id in corr_ids:
             with open(Path(logs_dir, filename)) as f:
                 for line in f:
-                    if (corr_id in line) and (
-                        result_logs_dict.get(corr_id) is not None
-                    ):
+                    if (corr_id in line) and (result_logs_dict.get(corr_id) is not None):
                         result_logs_dict[corr_id] += line
                     elif corr_id in line:
                         result_logs_dict[corr_id] = line

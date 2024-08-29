@@ -7,13 +7,9 @@ from docs_processing.parsing import WordDocumentLoader
 from docs_processing.parsing import ZipLoader
 from langchain_core.document_loaders import BaseLoader
 
-from chroma_rag.rag.pipeline.docs_processing.entities import (
-    LangChainDocumentLoader,
-)
+from chroma_rag.rag.pipeline.docs_processing.entities import LangChainDocumentLoader
 from chroma_rag.rag.pipeline.docs_processing.entities import LoaderType
-from chroma_rag.rag.pipeline.docs_processing.exceptions import (
-    FileExtensionError,
-)
+from chroma_rag.rag.pipeline.docs_processing.exceptions import FileExtensionError
 
 
 def get_loader(
@@ -27,12 +23,7 @@ def get_loader(
             return PDFLoader(**loader_params)
         case LoaderType.json:
             return LangChainDocumentLoader(**loader_params)
-        case (
-            LoaderType.docx
-            | LoaderType.doc
-            | LoaderType.rtf
-            | LoaderType.odt
-        ):
+        case LoaderType.docx | LoaderType.doc | LoaderType.rtf | LoaderType.odt:
             return WordDocumentLoader(**loader_params)
 
     parsing_scheme = loader_params.pop("parsing_scheme", "lines")

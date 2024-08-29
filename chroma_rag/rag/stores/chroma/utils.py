@@ -84,14 +84,9 @@ def get_all_docs_name(collection: Chroma) -> set[str]:
     docs: dict[str, Any] = collection.get()
 
     if "source" not in docs["metadatas"][0].keys():
-        raise KeyError(
-            "There is no file name, called <source>, in document metadata"
-        )
+        raise KeyError("There is no file name, called <source>, in document metadata")
 
-    return set(
-        str(metadata["source"].split("\\")[-1])
-        for metadata in docs["metadatas"]
-    )
+    return set(str(metadata["source"].split("\\")[-1]) for metadata in docs["metadatas"])
 
 
 def insert_documents(collection: Chroma, docs: Iterable[Document]):
@@ -101,9 +96,7 @@ def insert_documents(collection: Chroma, docs: Iterable[Document]):
     """
     first_element = next(docs)
     if "source" not in first_element.metadata.keys():
-        raise KeyError(
-            "There is no file name, called <source>, in document metadata"
-        )
+        raise KeyError("There is no file name, called <source>, in document metadata")
 
     existing_docs_name = set(get_all_docs_name(collection))
     new_docs_name = set(
@@ -111,10 +104,7 @@ def insert_documents(collection: Chroma, docs: Iterable[Document]):
         + [str(first_element.metadata["source"].split("\\")[-1])]
     )
     docs_name_for_insert = new_docs_name.difference(existing_docs_name)
-    if (
-        first_element.metadata["source"].split("\\")[-1]
-        in docs_name_for_insert
-    ):
+    if first_element.metadata["source"].split("\\")[-1] in docs_name_for_insert:
         docs_for_insert = [first_element]
     else:
         docs_for_insert = []

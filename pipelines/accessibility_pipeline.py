@@ -17,9 +17,7 @@ logger = logging.getLogger(__name__)
 
 
 # TODO: move this to api module/tools
-def define_default_functions(
-    type: str, id: str, coordinates: List
-) -> List[str]:
+def define_default_functions(type: str, id: str, coordinates: List) -> List[str]:
     """Selects default functions based on the territory type."""
     default_funcs = []
     if type == "city":
@@ -57,18 +55,14 @@ def service_accessibility_pipeline(
     Returns: Answer to the question.
     """
     agent = Agent("LLAMA_FC_URL", accessibility_tools)
-    llm_res_funcs = agent.choose_functions(
-        question, fc_sys_prompt, fc_user_prompt
-    )
+    llm_res_funcs = agent.choose_functions(question, fc_sys_prompt, fc_user_prompt)
     res_funcs = agent.check_functions(
         question, llm_res_funcs, base_sys_prompt, ac_cor_user_prompt
     )
     res_funcs = res_funcs + define_default_functions(t_type, t_id, coordinates)
     res_funcs = set_default_value_if_empty(res_funcs)
 
-    context = agent.retrieve_context_from_api(coordinates, res_funcs)
-    response = agent.generate_llm_answer(
-        question, accessibility_sys_prompt, context
-    )
+    context = agent.retrieve_context_from_api(t_id, t_type, coordinates, res_funcs)
+    response = agent.generate_llm_answer(question, accessibility_sys_prompt, context)
 
     return response

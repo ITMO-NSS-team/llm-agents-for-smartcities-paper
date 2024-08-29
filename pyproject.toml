@@ -30,7 +30,7 @@ exclude = [
     "*.ipynb",
 ]
 
-line-length = 79
+line-length = 90
 indent-width = 4
 
 target-version = "py310"

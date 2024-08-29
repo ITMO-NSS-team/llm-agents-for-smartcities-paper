@@ -5,18 +5,14 @@ from typing import Any, Callable, Iterable
 
 import chromadb
 from langchain_community.embeddings.huggingface import HuggingFaceEmbeddings
-from langchain_community.embeddings.huggingface_hub import (
-    HuggingFaceHubEmbeddings,
-)
+from langchain_community.embeddings.huggingface_hub import HuggingFaceHubEmbeddings
 from langchain_community.vectorstores import utils as chromautils
 from langchain_community.vectorstores.chroma import Chroma
 from langchain_core.documents import BaseDocumentTransformer
 from langchain_core.documents import Document
 from pydantic_settings import BaseSettings
 
-from chroma_rag.rag.pipeline.docs_processing.exceptions import (
-    PathIsNotAssigned,
-)
+from chroma_rag.rag.pipeline.docs_processing.exceptions import PathIsNotAssigned
 from chroma_rag.rag.pipeline.docs_processing.utils import get_loader
 from chroma_rag.rag.settings.settings import settings as default_settings
 
@@ -33,13 +29,8 @@ class DocsExtractPipeline:
 
     def load_docs(self, docs_collection_path: str | None = None):
         logger.info("Initialize parsing process")
-        if (
-            docs_collection_path is None
-            and self._config_dict.loader.doc_path == ""
-        ):
-            raise PathIsNotAssigned(
-                "Input file (directory) path is not assigned"
-            )
+        if docs_collection_path is None and self._config_dict.loader.doc_path == "":
+            raise PathIsNotAssigned("Input file (directory) path is not assigned")
         if docs_collection_path is None:
             load_path = self._config_dict.loader.doc_path
         else:
@@ -66,18 +57,14 @@ class DocsTransformPipeline:
         docs_generator: Iterable[Document],
     ):
         self._docs_generator: Iterable[Document] = docs_generator
-        self._transformers: list[BaseDocumentTransformer] = (
-            pipeline_settings.transformers
-        )
+        self._transformers: list[BaseDocumentTransformer] = pipeline_settings.transformers
 
         def transformation(docs: list[Document]) -> list[Document]:
             for transformer in self._transformers:
                 docs = transformer.transform_documents(docs)
             return docs
 
-        self._transformation: Callable[[list[Document]], list[Document]] = (
-            transformation
-        )
+        self._transformation: Callable[[list[Document]], list[Document]] = transformation
 
     def update_docs_transformers(
         self, **kwargs: dict[str, Any]
@@ -99,9 +86,7 @@ class DocsTransformPipeline:
             self._transformation = transformation
         return self
 
-    def transform(
-        self, batch_size: int | None = None
-    ) -> Iterable[list[Document]]:
+    def transform(self, batch_size: int | None = None) -> Iterable[list[Document]]:
         if batch_size is None:
             batch_size = 1
         batch_size = max(batch_size, 1)
@@ -109,9 +94,7 @@ class DocsTransformPipeline:
             docs = self._transformation(batch)
             yield docs
 
-    def go_to_next_step(
-        self, batch_size: int | None = None
-    ) -> "DocsLoadPipeline":
+    def go_to_next_step(self, batch_size: int | None = None) -> "DocsLoadPipeline":
         logger.info("Initialize transformation process")
         return DocsLoadPipeline(self.transform(batch_size))
 
@@ -121,9 +104,7 @@ class DocsLoadPipeline:
         self._docs_generator: Iterable[list[Document]] = docs_generator
         self._store_settings: BaseSettings = default_settings
 
-    def store_settings(
-        self, settings: BaseSettings | None = None
-    ) -> "DocsLoadPipeline":
+    def store_settings(self, settings: BaseSettings | None = None) -> "DocsLoadPipeline":
         self._store_settings: BaseSettings = settings
         return self
 
@@ -148,9 +129,7 @@ class DocsLoadPipeline:
         chroma_client = chromadb.HttpClient(
             host=self._store_settings.chroma_host,
             port=self._store_settings.chroma_port,
-            settings=chromadb.Settings(
-                allow_reset=self._store_settings.allow_reset
-            ),
+            settings=chromadb.Settings(allow_reset=self._store_settings.allow_reset),
         )
 
         if collection_name is None:
@@ -161,9 +140,7 @@ class DocsLoadPipeline:
             collection_name=collection_name,
             embedding_function=embedding_function,
             client=chroma_client,
-            collection_metadata={
-                "hnsw:space": self._store_settings.distance_fn
-            },
+            collection_metadata={"hnsw:space": self._store_settings.distance_fn},
         )
 
         # Add processed documents to the defined Chroma collection
@@ -175,8 +152,6 @@ class DocsLoadPipeline:
                     for i in range(0, len(docs_batch), loading_batch_size)
                 ]
             else:
-                loading_batches = [
-                    chromautils.filter_complex_metadata([docs_batch])
-                ]
+                loading_batches = [chromautils.filter_complex_metadata([docs_batch])]
             for batch in loading_batches:
                 chroma_store.add_documents(batch)
