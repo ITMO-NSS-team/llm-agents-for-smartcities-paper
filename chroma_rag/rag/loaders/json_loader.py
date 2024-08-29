@@ -73,10 +73,15 @@ class CustomJSONLoader(JSONLoader):
     def _get_metadata(
         self, sample: dict[str, Any], **additional_fields: Any
     ) -> dict[str, Any]:
-        """Return a metadata dictionary base on the existence of metadata_func
-        :param sample: single data payload
-        :param additional_fields: key-word arguments to be added as metadata values
-        :return: metadata for Document
+        """
+        Return a metadata dictionary base on the existence of metadata_func
+
+        Args:
+            sample (dict[str, Any]): The data payload used for generating metadata.
+            **additional_fields (Any): Key-value pairs to be included in the metadata.
+
+        Returns:
+            dict[str, Any]: The resulting metadata dictionary for the document.
         """
         if self._metadata_func is not None:
             return self._metadata_func(sample, additional_fields)

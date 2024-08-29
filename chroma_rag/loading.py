@@ -9,7 +9,6 @@ from chroma_rag.rag.settings.settings import settings as default_settings
 from chroma_rag.rag.stores.chroma.chroma_loader import load_documents_to_chroma_db
 
 
-# TODO: add comments and docstrings to all parts of the chroma pipeline, possibly refactor
 def chroma_loading(path: str, collection: str) -> None:
     # Loads data to ChromaDB
 
