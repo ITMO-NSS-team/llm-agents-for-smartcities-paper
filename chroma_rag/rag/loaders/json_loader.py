@@ -74,7 +74,7 @@ class CustomJSONLoader(JSONLoader):
         self, sample: dict[str, Any], **additional_fields: Any
     ) -> dict[str, Any]:
         """
-        Return a metadata dictionary base on the existence of metadata_func
+        Return a metadata dictionary based on the existence of metadata_func
 
         Args:
             sample (dict[str, Any]): The data payload used for generating metadata.

@@ -15,7 +15,7 @@ def merge_collections(
     """
     Merge 2 collections into the 'collection_name_1' if 'new_collection_name' is None,
     otherwise merge 2 collections into the new one with 'new_collection_name' name.
-    If any problems with network or DB accessibility will occur, exception are raised
+    If any problems with network or DB accessibility will occur, exceptions are raised
 
     Args:
         chroma_client (chromadb.HttpClient): The Chroma DB client instance to interact with the database.
@@ -88,8 +88,8 @@ def delete_repeats(collection: Chroma) -> None:
     collection.delete(ids=delete_ids)
 
 
-def get_all_docs_name(collection: Chroma) -> set[str]:
-    """Return list of files' name from collection.
+def get_all_docs_names(collection: Chroma) -> set[str]:
+    """Return list of files' names from collection.
 
     Args:
         collection (Chroma): The collection from which file names will be extracted. The collection should
@@ -126,7 +126,7 @@ def insert_documents(collection: Chroma, docs: Iterable[Document]):
     if "source" not in first_element.metadata.keys():
         raise KeyError("There is no file name, called <source>, in document metadata")
 
-    existing_docs_name = set(get_all_docs_name(collection))
+    existing_docs_name = set(get_all_docs_names(collection))
     new_docs_name = set(
         [str(doc.metadata["source"].split("\\")[-1]) for doc in docs]
         + [str(first_element.metadata["source"].split("\\")[-1])]
