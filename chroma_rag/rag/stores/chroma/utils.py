@@ -14,7 +14,7 @@ def merge_collections(
 ):
     """Merge 2 collections into the 'collection_name_1' if 'new_collection_name' is None,
     otherwise merge 2 collections into the new one with 'new_collection_name' name.
-    If any problems with network or DB accessibility will occur, exceptions are raised
+    If any problems with network or DB accessibility will occur, exceptions are raised.
 
     Args:
         chroma_client (chromadb.HttpClient): The Chroma DB client instance to interact with the database.
