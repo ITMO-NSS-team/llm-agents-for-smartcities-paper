@@ -12,8 +12,7 @@ def merge_collections(
     collection_name_2: str,
     new_collection_name: str | None = None,
 ):
-    """
-    Merge 2 collections into the 'collection_name_1' if 'new_collection_name' is None,
+    """Merge 2 collections into the 'collection_name_1' if 'new_collection_name' is None,
     otherwise merge 2 collections into the new one with 'new_collection_name' name.
     If any problems with network or DB accessibility will occur, exception are raised
 
@@ -27,7 +26,6 @@ def merge_collections(
     Raises:
         Exception: If there are issues with network connectivity or database accessibility.
     """
-
     collection_1 = chroma_client.get_collection(name=collection_name_1)
     collection_2 = chroma_client.get_collection(name=collection_name_2)
 
@@ -77,7 +75,6 @@ def delete_repeats(collection: Chroma) -> None:
     Raises:
         Exception: If there are issues accessing the database or performing deletion operations.
     """
-
     docs = collection.get(include=["documents", "metadatas", "embeddings"])
     delete_ids = []
 
@@ -101,7 +98,6 @@ def get_all_docs_name(collection: Chroma) -> set[str]:
     Raises:
         KeyError: If the key 'source' is not present in the metadata of any document in the collection.
     """
-
     docs: dict[str, Any] = collection.get()
 
     if "source" not in docs["metadatas"][0].keys():
@@ -121,7 +117,6 @@ def insert_documents(collection: Chroma, docs: Iterable[Document]):
     Raises:
         KeyError: If the key 'source' is missing in the metadata of any document from the collection or the input documents.
     """
-
     first_element = next(docs)
     if "source" not in first_element.metadata.keys():
         raise KeyError("There is no file name, called <source>, in document metadata")
