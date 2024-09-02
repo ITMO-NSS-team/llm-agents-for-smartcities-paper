@@ -16,8 +16,7 @@ def load_documents_to_chroma_db(
     loading_batch_size: int = 32,
     **kwargs,
 ) -> None:
-    """
-    Loads documents into a Chroma DB collection using a processing pipeline.
+    """Loads documents into a Chroma DB collection using a processing pipeline.
 
     Args:
         settings (Optional[ChromaSettings]): The settings for configuring the Chroma DB and document processing pipeline.
@@ -29,7 +28,6 @@ def load_documents_to_chroma_db(
     Returns:
         None
     """
-
     if settings is None:
         settings = default_settings
 
