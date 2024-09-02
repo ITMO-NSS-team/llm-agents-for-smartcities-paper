@@ -14,9 +14,17 @@ def merge_collections(
 ):
     """Merge 2 collections into the 'collection_name_1' if 'new_collection_name' is None,
     otherwise merge 2 collections into the new one with 'new_collection_name' name.
-    If any problems with network or DB accessibility will occur, exception are raised
+    If any problems with network or DB accessibility will occur, exceptions are raised.
 
-    :raises Exception: if there are network or database accessibility issues.
+    Args:
+        chroma_client (chromadb.HttpClient): The Chroma DB client instance to interact with the database.
+        collection_name_1 (str): The name of the first collection.
+        collection_name_2 (str): The name of the second collection.
+        new_collection_name (str | None): The name of the new collection to create and merge the data into.
+                                          If `None`, the merge is done into `collection_name_1`.
+
+    Raises:
+        Exception: If there are issues with network connectivity or database accessibility.
     """
     collection_1 = chroma_client.get_collection(name=collection_name_1)
     collection_2 = chroma_client.get_collection(name=collection_name_2)
@@ -60,9 +68,12 @@ def merge_collections(
 def delete_repeats(collection: Chroma) -> None:
     """Remove duplicate documents from a collection.
 
-    :param collection: it should include fields: 'documents', 'embeddings', 'metadatas'
+    Args:
+        collection (Chroma): The collection from which duplicate documents will be removed. The collection
+            should include fields: 'documents', 'embeddings', 'metadatas'.
 
-    :raises Exception: if there are issues accessing the database.
+    Raises:
+        Exception: If there are issues accessing the database or performing deletion operations.
     """
     docs = collection.get(include=["documents", "metadatas", "embeddings"])
     delete_ids = []
@@ -74,12 +85,18 @@ def delete_repeats(collection: Chroma) -> None:
     collection.delete(ids=delete_ids)
 
 
-def get_all_docs_name(collection: Chroma) -> set[str]:
-    """Return list of files' name from collection.
+def get_all_docs_names(collection: Chroma) -> set[str]:
+    """Return list of files' names from collection.
 
-    :param collection: it should include fields: 'documents', 'embeddings', 'metadatas'
+    Args:
+        collection (Chroma): The collection from which file names will be extracted. The collection should
+            include fields: 'documents', 'embeddings', 'metadatas'.
 
-    :raises KeyError: if there is no key 'source' in the documents' metadata from 'collection'
+    Returns:
+        set[str]: A set of file names extracted from the collection.
+
+    Raises:
+        KeyError: If the key 'source' is not present in the metadata of any document in the collection.
     """
     docs: dict[str, Any] = collection.get()
 
@@ -92,13 +109,19 @@ def get_all_docs_name(collection: Chroma) -> set[str]:
 def insert_documents(collection: Chroma, docs: Iterable[Document]):
     """Insert only documents whose names aren't in 'collection'
 
-    :raises KeyError: if there is no key 'source' in the documents' metadata from 'collection' or 'docs'
+    Args:
+        collection (Chroma): The collection to which documents will be added. The collection should include
+            fields: 'documents', 'embeddings', 'metadatas'.
+        docs (Iterable[Document]): An iterable of documents to be inserted into the collection.
+
+    Raises:
+        KeyError: If the key 'source' is missing in the metadata of any document from the collection or the input documents.
     """
     first_element = next(docs)
     if "source" not in first_element.metadata.keys():
         raise KeyError("There is no file name, called <source>, in document metadata")
 
-    existing_docs_name = set(get_all_docs_name(collection))
+    existing_docs_name = set(get_all_docs_names(collection))
     new_docs_name = set(
         [str(doc.metadata["source"].split("\\")[-1]) for doc in docs]
         + [str(first_element.metadata["source"].split("\\")[-1])]

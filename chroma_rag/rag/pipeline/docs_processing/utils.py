@@ -15,6 +15,18 @@ from chroma_rag.rag.pipeline.docs_processing.exceptions import FileExtensionErro
 def get_loader(
     documents_collection_path: str, loader_params: dict[str, Any]
 ) -> BaseLoader:
+    """Returns an appropriate document loader based on the file extension or directory type.
+
+    Args:
+        documents_collection_path (str): The file path or directory containing the documents to be loaded.
+        loader_params (dict[str, Any]): A dictionary of parameters to configure the document loader.
+
+    Returns:
+        BaseLoader: An instance of a document loader configured for the specific document type.
+
+    Raises:
+        FileExtensionError: If the file extension is not supported or has not been implemented yet.
+    """
     doc_extension = documents_collection_path.lower().split(".")[-1]
     if os.path.isdir(documents_collection_path):
         doc_extension = LoaderType.directory
