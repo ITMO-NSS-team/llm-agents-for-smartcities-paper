@@ -17,7 +17,10 @@ class TextProcessorInterface(metaclass=ABCMeta):
         raise NotImplementedError
     
     @abstractmethod
-    def preprocess_output(self, *args, **kwargs):
+    def preprocess_output(self, *args, **kwargs) -> str:
+        """Extract actual answer from recieved response and process it to str form.
+
+        """
         raise NotImplementedError
     
     

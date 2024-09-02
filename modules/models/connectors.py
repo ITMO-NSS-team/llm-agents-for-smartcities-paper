@@ -1,14 +1,14 @@
 import os
 import uuid
 from abc import ABCMeta, abstractmethod
-from typing import Optional
+from typing import Optional, Union
 
 import requests
 from dotenv import load_dotenv
 from openai import OpenAI
 
 from modules.preprocessing.text_preprocessor import TextProcessorInterface
-from modules.variables.definitions import ROOT
+from modules.variables import ROOT, ResponseMode
 
 
 class BaseLanguageModelInterface(metaclass=ABCMeta):
@@ -101,8 +101,8 @@ class WEBLanguageModel(BaseLanguageModelInterface):
         temperature: float = 0.15,
         top_k: int = 50,
         top_p: float = 0.15,
-        **kwargs,
-    ) -> str:
+        mode: ResponseMode = ResponseMode.default,
+        **kwargs) -> Union[str, requests.Response]:
         """Get a response from the model on a given prompt.
 
         Args:
@@ -113,9 +113,12 @@ class WEBLanguageModel(BaseLanguageModelInterface):
             top_k (int, optional): Amount of tokens that are considered while sampling. Defaults to 50.
             top_p (float, optional): Parameter to manage randomness of the LLM output.
             Responsible for selecting tokens whose combined likelihood surpasses this threshold. Defaults to 0.15.
+            mode (ResponseMode): Determines in what form model response will be received. For mode "default", 
+            response will be in string format and contain only the answer to the question, whilst with mode "full" 
+            answer will be returned as requests.Response object.
 
         Returns:
-            str: LLM's response for given prompt.
+            Union[str, requiest.Response]: LLM's response for given prompt.
         """
         job_id = str(uuid.uuid4())
         token_limit = kwargs.get("tokens_limit", 8000)
@@ -132,7 +135,11 @@ class WEBLanguageModel(BaseLanguageModelInterface):
                                                        system_prompt=self.system_prompt,
                                                        user_prompt=formatted_prompt)
         response = requests.post(url=self.url, json=message)
-        return self.text_processor.preprocess_output(response)
+        match mode:
+            case ResponseMode.full:
+                return response
+            case ResponseMode.default:
+                return self.text_processor.preprocess_output(response)
 
 
 class GPTWebLanguageModel(BaseLanguageModelInterface):
