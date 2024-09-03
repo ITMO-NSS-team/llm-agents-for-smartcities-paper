@@ -48,20 +48,3 @@ def test_all_models(models, prompts: Dict[str, str]) -> None:
                               tokens_limit=200)
     assert isinstance(response, Response)
     assert response.status_code == 200
-
-# if __name__ == "__main__":
-#     m = {'url': os.environ['LLAMA_URL'], 'template': llama_70b_template, 'func': llama_70b_postprocessing}
-#     prompts = {"sys_prompt": "You're an AI assitant",
-#                                       "prompt": "What is 2 + 2?",
-#                                       "context": ""}
-#     message_processor = BaseTextProcessor(m['template'], m['func'])
-#     model = WEBLanguageModel(prompts["sys_prompt"],
-#                                 m['url'],
-#                                 text_processor=message_processor)
-#     response = model.generate(prompts["prompt"],
-#                                 prompts["context"],
-#                                 mode=ResponseMode.full,
-#                                 tokens_limit=200)
-#     # assert m != model_types[-1]
-#     assert isinstance(response, Response)
-#     assert response.status_code == 200
