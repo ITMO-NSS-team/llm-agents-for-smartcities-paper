@@ -11,8 +11,8 @@ import requests
 
 import api.summary_tables_requests
 from api.utils.coords_typer import prepare_typed_coords
-from models.definitions import ROOT
-from models.new_web_api import NewWebAssistant
+from modules.models.new_web_api import NewWebAssistant
+from modules.variables import ROOT
 
 
 path_to_config = Path(ROOT, "config.env")

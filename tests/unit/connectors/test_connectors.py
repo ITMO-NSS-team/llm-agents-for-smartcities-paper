@@ -2,19 +2,21 @@
 import os
 from typing import Dict
 
-import pytest
 from dotenv import load_dotenv
+import pytest
 from requests import Response
 
 from modules.models.connectors import WEBLanguageModel
-from modules.preprocessing.dafault_postprocessing import (
-    llama_8b_postprocessing,
-    llama_70b_postprocessing,
-)
+from modules.preprocessing.dafault_postprocessing import \
+    llama_8b_postprocessing
+from modules.preprocessing.dafault_postprocessing import \
+    llama_70b_postprocessing
 from modules.preprocessing.text_preprocessor import BaseTextProcessor
 from modules.variables import ROOT
 from modules.variables.definitions import ResponseMode
-from modules.variables.prompts import llama_8b_template, llama_70b_template
+from modules.variables.prompts import llama_8b_template
+from modules.variables.prompts import llama_70b_template
+
 
 load_dotenv(ROOT / 'config.env')
 
