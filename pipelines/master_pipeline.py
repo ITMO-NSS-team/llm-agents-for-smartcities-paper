@@ -97,7 +97,7 @@ def check_choice_correctness(question: str, answer: str, tools: List):
 
 def choose_pipeline(q: str) -> List[str]:
     load_dotenv(ROOT / 'config.env')
-    model_url = os.environ.get('LLAMA_FC_URL')
+    model_url = os.environ.get('LLAMA_FC')
 
     llm_res = get_relevant_function_from_llm(model_url, tools, q)
     res_funcs = parse_function_names_from_llm_answer(llm_res)

@@ -83,7 +83,7 @@ def get_territory_coordinate_type(coords: List) -> str:
 
 def choose_functions(q: str) -> List[str]:
     load_dotenv(ROOT / 'config.env')
-    model_url = os.environ.get('LLAMA_FC_URL')
+    model_url = os.environ.get('LLAMA_FC')
 
     llm_res = get_relevant_api_function_from_llm(model_url, tools, q)
     llm_res_funcs = parse_function_names_from_llm_answer(llm_res)
