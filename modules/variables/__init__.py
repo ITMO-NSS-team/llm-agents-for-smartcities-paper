@@ -1,1 +1,2 @@
-from modules.variables.definitions import ROOT, ResponseMode
+from modules.variables.definitions import ResponseMode
+from modules.variables.definitions import ROOT

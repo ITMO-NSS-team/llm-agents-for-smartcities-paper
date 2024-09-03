@@ -20,51 +20,50 @@ def get_relevant_function_from_llm(model_url: str, tools: List, question: str) -
             {
                 "role": "system",
                 "content": f"You are a helpful assistant with access to the following functions. "
-                           f"Use them if required - {str(tools)}."
+                f"Use them if required - {str(tools)}.",
             },
             {
                 "role": "user",
                 "content": f"Extract all relevant data for answering this question: "
-                           f"{question}\n"
-                           f"You MUST return ONLY the function name. "
+                f"{question}\n"
+                f"You MUST return ONLY the function name. "
                 # f"You MUST return ONLY the function call with parameters. "
-                           f"Do NOT return any other additional text."
-            }
+                f"Do NOT return any other additional text.",
+            },
         ]
     }
     response = requests.post(url=model_url, json=params)
     res = json.loads(response.text)
-    return res['choices'][0]['message']['content']
+    return res["choices"][0]["message"]["content"]
 
 
 def parse_function_names_from_check_llm_answer_for_metrics(llm_res: str) -> List:
-    match = re.search(r'^\[Correct answer\]:.*', llm_res, re.MULTILINE)
+    match = re.search(r"^\[Correct answer\]:.*", llm_res, re.MULTILINE)
     res = []
     if match:
         correct_answer_line = match.group(0)
-        if 'service_accessibility_pipeline' in correct_answer_line:
-            res.append('api')
-        if 'strategy_development_pipeline' in correct_answer_line:
-            res.append('rag')
+        if "service_accessibility_pipeline" in correct_answer_line:
+            res.append("api")
+        if "strategy_development_pipeline" in correct_answer_line:
+            res.append("rag")
     return res
 
 
 def parse_function_names_from_check_llm_answer(llm_res: str) -> List:
-    match = re.search(r'^\[Correct answer\]:.*', llm_res, re.MULTILINE)
+    match = re.search(r"^\[Correct answer\]:.*", llm_res, re.MULTILINE)
     res = []
     if match:
         correct_answer_line = match.group(0)
-        if 'service_accessibility_pipeline' in correct_answer_line:
-            res.append('service_accessibility_pipeline')
-        if 'strategy_development_pipeline' in correct_answer_line:
-            res.append('strategy_development_pipeline')
+        if "service_accessibility_pipeline" in correct_answer_line:
+            res.append("service_accessibility_pipeline")
+        if "strategy_development_pipeline" in correct_answer_line:
+            res.append("strategy_development_pipeline")
     return res
 
 
 def parse_function_names_from_llm_answer(llm_res: str) -> List:
     res = []
-    functions = ['service_accessibility_pipeline',
-                 'strategy_development_pipeline']
+    functions = ["service_accessibility_pipeline", "strategy_development_pipeline"]
     for pipeline_func in functions:
         if pipeline_func in llm_res:
             res.append(pipeline_func)
@@ -72,32 +71,36 @@ def parse_function_names_from_llm_answer(llm_res: str) -> List:
 
 
 def check_choice_correctness(question: str, answer: str, tools: List):
-    sys_prompt = "You are a knowledgeable, efficient, and direct AI assistant. Provide concise answers, " \
-                 "focusing on the key information needed. Offer suggestions tactfully when appropriate to " \
-                 "improve outcomes. Engage in productive collaboration with the user."
+    sys_prompt = (
+        "You are a knowledgeable, efficient, and direct AI assistant. Provide concise answers, "
+        "focusing on the key information needed. Offer suggestions tactfully when appropriate to "
+        "improve outcomes. Engage in productive collaboration with the user."
+    )
     model = NewWebAssistant()
     model.set_sys_prompt(sys_prompt)
-    user_message = f"[Instruction]: You are given question, descriptions of 2 functions and an answer from another " \
-                   f"Llama model, which has chosen one of these functions. Your task is to compare " \
-                   f"the chosen function with the question and the descriptions and determine " \
-                   f"if the function was selected correctly. If the chosen function is correct, " \
-                   f"return the function name. If the function is selected incorrectly, return the name " \
-                   f"of another function.\n" \
-                   f"[Question]: {question}.\n" \
-                   f"[Answer]: {answer}.\n" \
-                   f"[Function Descriptions]: {tools}.\n" \
-                   f"[Task]: " \
-                   f"Compare the chosen function with the function descriptions and the question " \
-                   f"to determine if the function was selected correctly. Return the name of correct function in this format: " \
-                   f"[Correct answer]: correct function."
+    user_message = (
+        f"[Instruction]: You are given question, descriptions of 2 functions and an answer from another "
+        f"Llama model, which has chosen one of these functions. Your task is to compare "
+        f"the chosen function with the question and the descriptions and determine "
+        f"if the function was selected correctly. If the chosen function is correct, "
+        f"return the function name. If the function is selected incorrectly, return the name "
+        f"of another function.\n"
+        f"[Question]: {question}.\n"
+        f"[Answer]: {answer}.\n"
+        f"[Function Descriptions]: {tools}.\n"
+        f"[Task]: "
+        f"Compare the chosen function with the function descriptions and the question "
+        f"to determine if the function was selected correctly. Return the name of correct function in this format: "
+        f"[Correct answer]: correct function."
+    )
     ans = model(user_message, as_json=False)
 
     return ans
 
 
 def choose_pipeline(q: str) -> List[str]:
-    load_dotenv(ROOT / 'config.env')
-    model_url = os.environ.get('LLAMA_FC')
+    load_dotenv(ROOT / "config.env")
+    model_url = os.environ.get("LLAMA_FC")
 
     llm_res = get_relevant_function_from_llm(model_url, tools, q)
     res_funcs = parse_function_names_from_llm_answer(llm_res)
@@ -110,11 +113,9 @@ def check_pipeline(q: str, r_f: List[str]) -> List[str]:
     return checked_res_funcs
 
 
-def answer_question_with_llm(question: str,
-                             coordinates: List,
-                             t_type: str,
-                             t_id: str,
-                             chunk_num: int) -> str:
+def answer_question_with_llm(
+    question: str, coordinates: List, t_type: str, t_id: str, chunk_num: int
+) -> str:
     # add loading tools later
     # Send request to agent llm
     res_funcs = choose_pipeline(question)

@@ -3,9 +3,11 @@ import json
 import re
 from typing import Dict, List
 
-import requests
-from modules.variables.prompts.strategy_prompt import strategy_sys_prompt
 from new_web_api import NewWebAssistant
+import requests
+
+from modules.variables.prompts.strategy_prompt import strategy_sys_prompt
+
 
 tools = [
     {
