@@ -69,3 +69,4 @@ class BaseTextProcessor(TextProcessorInterface):
             str: LLM's response in text format.
         """
         return self.out_format(text)
+        

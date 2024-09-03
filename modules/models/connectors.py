@@ -95,14 +95,14 @@ class WEBLanguageModel(BaseLanguageModelInterface):
         self._url = new_address
 
     def generate(
-        self,
-        prompt: str,
-        context: str | None = None,
-        temperature: float = 0.15,
-        top_k: int = 50,
-        top_p: float = 0.15,
-        mode: ResponseMode = ResponseMode.default,
-        **kwargs) -> Union[str, requests.Response]:
+            self,
+            prompt: str,
+            context: Optional[str] = None,
+            temperature: float = 0.15,
+            top_k: int = 50,
+            top_p: float = 0.15,
+            mode: ResponseMode = ResponseMode.default,
+            **kwargs) -> Union[str, requests.Response]:
         """Get a response from the model on a given prompt.
 
         Args:
@@ -125,15 +125,18 @@ class WEBLanguageModel(BaseLanguageModelInterface):
         if context is None:
             formatted_prompt = f"Question: {prompt}"
         else:
-            formatted_prompt = f"Context: {context}. Question: {prompt}"
+            formatted_prompt = f'Context: {context} Question: {prompt}'
 
-        message = self.text_processor.preprocess_input(job_id=job_id,
-                                                       temperature=temperature,
-                                                       token_limit=token_limit,
-                                                       top_p=top_p,
-                                                       top_k=top_k,
-                                                       system_prompt=self.system_prompt,
-                                                       user_prompt=formatted_prompt)
+        message = self.text_processor.preprocess_input(job_id=str(job_id),
+                                                       temperature=str(
+                                                           temperature),
+                                                       token_limit=str(
+                                                           token_limit),
+                                                       top_p=str(top_p),
+                                                       top_k=str(top_k),
+                                                       system_prompt=str(
+                                                           self.system_prompt),
+                                                       user_prompt=str(formatted_prompt))
         response = requests.post(url=self.url, json=message)
         match mode:
             case ResponseMode.full:
