@@ -6,10 +6,8 @@ import pytest
 from requests import Response
 
 from modules.models.connectors import WEBLanguageModel
-from modules.preprocessing.dafault_postprocessing import \
-    llama_8b_postprocessing
-from modules.preprocessing.dafault_postprocessing import \
-    llama_70b_postprocessing
+from modules.preprocessing.dafault_postprocessing import llama_8b_postprocessing
+from modules.preprocessing.dafault_postprocessing import llama_70b_postprocessing
 from modules.preprocessing.text_preprocessor import BaseTextProcessor
 from modules.variables import ROOT
 from modules.variables.definitions import ResponseMode

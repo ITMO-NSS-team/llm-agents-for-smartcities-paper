@@ -59,8 +59,7 @@ class BaseTextProcessor(TextProcessorInterface):
                 ).safe_substitute(**kwargs)
                 return processed
             case _:
-                raise ValueError(
-                    f"{type(self.input_format)} is not supported.")
+                raise ValueError(f"{type(self.input_format)} is not supported.")
 
     def preprocess_output(self, text: Response) -> str:
         """Process response from the model to string format using given transformation function.

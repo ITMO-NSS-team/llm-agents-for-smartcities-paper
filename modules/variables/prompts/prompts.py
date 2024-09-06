@@ -1,4 +1,3 @@
-
 accessibility_sys_prompt = """Answer the question following rules below. For answer you must use provided by user context.
                          Rules:
                          1. You must use only provided information for the answer.

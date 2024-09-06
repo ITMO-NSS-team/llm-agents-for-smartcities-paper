@@ -2,10 +2,10 @@ from inspect import ismethod
 import os
 
 from dotenv import load_dotenv
-from modules.variables.definitions import ROOT
 
 from api.endpoint import GetEndpoint
 from api.endpoint import PostEndpoint
+from modules.variables.definitions import ROOT
 
 
 load_dotenv(ROOT / "config.env")
