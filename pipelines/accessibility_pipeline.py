@@ -2,15 +2,14 @@ import logging
 from pathlib import Path
 from typing import List
 
-from models.definitions import ROOT
-from models.prompts.strategy_prompt import *
-
 from agents.agent import Agent
 from agents.prompts import ac_cor_user_prompt
 from agents.prompts import base_sys_prompt
 from agents.prompts import fc_sys_prompt
 from agents.prompts import fc_user_prompt
 from agents.tools.accessibility_tools import accessibility_tools
+from modules.variables import ROOT
+from modules.variables.prompts import *
 
 
 path_to_config = Path(ROOT, "config.env")

@@ -11,10 +11,6 @@ from deepeval.metrics import FaithfulnessMetric
 from deepeval.metrics import GEval
 from deepeval.test_case import LLMTestCase
 from deepeval.test_case import LLMTestCaseParams
-from models.definitions import ROOT
-from models.prompts.strategy_prompt import accessibility_sys_prompt
-from models.prompts.strategy_prompt import strategy_sys_prompt
-from models.vsegpt_api import VseGPTConnector
 import pandas as pd
 
 from agents.agent import Agent
@@ -26,6 +22,10 @@ from agents.prompts import fc_user_prompt
 from agents.prompts import pip_cor_user_prompt
 from agents.tools.accessibility_tools import accessibility_tools
 from agents.tools.pipeline_tools import pipeline_tools
+from modules.definitions.prompts import accessibility_sys_prompt
+from modules.definitions.prompts import strategy_sys_prompt
+from modules.models.vsegpt_api import VseGPTConnector
+from modules.variables import ROOT
 from pipelines.accessibility_pipeline import define_default_functions
 from pipelines.accessibility_pipeline import set_default_value_if_empty
 from pipelines.strategy_pipeline import generate_answer
