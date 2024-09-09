@@ -1,10 +1,10 @@
 import json
 import os
-import uuid
 from typing import Any
+import uuid
 
-import requests
 from dotenv import load_dotenv
+import requests
 
 from modules.variables import ROOT
 
@@ -73,8 +73,7 @@ class WebAssistant:
                     "ANSWER: "
                 )[1]
             except:
-                res = json.loads(response.text)[
-                    "choices"][0]["message"]["content"]
+                res = json.loads(response.text)["choices"][0]["message"]["content"]
             return res
         else:
             return response.text
@@ -107,9 +106,11 @@ class NewWebAssistant(WebAssistant):
             str: Model's answer to user's question.
         """
         job_id = str(uuid.uuid4())
-        content = f"<|begin_of_text|><|start_header_id|>system<|end_header_id|> {self._system_prompt}"\
-        "<|eot_id|><|start_header_id|>user<|end_header_id|> Question: {user_question}"\
-        "Context: {self._context} <|eot_id|><|start_header_id|>assistant<|end_header_id|>"
+        content = (
+            f"<|begin_of_text|><|start_header_id|>system<|end_header_id|> {self._system_prompt}"
+            "<|eot_id|><|start_header_id|>user<|end_header_id|> Question: {user_question}"
+            "Context: {self._context} <|eot_id|><|start_header_id|>assistant<|end_header_id|>"
+        )
         formatted_prompt = {
             "job_id": job_id,
             "meta": {

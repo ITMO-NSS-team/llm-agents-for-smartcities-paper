@@ -1,9 +1,11 @@
+from abc import ABCMeta
+from abc import abstractmethod
 import json
-from abc import ABCMeta, abstractmethod
 from string import Template
 from typing import Callable, Dict, List
 
 from requests import Response
+
 
 StrTemplateType = str | Dict[str, str] | List[str]
 
@@ -60,8 +62,7 @@ class BaseTextProcessor(TextProcessorInterface):
                 ).safe_substitute(**kwargs)
                 return processed
             case _:
-                raise ValueError(
-                    f"{type(self.input_format)} is not supported.")
+                raise ValueError(f"{type(self.input_format)} is not supported.")
 
     def preprocess_output(self, text: Response) -> str:
         """Retrieves text answer from the received response.

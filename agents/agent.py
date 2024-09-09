@@ -5,14 +5,15 @@ from pathlib import Path
 from string import Template
 from typing import Dict, List
 
-import requests
 from dotenv import load_dotenv
 from Levenshtein import distance as levenshtein_distance
+import requests
 
 import api.summary_tables_requests
 from api.utils.coords_typer import prepare_typed_coords
 from modules.models.new_web_api import NewWebAssistant
 from modules.variables import ROOT
+
 
 path_to_config = Path(ROOT, "config.env")
 logger = logging.getLogger(__name__)
@@ -154,7 +155,7 @@ class Agent:
         """Check the chosen list of functions.
 
         Checks if the list of functions returned by the LLM is accurate. If it is not,
-        returns a better choice for the given question. The validation is done 
+        returns a better choice for the given question. The validation is done
         by another LLM.
 
         Args:
