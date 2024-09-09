@@ -5,15 +5,14 @@ from pathlib import Path
 from string import Template
 from typing import Dict, List
 
+import requests
 from dotenv import load_dotenv
 from Levenshtein import distance as levenshtein_distance
-import requests
 
 import api.summary_tables_requests
 from api.utils.coords_typer import prepare_typed_coords
 from modules.models.new_web_api import NewWebAssistant
 from modules.variables import ROOT
-
 
 path_to_config = Path(ROOT, "config.env")
 logger = logging.getLogger(__name__)
@@ -57,7 +56,9 @@ class Agent:
     def retrieve_context_from_api(
         t_name: str, t_type: str, coords: List, chosen_functions: List
     ) -> str:
-        """Calls all given functions in order to collect the relevant context
+        """Call all functions to get the context.
+
+        Calls all given functions in order to collect the relevant context
         for the given question.
 
         Args:
@@ -87,7 +88,9 @@ class Agent:
     def get_relevant_functions(
         self, question: str, sys_prompt: str, user_prompt: str
     ) -> List[str]:
-        """Sends a request to a function calling LLM to choose the most suitable
+        """Send request to get suitable functions.
+
+        Sends a request to a function calling LLM to choose the most suitable
         functions to get the context for the given question. Possible functions
         must be defined in the current tools.
 
@@ -121,7 +124,10 @@ class Agent:
     def choose_functions(
         self, question: str, sys_prompt: str, user_prompt: str
     ) -> List[str]:
-        """Chooses the most suitable functions to get the context for the given question."""
+        """Chose function to get the context for given question.
+
+        Chooses the most suitable functions to get the context for the given question.
+        """
         llm_res = self.get_relevant_functions(question, sys_prompt, user_prompt)
         llm_res_funcs = self.parse_function_names_from_agent_answer(llm_res)
         return llm_res_funcs
@@ -145,8 +151,11 @@ class Agent:
         sys_prompt: str,
         user_prompt: str,
     ) -> str:
-        """Checks if the list of functions returned by the LLM is accurate. If it is not,
-        returns a better choice for the given question. The validation is done by another LLM.
+        """Check the chosen list of functions.
+
+        Checks if the list of functions returned by the LLM is accurate. If it is not,
+        returns a better choice for the given question. The validation is done 
+        by another LLM.
 
         Args:
             question: The user's question.
@@ -154,7 +163,8 @@ class Agent:
             sys_prompt: System prompt for checking chosen functions.
             user_prompt: User prompt for checking chosen functions.
 
-        Returns: A string that contains the corrected names of the chosen functions in a free format.
+        Returns: A string that contains the corrected names of the chosen
+        functions in a free format.
         """
         user_message = Template(user_prompt).safe_substitute(
             question=question, answer=answer, tools=self.tools

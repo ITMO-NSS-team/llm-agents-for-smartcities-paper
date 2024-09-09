@@ -1,13 +1,11 @@
-from abc import ABCMeta
-from abc import abstractmethod
 import json
+from abc import ABCMeta, abstractmethod
 from string import Template
-from typing import Callable, Dict, List, Union
+from typing import Callable, Dict, List
 
 from requests import Response
 
-
-StrTemplateType = Union[str, Dict[str, str], List[str]]
+StrTemplateType = str | Dict[str, str] | List[str]
 
 
 class TextProcessorInterface(metaclass=ABCMeta):
@@ -15,6 +13,7 @@ class TextProcessorInterface(metaclass=ABCMeta):
 
     @abstractmethod
     def preprocess_input(self, *args, **kwargs) -> StrTemplateType:
+        """Preprocess input."""
         raise NotImplementedError
 
     @abstractmethod
@@ -25,6 +24,7 @@ class TextProcessorInterface(metaclass=ABCMeta):
 
 class BaseTextProcessor(TextProcessorInterface):
     """Default text preprocessor.
+
     Transforms given prompt to required format.
     Transforms LLM response to str type.
     """
@@ -34,7 +34,8 @@ class BaseTextProcessor(TextProcessorInterface):
 
         Args:
             input_format (StrTemplateType): Required format of input data for LLM usage.
-            out_format (Callable): Function which describes how to transform LLM's response to str.
+            out_format (Callable): Function which describes how to transform LLM's response
+            to str.
         """
         self.input_format = input_format
         self.out_format = out_format
@@ -59,10 +60,14 @@ class BaseTextProcessor(TextProcessorInterface):
                 ).safe_substitute(**kwargs)
                 return processed
             case _:
-                raise ValueError(f"{type(self.input_format)} is not supported.")
+                raise ValueError(
+                    f"{type(self.input_format)} is not supported.")
 
     def preprocess_output(self, text: Response) -> str:
-        """Process response from the model to string format using given transformation function.
+        """Retrieves text answer from the received response.
+
+        Process response from the model to string format using given
+        transformation function.
 
         Args:
             text (Response): Response received from the model.
