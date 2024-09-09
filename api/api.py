@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 from api.endpoint import GetEndpoint
 from api.endpoint import PostEndpoint
-from models.definitions import ROOT
+from modules.variables.definitions import ROOT
 
 
 load_dotenv(ROOT / "config.env")

@@ -8,7 +8,7 @@ from agents.prompts import binary_fc_user_prompt
 from agents.prompts import fc_sys_prompt
 from agents.prompts import pip_cor_user_prompt
 from agents.tools.pipeline_tools import pipeline_tools
-from models.definitions import ROOT
+from modules.variables import ROOT
 from pipelines import accessibility_pipeline
 from pipelines import strategy_pipeline
 

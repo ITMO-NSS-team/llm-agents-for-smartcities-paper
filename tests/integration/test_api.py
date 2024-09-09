@@ -1,12 +1,12 @@
 import json
-from test.test_data.api_objects_examples import coordinates
-from test.test_data.api_objects_examples import possible_name_ids
 
 import pytest
 
 from api.summary_tables_requests import get_summary_table
 from api.summary_tables_requests import possible_tables
 from api.utils.coords_typer import prepare_typed_coords
+from tests.test_data.api_objects_examples import coordinates
+from tests.test_data.api_objects_examples import possible_name_ids
 
 
 # Test getting info from table by coordinates

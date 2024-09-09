@@ -3,9 +3,8 @@ from pathlib import Path
 
 from deepeval.models.base_model import DeepEvalBaseLLM
 from dotenv import load_dotenv
-from openai import OpenAI
-
 from models.definitions import ROOT
+from openai import OpenAI
 
 
 path_to_config = Path(ROOT, "config.env")
