@@ -6,9 +6,9 @@ from api.api_tables import possible_tables
 
 
 def get_summary_table(
-    table: str, name_id: str = None, type: str = None, coordinates: Dict = None
+    table: str, name_id: str | int = None, type: str = None, coordinates: Dict = None
 ) -> Dict:
-    if name_id and type:
+    if name_id:
         return Api.EndpointsSummaryTables.get_summary_table(
             table=table,
             territory_name_id=name_id,
@@ -23,7 +23,7 @@ def get_summary_table(
             selection_zone=coordinates,
         )
     else:
-        raise ValueError("Expected name_id and type or coordinates, ")
+        raise ValueError("Expected name_id and type or coordinates or just name_id")
 
 
 get_general_stats_city = partial(get_summary_table, table=possible_tables["city"])
@@ -45,13 +45,10 @@ get_general_stats_services = partial(
 get_general_stats_demography = partial(
     get_summary_table, table=possible_tables["demography"]
 )
-get_general_stats_housing_services = partial(
+get_general_stats_housing_and_communal_services = partial(
     get_summary_table, table=possible_tables["housing_services"]
 )
 get_general_stats_transport = partial(
     get_summary_table, table=possible_tables["transport"]
-)
-get_general_stats_communal_services = partial(
-    get_summary_table, table=possible_tables["housing_services"]
 )
 get_general_stats_object = partial(get_summary_table, table=possible_tables["object"])

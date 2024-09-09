@@ -24,7 +24,7 @@ def define_default_functions(type: str, id: str, coordinates: List) -> List[str]
         default_funcs.append("get_general_stats_city")
     elif type == "municipality" or type == "district":
         default_funcs.append("get_general_stats_districts_mo")
-    elif type is None and id is not None and type(coordinates[0]) is not int:
+    elif type is None and id is not None and coordinates is None:
         default_funcs.append("get_general_stats_block")
     return default_funcs
 

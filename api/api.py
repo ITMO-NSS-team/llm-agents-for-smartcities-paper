@@ -75,7 +75,7 @@ class Api:
     class EndpointsSummaryTables:
         _base_url = os.environ.get("ENDPOINT_SUMMARY_URL")
         get_summary_table = PostEndpoint(
-            url="/api_llm/context_by_geom/",
+            url="/api_llm/tables_context/",
             param_names=(
                 "table",
                 "territory_name_id",

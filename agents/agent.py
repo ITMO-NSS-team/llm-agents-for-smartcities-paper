@@ -68,7 +68,10 @@ class Agent:
 
         Returns: The results of all functions combined into one string.
         """
-        coordinates = prepare_typed_coords(coords)
+        if coords:
+            coordinates = prepare_typed_coords(coords)
+        else:
+            coordinates = None
         context = ""
         try:
             for func in chosen_functions:

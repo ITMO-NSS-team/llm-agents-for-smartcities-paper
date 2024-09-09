@@ -38,13 +38,15 @@ strategy_and_access_data = pd.read_csv(
     Path(path_to_data, "test_data", "questions_for_test.csv")
 )
 strategy_data = pd.read_csv(Path(path_to_data, "test_data", "strategy_questions.csv"))
-access_data = pd.read_csv(
+access_data_simple = pd.read_csv(
     Path(path_to_data, "test_data", "urb_accessibility_questions.csv")
 )
+strategy_data = strategy_data[strategy_data["correct_answer"].notnull()]
+access_data_simple = access_data_simple[access_data_simple["Ответ"].notnull()]
 collection_name = "strategy-spb"
 total_all_questions = strategy_and_access_data.shape[0]
 total_strategy_questions = strategy_data.shape[0]
-total_access_questions = access_data.shape[0]
+total_access_questions = access_data_simple.shape[0]
 
 model = VseGPTConnector(
     model="openai/gpt-4o-mini"
@@ -62,8 +64,10 @@ context_recall = ContextualRecallMetric(**metrics_init_params)
 context_relevancy = ContextualRelevancyMetric(**metrics_init_params)
 correctness_metric = GEval(
     name="Correctness",
-    # criteria="Correctness - determine if the actual output is correct according to the expected output.",  # more strictly evaluate consistency with the correct answer
-    criteria="Correctness - determine if the actual output is factually correct according to the expected output.",
+    criteria=(
+        "Correctness - determine if the actual output is factually "
+        "correct according to the expected output."
+    ),
     evaluation_params=[
         LLMTestCaseParams.ACTUAL_OUTPUT,
         LLMTestCaseParams.EXPECTED_OUTPUT,
@@ -75,7 +79,8 @@ correctness_metric = GEval(
 def choose_pipeline_test() -> None:
     """Tests pipeline choosing functions.
 
-    Counts number of correctly chosen pipelines and measures elapsed time for choosing and checking results.
+    Counts number of correctly chosen pipelines and measures elapsed time for
+    choosing and checking results.
     Writes results to .txt file at the specified path.
 
     Returns: None
@@ -124,7 +129,8 @@ Average pipeline check time: {avg_pipe_check_time}""",
 def choose_functions_test() -> None:
     """Tests API functions choosing function.
 
-    Counts number of correctly chosen function and measures elapsed time for choosing and checking results.
+    Counts number of correctly chosen function and measures elapsed time for
+    choosing and checking results.
     Writes results to .txt file at the specified path.
 
     Returns: None
@@ -139,7 +145,7 @@ def choose_functions_test() -> None:
     total_function_choose_time = 0
     total_check_function_time = 0
 
-    for i, row in access_data.iterrows():
+    for i, row in access_data_simple.iterrows():
         question = row["Вопрос"]
         correct_function = row["Датасет"]
         t_type = row["Тип территории"]
@@ -175,17 +181,12 @@ Average function checking time: {avg_func_check_time}""",
         )
 
 
-def accessibility_pipeline_test(coordinates: list, t_type: str, t_id: str) -> None:
+def accessibility_pipeline_test() -> None:
     """Tests whole accessibility pipeline.
 
-    Counts number of correctly chosen function and correct answers, measures elapsed time for choosing and checking
-    and final answer generation.
+    Counts number of correctly chosen function and correct answers, measures
+    elapsed time for choosing and checking and final answer generation.
     Writes results to .txt file at the specified path.
-
-    Args:
-        coordinates: nested list of coordinates of specific area
-        t_type: the type of territory that was 'selected' on the map
-        t_id: the name of 'selected' territory
 
     Returns: None
     """
@@ -202,11 +203,26 @@ def accessibility_pipeline_test(coordinates: list, t_type: str, t_id: str) -> No
     total_check_function_time = 0
     total_get_context_time = 0
 
-    for i, row in access_data.iterrows():
-        question = row["question"]
-        correct_answer = row["correct_answer"]
-        correct_functions = row["correct_functions"]
+    for i, row in access_data_simple.iterrows():
         print(f"Processing question {i}")
+        question = row["Вопрос"]
+        correct_answer = row["Ответ"]
+        correct_function = row["Датасет"]
+        t_t = row["Тип территории"]
+        t_n = row["Название территории"]
+        cs = row["Геометрия"]
+        t_type = None if pd.isnull(t_t) else t_t
+        if pd.isnull(t_n):
+            t_name = None
+        else:
+            try:
+                t_name = int(t_n)
+            except ValueError:
+                t_name = t_n
+        if pd.isnull(cs):
+            coordinates = None
+        else:
+            coordinates = eval(row["Геометрия"])["coordinates"]
         agent = Agent("LLAMA_FC_URL", accessibility_tools)
         with Timer() as t:
             functions = agent.choose_functions(question, fc_sys_prompt, fc_user_prompt)
@@ -217,27 +233,40 @@ def accessibility_pipeline_test(coordinates: list, t_type: str, t_id: str) -> No
             )
             total_check_function_time += t.seconds_from_start
         res_funcs = corrected_functions + define_default_functions(
-            t_type, t_id, coordinates
+            t_type, t_name, coordinates
         )
         res_funcs = set_default_value_if_empty(res_funcs)
         with Timer() as t:
-            # TODO: add vars - agent.retrieve_context_from_api(name, type, coordinates, res_funcs)
-            context = agent.retrieve_context_from_api(coordinates, res_funcs)
+            context = agent.retrieve_context_from_api(
+                t_name, t_type, coordinates, res_funcs
+            )
             total_get_context_time += t.seconds_from_start
         with Timer() as t:
             llm_res = agent.generate_llm_answer(
                 question, accessibility_sys_prompt, context
             )
             total_model_time += t.seconds_from_start
-        if correct_functions in functions:
+        if correct_function in res_funcs:
             correct_function_choice += 1
         correct_answer = re.findall(r"\d+,\d+|\d+\.\d+|\d+", correct_answer)
-        numbers_from_response: List[str] = re.findall(r"\d+,\d+|\d+\.\d+|\d+", llm_res)
+        numbers_from_response = re.findall(r"\d+,\d+|\d+\.\d+|\d+", llm_res)
+        correct_answer = list(map(lambda x: x.replace(",", "."), correct_answer))
+        numbers_from_response = list(
+            map(lambda x: x.replace(",", "."), numbers_from_response)
+        )
+        correct_answer = list(map(float, correct_answer))
+        numbers_from_response = list(map(float, numbers_from_response))
         if (
-            all(elem in [correct_answer] for elem in numbers_from_response)
+            all(elem in correct_answer for elem in numbers_from_response)
             and numbers_from_response
         ):
             correct_accessibility_answer += 1
+        print(f"Function to call: {res_funcs}")
+        print(f"Context from tables: {context}")
+        print(f"Answer from LLM: {llm_res}")
+        print(f"Correct numbers: {correct_answer}")
+        print(f"Numbers from LLM answer: {numbers_from_response}")
+        print(f"Number of correct answers: {correct_accessibility_answer}")
 
     corr_func_percent = round(correct_function_choice / total_access_questions * 100, 2)
     corr_answer_percent = round(
@@ -264,8 +293,8 @@ Average answer generation time: {avg_model_time}""",
 def strategy_pipeline_test(metrics_to_calculate: List, chunk_num: int = 4) -> None:
     """Tests strategy pipeline.
 
-    Evaluate metrics for model answers using 'deepeval' and measures elapsed time for context retrieving and final
-    answer generation.
+    Evaluate metrics for model answers using 'deepeval' and measures elapsed
+    time for context retrieving and final answer generation.
     Writes results to .txt file at the specified path.
 
     Args:
@@ -335,7 +364,8 @@ def strategy_pipeline_test(metrics_to_calculate: List, chunk_num: int = 4) -> No
         avg_score = metrics_result_df[metrics_result_df[column] != -1][column].mean()
         success_metric = metrics_result_df[metrics_result_df[column] != -1].shape[0]
         metrics_to_print.append(
-            f"Average {column} is {avg_score}. Number of successfully processed questions {success_metric}"
+            f"Average {column} is {avg_score}. Number of successfully"
+            f" processed questions {success_metric}"
         )
     short_metrics_result = "\n".join(metrics_to_print)
     metrics_result_df.to_csv(path_to_metrics, index=False)
@@ -348,7 +378,7 @@ def strategy_pipeline_test(metrics_to_calculate: List, chunk_num: int = 4) -> No
             f"""Total strategy samples: {total_strategy_questions}
 Average getting context from ChromaDB time (strategy): {avg_get_context_time}
 Average answer generation time (strategy): {avg_model_time}
-Short metrics results: 
+Short metrics results:
 {short_metrics_result}""",
             file=f,
         )
@@ -356,19 +386,8 @@ Short metrics results:
 
 if __name__ == "__main__":
     chunks = 4
-    coords = [
-        [
-            [30.2679419, 60.1126515],
-            [30.2679786, 60.112752],
-            [30.2682489, 60.1127275],
-            [30.2682122, 60.112627],
-            [30.2679419, 60.1126515],
-        ]
-    ]
-    ttype = ""
-    tid = ""
     metrics = [answer_relevancy, faithfulness, correctness_metric]
-    choose_pipeline_test()
-    choose_functions_test()
-    # accessibility_pipeline_test(coords, ttype, tid)
+    # choose_pipeline_test()
+    # choose_functions_test()
+    accessibility_pipeline_test()
     # strategy_pipeline_test(metrics, chunks)
