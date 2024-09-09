@@ -1,0 +1,21 @@
+---
+name: Build and launch app
+
+on:  # yamllint disable-line rule:truthy
+  schedule:
+    - cron: "0 3 * * *"
+
+jobs:
+  test_build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up models URL
+        env:
+          NSS_NPA_TOKEN: ${{ secrets.NSS_NPA_TOKEN }}
+
+      - name: Build, run and test app
+        run: bash build_and_launch.sh

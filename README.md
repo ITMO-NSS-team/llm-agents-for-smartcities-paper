@@ -26,7 +26,7 @@ docker container stop llm_city_app-container
 docker container rm llm_city_app-container
 
 # use --no-cache key if the entire image needs to be rebuilt (e.g. dependencies changed)
-docker build -t llm_city_app [--no-cache] --build-arg NSS_NPA_TOKEN=$NSS_NPA_TOKEN . 
+docker build -t llm_city_app [--no-cache] --build-arg NSS_NPA_TOKEN=$NSS_NPA_TOKEN -f docker/app/Dockerfile .
  
 docker run -d --restart always -p <port>:80 --name llm_city_app-container llm_city_app
 ```
@@ -50,6 +50,8 @@ http://<ip>:<port>/docs/
 ```
 docker logs --follow --timestamps llm_city_app-container
 ```
+
+Или же по следующему пути: `/var/essdata/llm/log/biam-urb/`
 
 ## Тестировать апи локально:
 

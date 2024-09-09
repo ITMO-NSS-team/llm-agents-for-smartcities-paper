@@ -76,3 +76,13 @@ async def read_item(question: Question):
     cid = correlation_id.get()
     request_logs = filter_records(get_records_by_id(cid))
     return {"llm_res": llm_res, "request_logs": request_logs}
+
+
+@app.get("/build_test")
+async def build_test():
+    """Endpoint for build test
+
+    Returns:
+        dict: message - just an indicator
+    """
+    return {"message": "App is running"}
