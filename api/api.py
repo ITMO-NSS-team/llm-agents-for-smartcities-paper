@@ -2,10 +2,10 @@ from inspect import ismethod
 import os
 
 from dotenv import load_dotenv
+from models.definitions import ROOT
 
 from api.endpoint import GetEndpoint
 from api.endpoint import PostEndpoint
-from modules.variables.definitions import ROOT
 
 
 load_dotenv(ROOT / "config.env")
@@ -73,11 +73,23 @@ class Api:
         )
 
     class EndpointsSummaryTables:
-        _base_url = os.environ.get("ENDPOINT_SUMMARY_URL")
+        _base_url = os.environ.get("ENDPOINT_TABLES_URL")
         get_summary_table = PostEndpoint(
             url="/api_llm/tables_context/",
             param_names=(
                 "table",
+                "territory_name_id",
+                "territory_type",
+                "selection_zone",
+            ),
+        )
+
+    class EndpointsIndicators:
+        _base_url = os.environ.get("ENDPOINT_TABLES_URL")
+        get_indicators = PostEndpoint(
+            url="/api_llm/indicators_context/",
+            param_names=(
+                "indicators",
                 "territory_name_id",
                 "territory_type",
                 "selection_zone",
@@ -97,4 +109,8 @@ for endpoint_group_name in dir(Api):
         ):
             continue
         endpoint = getattr(endpoint_group, endpoint_name)
-        endpoint.url = endpoint_group._base_url + endpoint.url
+        if endpoint_group._base_url:
+            endpoint.url = endpoint_group._base_url + endpoint.url
+        else:
+            msg = f"Base url for endpoint {endpoint_group.__name__}.{endpoint_name} is not set in config.env"
+            raise KeyError(msg)

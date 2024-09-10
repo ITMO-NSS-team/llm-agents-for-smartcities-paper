@@ -6,13 +6,16 @@ from api.api_tables import possible_tables
 
 
 def get_summary_table(
-    table: str, name_id: str | int = None, type: str = None, coordinates: Dict = None
+    table: str,
+    name_id: str | None = None,
+    territory_type: str | None = None,
+    coordinates: list = None,
 ) -> Dict:
     if name_id:
         return Api.EndpointsSummaryTables.get_summary_table(
             table=table,
             territory_name_id=name_id,
-            territory_type=type,
+            territory_type=territory_type,
             selection_zone=None,
         )
     elif coordinates:

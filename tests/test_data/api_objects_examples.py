@@ -4767,11 +4767,11 @@ krasnoe_selo_mo_coords = [
 ]
 
 coordinates = [
-    {"coords": spb_coords, "type": "MultiPolygon"},
     {"coords": vuborg_district_coords, "type": "Polygon"},
     {"coords": krasnoe_selo_mo_coords, "type": "MultiPolygon"},
     {"coords": block2_coords, "type": "Polygon"},
     {"coords": house1_coords, "type": "Point"},
+    {"coords": spb_coords, "type": "MultiPolygon"},
 ]
 
 possible_name_ids = [
@@ -4779,4 +4779,10 @@ possible_name_ids = [
     ("Василеостровский район", "district"),
     ("Кронштадт", "municipality"),
     (166074, None),
+]
+
+possible_indicators = [
+    "Обеспеченность населения поликлиниками",
+    "Общая площадь жилых помещений",
+    "Среднее время доступности кафе и ресторанов пешком",
 ]

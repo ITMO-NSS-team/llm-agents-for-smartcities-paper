@@ -95,3 +95,11 @@ profile = "google"
 sections = ['FUTURE', 'STDLIB', 'THIRDPARTY', 'FIRSTPARTY', 'LOCALFOLDER']
 no_lines_before = 'LOCALFOLDER'
 lines_after_imports = 2
+
+[tool.pytest.ini_options]
+pythonpath = [
+  "."
+]
+
+[tool.pytest]
+disable_test_id_escaping_and_forfeit_all_rights_to_community_support = true
