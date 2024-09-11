@@ -3,7 +3,8 @@ import os
 from pathlib import Path
 
 from dotenv import load_dotenv
-from models.definitions import ROOT
+
+from modules.variables.definitions import ROOT
 
 
 def get_path_to_logs() -> Path:

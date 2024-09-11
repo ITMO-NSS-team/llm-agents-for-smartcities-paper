@@ -1,9 +1,13 @@
 ---
-name: Build and launch app
+name: Test build and launch app
 
 on:  # yamllint disable-line rule:truthy
+  pull_request:
+    branches:
+      - develop
+      - main
   schedule:
-    - cron: "0 3 * * *"
+    - cron: "25 3 * * *"
 
 jobs:
   test_build:
@@ -13,9 +17,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up models URL
+      - name: Set up env, build and run
         env:
           NSS_NPA_TOKEN: ${{ secrets.NSS_NPA_TOKEN }}
-
-      - name: Build, run and test app
-        run: bash build_and_launch.sh
+          ENDPOINT_LISTINGS_URL: ${{ secrets.ENDPOINT_LISTINGS_URL }}
+          ENDPOINT_CITY_URL: ${{ secrets.ENDPOINT_CITY_URL }}
+          ENDPOINT_METRICS_URL: ${{ secrets.ENDPOINT_METRICS_URL }}
+          ENDPOINT_PROVISION_URL: ${{ secrets.ENDPOINT_PROVISION_URL }}
+          ENDPOINT_TABLES_URL: ${{ secrets.ENDPOINT_TABLES_URL }}
+        run: |
+          (echo "ENDPOINT_LISTINGS_URL='$ENDPOINT_LISTINGS_URL'";
+          echo "ENDPOINT_CITY_URL='$ENDPOINT_CITY_URL'";
+          echo "ENDPOINT_METRICS_URL='$ENDPOINT_METRICS_URL'";
+          echo "ENDPOINT_PROVISION_URL='$ENDPOINT_PROVISION_URL'";
+          echo "ENDPOINT_TABLES_URL='$ENDPOINT_TABLES_URL'") > config.env
+          bash test_build.sh

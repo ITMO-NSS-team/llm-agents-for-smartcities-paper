@@ -1,4 +1,4 @@
-# BIAM-Urb
+    # BIAM-Urb
 
 ## Собрать образ для пайплайна с RAG и запустить контейнер:
 
@@ -15,8 +15,13 @@ git pull
 Создать `config.env` в корне проекта:
 
 ```
-LLAMA_URL_8b=<url>
 LLAMA_URL=<url>
+LLAMA_FC_URL=<url>
+ENDPOINT_LISTINGS_URL=<url>
+ENDPOINT_CITY_URL=<url>
+ENDPOINT_METRICS_URL=<url>
+ENDPOINT_PROVISION_URL=<url>
+ENDPOINT_TABLES_URL=<url>
 ```
 
 Пересобрать образ и запустить контейнер
@@ -26,7 +31,7 @@ docker container stop llm_city_app-container
 docker container rm llm_city_app-container
 
 # use --no-cache key if the entire image needs to be rebuilt (e.g. dependencies changed)
-docker build -t llm_city_app [--no-cache] --build-arg NSS_NPA_TOKEN=$NSS_NPA_TOKEN -f docker/app/Dockerfile .
+docker build -t llm_city_app --build-arg NSS_NPA_TOKEN=$NSS_NPA_TOKEN -f docker/app/Dockerfile --no-cache .
  
 docker run -d --restart always -p <port>:80 --name llm_city_app-container llm_city_app
 ```
