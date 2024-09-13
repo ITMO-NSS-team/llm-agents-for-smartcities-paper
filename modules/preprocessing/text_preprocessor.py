@@ -53,7 +53,11 @@ class BaseTextProcessor(TextProcessorInterface):
         """
         match self.input_format:
             case str():
-                return json.loads(Template(self.input_format).safe_substitute(**kwargs))
+                return json.loads(
+                    Template(self.input_format)
+                    .safe_substitute(**kwargs)
+                    .replace("\n", "\\n")
+                )
             case Dict():
                 messages_key = kwargs.pop("template_messages")
                 processed = self.input_format

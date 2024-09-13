@@ -25,3 +25,15 @@ def llama_8b_postprocessing(response: Response) -> str:
         str: Processed output containing only answer on asked question.
     """
     return json.loads(response.text)["choices"][0]["message"]["content"]
+
+
+def vsegpt_postprocessing(response: Response) -> str:
+    """Postprocessing function to retrieve text answer from vsegpt service.
+
+    Args:
+        response (Response): Recieved model's response.
+
+    Returns:
+        str: Processed output containing only answer on asked question.
+    """
+    return response.choices[0].message.content

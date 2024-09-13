@@ -27,7 +27,7 @@ load_dotenv(ROOT / "config.env")
             "func": llama_70b_postprocessing,
         },
         {
-            "url": os.environ["LLAMA_FC"],
+            "url": os.environ["LLAMA_FC_URL"],
             "template": llama_8b_template,
             "func": llama_8b_postprocessing,
         },

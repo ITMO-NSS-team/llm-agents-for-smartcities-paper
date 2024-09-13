@@ -1,4 +1,5 @@
 import logging
+import os
 from pathlib import Path
 from typing import List
 
@@ -8,6 +9,7 @@ from agents.prompts import base_sys_prompt
 from agents.prompts import fc_sys_prompt
 from agents.prompts import fc_user_prompt
 from agents.tools.accessibility_tools import accessibility_tools
+from modules.models.connector_creator import LanguageModelCreator
 from modules.variables import ROOT
 from modules.variables.prompts import *
 
@@ -63,6 +65,9 @@ def service_accessibility_pipeline(
     res_funcs = set_default_value_if_empty(res_funcs)
 
     context = agent.retrieve_context_from_api(t_id, t_type, coordinates, res_funcs)
-    response = agent.generate_llm_answer(question, accessibility_sys_prompt, context)
 
-    return response
+    model_url = os.environ.get("LLAMA_URL")
+    model_connector = LanguageModelCreator.create_llm_connector(
+        model_url, accessibility_sys_prompt
+    )
+    return model_connector.generate(question, context)

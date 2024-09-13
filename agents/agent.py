@@ -1,4 +1,3 @@
-import json
 import logging
 import os
 from pathlib import Path
@@ -7,11 +6,10 @@ from typing import Dict, List
 
 from dotenv import load_dotenv
 from Levenshtein import distance as levenshtein_distance
-import requests
 
 import api.summary_tables_requests
 from api.utils.coords_typer import prepare_typed_coords
-from modules.models.new_web_api import NewWebAssistant
+from modules.models.connector_creator import LanguageModelCreator
 from modules.variables import ROOT
 
 
@@ -79,7 +77,9 @@ class Agent:
             for func in chosen_functions:
                 cur_handle = getattr(api.summary_tables_requests, func)
                 context += str(
-                    cur_handle(name_id=t_name, type=t_type, coordinates=coordinates)
+                    cur_handle(
+                        name_id=t_name, territory_type=t_type, coordinates=coordinates
+                    )
                 )
         except Exception as e:
             # TODO: send these logs to frontend
@@ -101,26 +101,15 @@ class Agent:
             user_prompt: User prompt for the current tools.
 
         Returns: List of the most suitable functions.
-
-        TODO: use new connector from model module
         """
-        params = {
-            "messages": [
-                {
-                    "role": "system",
-                    "content": Template(sys_prompt).safe_substitute(
-                        tools=str(self.tools)
-                    ),
-                },
-                {
-                    "role": "user",
-                    "content": Template(user_prompt).safe_substitute(question=question),
-                },
-            ]
-        }
-        response = requests.post(url=self.model_url, json=params)
-        res = json.loads(response.text)
-        return res["choices"][0]["message"]["content"]
+        sys_prompt = Template(sys_prompt).safe_substitute(
+            tools=str(self.tools).replace('"', "'")
+        )
+        user_prompt = Template(user_prompt).safe_substitute(question=question)
+        model_connector = LanguageModelCreator.create_llm_connector(
+            self.model_url, sys_prompt
+        )
+        return model_connector.generate(user_prompt)
 
     def choose_functions(
         self, question: str, sys_prompt: str, user_prompt: str
@@ -132,18 +121,6 @@ class Agent:
         llm_res = self.get_relevant_functions(question, sys_prompt, user_prompt)
         llm_res_funcs = self.parse_function_names_from_agent_answer(llm_res)
         return llm_res_funcs
-
-    # TODO: move to another location
-    @staticmethod
-    def generate_llm_answer(
-        question: str, system_prompt: str, context: str, as_json: bool = True
-    ) -> str:
-        """Calls LLM with correct params and returns the answer."""
-        model = NewWebAssistant()
-        model.set_sys_prompt(system_prompt)
-        model.add_context(context)
-        response = model(question, as_json=as_json)
-        return response
 
     def check_choice_correctness(
         self,
@@ -167,10 +144,13 @@ class Agent:
         Returns: A string that contains the corrected names of the chosen
         functions in a free format.
         """
-        user_message = Template(user_prompt).safe_substitute(
-            question=question, answer=answer, tools=self.tools
+        user_prompt = Template(user_prompt).safe_substitute(
+            question=question, answer=answer, tools=str(self.tools).replace('"', "'")
         )
-        return self.generate_llm_answer(user_message, sys_prompt, "", False)
+        model_connector = LanguageModelCreator.create_llm_connector(
+            self.model_url, sys_prompt
+        )
+        return model_connector.generate(user_prompt)
 
     def check_functions(
         self,

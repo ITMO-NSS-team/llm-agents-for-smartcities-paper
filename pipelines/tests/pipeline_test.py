@@ -22,13 +22,13 @@ from agents.prompts import fc_user_prompt
 from agents.prompts import pip_cor_user_prompt
 from agents.tools.accessibility_tools import accessibility_tools
 from agents.tools.pipeline_tools import pipeline_tools
-from modules.definitions.prompts import accessibility_sys_prompt
-from modules.definitions.prompts import strategy_sys_prompt
+from modules.models.connector_creator import LanguageModelCreator
 from modules.models.vsegpt_api import VseGPTConnector
 from modules.variables import ROOT
+from modules.variables.prompts import accessibility_sys_prompt
+from modules.variables.prompts import strategy_sys_prompt
 from pipelines.accessibility_pipeline import define_default_functions
 from pipelines.accessibility_pipeline import set_default_value_if_empty
-from pipelines.strategy_pipeline import generate_answer
 from pipelines.strategy_pipeline import retrieve_context_from_chroma
 from pipelines.tests.utils.measure_time import Timer
 
@@ -184,7 +184,7 @@ Average function checking time: {avg_func_check_time}""",
 def accessibility_pipeline_test() -> None:
     """Tests whole accessibility pipeline.
 
-    Counts number of correctly chosen function and correct answers, measures
+    Counts the number of correctly chosen functions and correct answers, measures
     elapsed time for choosing and checking and final answer generation.
     Writes results to .txt file at the specified path.
 
@@ -242,9 +242,11 @@ def accessibility_pipeline_test() -> None:
             )
             total_get_context_time += t.seconds_from_start
         with Timer() as t:
-            llm_res = agent.generate_llm_answer(
-                question, accessibility_sys_prompt, context
+            model_url = os.environ.get("LLAMA_URL")
+            model_connector = LanguageModelCreator.create_llm_connector(
+                model_url, accessibility_sys_prompt
             )
+            llm_res = model_connector.generate(question, context)
             total_model_time += t.seconds_from_start
         if correct_function in res_funcs:
             correct_function_choice += 1
@@ -332,7 +334,12 @@ def strategy_pipeline_test(metrics_to_calculate: List, chunk_num: int = 4) -> No
             context = retrieve_context_from_chroma(question, collection_name, chunk_num)
             total_chroma_time += t.seconds_from_start
         with Timer() as t:
-            llm_ans = generate_answer(question, strategy_sys_prompt, context)
+            model_url = os.environ.get("LLAMA_URL")
+            context = context.replace('"', "'")
+            model_connector = LanguageModelCreator.create_llm_connector(
+                model_url, strategy_sys_prompt
+            )
+            llm_ans = model_connector.generate(question, context)
             total_model_time += t.seconds_from_start
         metrics_result["question"].append(question)
         metrics_result["correct_answer"].append(correct_answer)

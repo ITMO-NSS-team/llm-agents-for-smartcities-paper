@@ -120,7 +120,7 @@ class WEBLanguageModel(BaseLanguageModelInterface):
             answer will be returned as requests.Response object.
 
         Returns:
-            Union[str, requiest.Response]: LLM's response for given prompt.
+            Union[str, request.Response]: LLM's response for given prompt.
         """
         job_id = str(uuid.uuid4())
         token_limit = kwargs.get("tokens_limit", 8000)
