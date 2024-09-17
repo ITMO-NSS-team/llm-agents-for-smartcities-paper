@@ -11,6 +11,7 @@ from agents.tools.pipeline_tools import pipeline_tools
 from modules.variables import ROOT
 from pipelines import accessibility_pipeline
 from pipelines import strategy_pipeline
+from utils.measure_time import Timer
 
 
 path_to_config = Path(ROOT, "config.env")
@@ -28,15 +29,20 @@ def answer_question_with_llm(
         coordinates: The coordinates of the territory selected on the map.
         t_type: The type of territory that was selected on the map.
         t_id: The name of selected territory.
-        chunk_num: Number of chunks that will be returned by the DB and used as a context.
+        chunk_num: Number of chunks that will be returned by the DB and used as
+            a context.
 
     Returns: Answer to the question.
     """
     agent = Agent("LLAMA_FC_URL", pipeline_tools)
-    res_funcs = agent.choose_functions(question, fc_sys_prompt, binary_fc_user_prompt)
-    checked_res_funcs = agent.check_functions(
-        question, res_funcs, base_sys_prompt, pip_cor_user_prompt
-    )
+    with Timer() as t:
+        res_funcs = agent.choose_functions(question, fc_sys_prompt, binary_fc_user_prompt)
+        logger.info(f"Pipeline choose time: {t.seconds_from_start} sec")
+    with Timer() as t:
+        checked_res_funcs = agent.check_functions(
+            question, res_funcs, base_sys_prompt, pip_cor_user_prompt
+        )
+        logger.info(f"Pipeline check time: {t.seconds_from_start} sec")
 
     # Set a default value if the LLM could not come up with an answer
     if not checked_res_funcs:

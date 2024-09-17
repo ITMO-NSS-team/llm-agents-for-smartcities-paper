@@ -12,6 +12,7 @@ from agents.tools.accessibility_tools import accessibility_tools
 from modules.models.connector_creator import LanguageModelCreator
 from modules.variables import ROOT
 from modules.variables.prompts import *
+from utils.measure_time import Timer
 
 
 path_to_config = Path(ROOT, "config.env")
@@ -57,17 +58,27 @@ def service_accessibility_pipeline(
     Returns: Answer to the question.
     """
     agent = Agent("LLAMA_FC_URL", accessibility_tools)
-    llm_res_funcs = agent.choose_functions(question, fc_sys_prompt, fc_user_prompt)
-    res_funcs = agent.check_functions(
-        question, llm_res_funcs, base_sys_prompt, ac_cor_user_prompt
-    )
+    with Timer() as t:
+        llm_res_funcs = agent.choose_functions(question, fc_sys_prompt, fc_user_prompt)
+        logger.info(f"Function choose time: {t.seconds_from_start} sec")
+    with Timer() as t:
+        res_funcs = agent.check_functions(
+            question, llm_res_funcs, base_sys_prompt, ac_cor_user_prompt
+        )
+        logger.info(f"Function check time: {t.seconds_from_start} sec")
     res_funcs = res_funcs + define_default_functions(t_type, t_id, coordinates)
     res_funcs = set_default_value_if_empty(res_funcs)
 
-    context = agent.retrieve_context_from_api(t_id, t_type, coordinates, res_funcs)
+    with Timer() as t:
+        context = agent.retrieve_context_from_api(t_id, t_type, coordinates, res_funcs)
+        logger.info(f"Context retrieve time: {t.seconds_from_start} sec")
 
     model_url = os.environ.get("LLAMA_URL")
     model_connector = LanguageModelCreator.create_llm_connector(
         model_url, accessibility_sys_prompt
     )
-    return model_connector.generate(question, context)
+    with Timer() as t:
+        response = model_connector.generate(question, context)
+        logger.info(f"Answer generation time: {t.seconds_from_start} sec")
+
+    return response

@@ -38,6 +38,12 @@ def filter_records(records_to_filter: List[str]) -> str:
         "Selected pipeline",
         "Selected functions",
         "Chunk metadata",
+        "Pipeline choose time",
+        "Pipeline check time",
+        "Function choose time",
+        "Function check time",
+        "Context retrieve time",
+        "Answer generation time",
     ]
     for record in records_to_filter:
         record = " ".join(record.strip().split(" ")[5:])

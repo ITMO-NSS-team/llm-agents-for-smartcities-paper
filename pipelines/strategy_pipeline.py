@@ -4,6 +4,7 @@ import os
 import chroma_rag.loading as chroma_connector
 from modules.models.connector_creator import LanguageModelCreator
 from modules.variables.prompts import strategy_sys_prompt
+from utils.measure_time import Timer
 
 
 logger = logging.getLogger(__name__)
@@ -43,15 +44,18 @@ def strategy_development_pipeline(
     """
     collection_name = "strategy-spb"
     logger.info(f"Chroma collection name: {collection_name}")
-    logger.info(f"Question: {question}")
     logger.info(f"Chunks num: {chunk_num}")
     # Get context from ChromaDB
-    context = retrieve_context_from_chroma(question, collection_name, chunk_num)
+    with Timer() as t:
+        context = retrieve_context_from_chroma(question, collection_name, chunk_num)
+        logger.info(f"Retrieve context time: {t.seconds_from_start} sec")
     # Get question answer from model
     model_url = os.environ.get("LLAMA_URL")
     model_connector = LanguageModelCreator.create_llm_connector(
         model_url, strategy_sys_prompt
     )
-    return model_connector.generate(question, context)
+    with Timer() as t:
+        response = model_connector.generate(question, context)
+        logger.info(f"Answer generation time: {t.seconds_from_start} sec")
 
     return response

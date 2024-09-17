@@ -30,7 +30,7 @@ from modules.variables.prompts import strategy_sys_prompt
 from pipelines.accessibility_pipeline import define_default_functions
 from pipelines.accessibility_pipeline import set_default_value_if_empty
 from pipelines.strategy_pipeline import retrieve_context_from_chroma
-from pipelines.tests.utils.measure_time import Timer
+from utils.measure_time import Timer
 
 
 path_to_data = Path(ROOT, "pipelines", "tests")
