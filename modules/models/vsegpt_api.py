@@ -4,6 +4,7 @@ from pathlib import Path
 from deepeval.models.base_model import DeepEvalBaseLLM
 from dotenv import load_dotenv
 from openai import OpenAI
+from openai._types import NOT_GIVEN
 
 from modules.variables import ROOT
 
@@ -64,12 +65,14 @@ class VseGPTConnector(DeepEvalBaseLLM):
             {"role": "system", "content": self._sys_prompt},
             {"role": "user", "content": usr_msg_template},
         ]
+        response_format = kwargs.get("schema", NOT_GIVEN)
         response = self.model.chat.completions.create(
             model=self._model_name,
             messages=formatted_message,
             temperature=temperature,
             n=1,
             max_tokens=8182,
+            response_format=response_format,
         )
         return response.choices[0].message.content
 

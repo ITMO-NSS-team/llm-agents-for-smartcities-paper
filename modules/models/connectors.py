@@ -123,7 +123,7 @@ class WEBLanguageModel(BaseLanguageModelInterface):
             Union[str, request.Response]: LLM's response for given prompt.
         """
         job_id = str(uuid.uuid4())
-        token_limit = kwargs.get("tokens_limit", 8000)
+        token_limit = kwargs.get("tokens_limit", 64000)
         if context is None:
             formatted_prompt = f"Question: {prompt}"
         else:

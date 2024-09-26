@@ -72,6 +72,7 @@ class Agent:
             coordinates = prepare_typed_coords(coords)
         else:
             coordinates = None
+        chosen_functions = chosen_functions[:3]
         context = ""
         try:
             for func in chosen_functions:

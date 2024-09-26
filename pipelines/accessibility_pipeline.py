@@ -66,7 +66,7 @@ def service_accessibility_pipeline(
             question, llm_res_funcs, base_sys_prompt, ac_cor_user_prompt
         )
         logger.info(f"Function check time: {t.seconds_from_start} sec")
-    res_funcs = res_funcs + define_default_functions(t_type, t_id, coordinates)
+    res_funcs = define_default_functions(t_type, t_id, coordinates) + res_funcs
     res_funcs = set_default_value_if_empty(res_funcs)
 
     with Timer() as t:
