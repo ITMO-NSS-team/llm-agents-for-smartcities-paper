@@ -1,4 +1,3 @@
-import os
 import urllib
 
 from dotenv import load_dotenv
@@ -66,7 +65,7 @@ class LanguageModelCreator:
         Returns: The connector object that can be used to make requests to the LLM service.
         """
         if "vsegpt" in model_url:
-            model_name = os.environ["VSEGPT_MODEL_NAME"]
+            model_name = model_url.split(";")[1]
             message_processor = BaseTextProcessor(all_gpt_template, vsegpt_postprocessing)
             return GPTWebLanguageModel(sys_prompt, model_name, message_processor)
         else:

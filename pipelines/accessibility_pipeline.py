@@ -4,8 +4,6 @@ from pathlib import Path
 from typing import List
 
 from agents.agent import Agent
-from agents.prompts import ac_cor_user_prompt
-from agents.prompts import base_sys_prompt
 from agents.prompts import fc_sys_prompt
 from agents.prompts import fc_user_prompt
 from agents.tools.accessibility_tools import accessibility_tools
@@ -59,13 +57,13 @@ def service_accessibility_pipeline(
     """
     agent = Agent("LLAMA_FC_URL", accessibility_tools)
     with Timer() as t:
-        llm_res_funcs = agent.choose_functions(question, fc_sys_prompt, fc_user_prompt)
+        res_funcs = agent.choose_functions(question, fc_sys_prompt, fc_user_prompt)
         logger.info(f"Function choose time: {t.seconds_from_start} sec")
-    with Timer() as t:
-        res_funcs = agent.check_functions(
-            question, llm_res_funcs, base_sys_prompt, ac_cor_user_prompt
-        )
-        logger.info(f"Function check time: {t.seconds_from_start} sec")
+    # with Timer() as t:
+    #     res_funcs = agent.check_functions(
+    #         question, llm_res_funcs, base_sys_prompt, ac_cor_user_prompt
+    #     )
+    #     logger.info(f"Function check time: {t.seconds_from_start} sec")
     res_funcs = define_default_functions(t_type, t_id, coordinates) + res_funcs
     res_funcs = set_default_value_if_empty(res_funcs)
 

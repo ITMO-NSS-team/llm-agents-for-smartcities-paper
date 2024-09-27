@@ -3,6 +3,15 @@ import json
 from requests import Response
 
 
+def parse_answer(res):
+    answer_separator = "ОТВЕТ: "
+
+    if answer_separator in res:
+        return res.split(answer_separator)[1].strip()
+    else:
+        return res
+
+
 def llama_70b_postprocessing(response: Response) -> str:
     """Postprocessing function to retrieve text answer from hosted llama response.
 
@@ -12,7 +21,7 @@ def llama_70b_postprocessing(response: Response) -> str:
     Returns:
         str: Processed output containing only answer on asked question.
     """
-    return json.loads(response.text)["content"]
+    return parse_answer(json.loads(response.text)["content"])
 
 
 def llama_8b_postprocessing(response: Response) -> str:
@@ -24,7 +33,7 @@ def llama_8b_postprocessing(response: Response) -> str:
     Returns:
         str: Processed output containing only answer on asked question.
     """
-    return json.loads(response.text)["choices"][0]["message"]["content"]
+    return parse_answer(json.loads(response.text)["choices"][0]["message"]["content"])
 
 
 def vsegpt_postprocessing(response: Response) -> str:
@@ -36,4 +45,4 @@ def vsegpt_postprocessing(response: Response) -> str:
     Returns:
         str: Processed output containing only answer on asked question.
     """
-    return response.choices[0].message.content
+    return parse_answer(response.choices[0].message.content)

@@ -175,3 +175,4 @@ data/*
 .vscode/
 
 pipelines/tests/test_results/
+pipelines/tests/metrics_results/

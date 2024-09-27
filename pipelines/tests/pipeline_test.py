@@ -396,5 +396,5 @@ if __name__ == "__main__":
     metrics = [answer_relevancy, faithfulness, correctness_metric]
     # choose_pipeline_test()
     # choose_functions_test()
-    accessibility_pipeline_test()
-    # strategy_pipeline_test(metrics, chunks)
+    # accessibility_pipeline_test()
+    strategy_pipeline_test(metrics, chunks)

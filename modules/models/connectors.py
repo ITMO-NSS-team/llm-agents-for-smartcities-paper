@@ -41,6 +41,11 @@ class BaseLanguageModelInterface(metaclass=ABCMeta):
         """
         self._system_prompt = sys_prompt
 
+    @staticmethod
+    def prep_context(context: str) -> str:
+        """Preps context so that it can be inserted into a JSON structure."""
+        return context.replace('"', "'")
+
     @abstractmethod
     def generate(self, prompt: str, context: str, **kwargs) -> str:
         """This method takes user question(prompt) with context. A tries to find an answer to given question with LLM.
@@ -127,7 +132,7 @@ class WEBLanguageModel(BaseLanguageModelInterface):
         if context is None:
             formatted_prompt = f"Question: {prompt}"
         else:
-            formatted_prompt = f"Context: {context} Question: {prompt}"
+            formatted_prompt = f"Context: {self.prep_context(context)} Question: {prompt}"
 
         message = self.text_processor.preprocess_input(
             job_id=str(job_id),
@@ -185,7 +190,7 @@ class GPTWebLanguageModel(BaseLanguageModelInterface):
         if context is None:
             prompt = f"Question: {prompt}"
         else:
-            prompt = f"Context: {context}. Question: {prompt}"
+            prompt = f"Context: {self.prep_context(context)}. Question: {prompt}"
         message = self.text_processor.preprocess_input(
             system_prompt=self.system_prompt,
             user_prompt=prompt,
