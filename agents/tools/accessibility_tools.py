@@ -3,10 +3,10 @@ accessibility_tools = [
         "type": "function",
         "function": {
             "name": "get_general_stats_education",
-            "description": "Возвращает статистику по обеспеченности всему, что связано с образованием:"
-            "[детские сады, школы, специализированные учебные заведения, "
-            "средние специальные учебные заведения"
-            "высшие учебные заведения]; данные по транспортной доступности всех образовательных учреждений.",
+            "description": "Returns statistics on everything related to education:"
+            "[kindergartens, schools, specialized educational institutions, "
+            "secondary special educational institutions, "
+            "higher educational institutions]; data on the transport accessibility of all educational institutions.",
             "parameters": {
                 "type": "object",
                 "properties": {"coordinates": {"type": "dict"}},
@@ -18,12 +18,12 @@ accessibility_tools = [
         "type": "function",
         "function": {
             "name": "get_general_stats_healthcare",
-            "description": "Возвращает статистику по всем возможным объектам здравоохранения для ЛЮДЕЙ, "
-            "всем что связано с человеческим здровьем:  [клиники,"
-            "поликлиники, больницы, стационары, травматологические отделения, родильные дома,"
-            "стоматология, женские консультации, аптеки, станции "
-            "скорой помощи, центры психологической помощи]; данные о транспортной доступности всех "
-            "медицинских услуг",
+            "description": "Returns statistics on all possible healthcare facilities for PEOPLE, "
+            "everything related to human health: [clinics, "
+            "polyclinics, hospitals, inpatient facilities, trauma departments, maternity homes, "
+            "dentistry, women's consultations, pharmacies, emergency stations, "
+            "psychological help centers]; data on the transport accessibility of all "
+            "medical services.",
             "parameters": {
                 "type": "object",
                 "properties": {"coordinates": {"type": "dict"}},
@@ -35,10 +35,10 @@ accessibility_tools = [
         "type": "function",
         "function": {
             "name": "get_general_stats_culture",
-            "description": "Возвращает статистику по обеспеченности объектами культуры и приятного досуга всех видов:"
-            "[библиотеки, музеи, ботанические сады, цирки, театры, зоопарки, кинотеатры, кинозалы, "
-            "кафе, рестораны, парки, клубы, достопримечательности];"
-            "данные о транспортной доступности всех этих объектов на транспорте и пешком",
+            "description": "Returns statistics on the provision of cultural and leisure objects of all kinds: "
+            "[libraries, museums, botanical gardens, circuses, theaters, zoos, cinemas, movie theaters, "
+            "cafes, restaurants, parks, clubs, landmarks];"
+            "data on the transport accessibility of all these objects by transport and on foot.",
             "parameters": {
                 "type": "object",
                 "properties": {"coordinates": {"type": "dict"}},
@@ -50,9 +50,9 @@ accessibility_tools = [
         "type": "function",
         "function": {
             "name": "get_general_stats_sports",
-            "description": "Возвращает статистику по объектами для спорта, всему что связано со спортом: "
-            "[бассейны, тренажерные залы, фитнес-центры, ледовые катки, катки для фигурного катания,"
-            "футбольные поля, баскетбольные площадки]; данные о транспортной доступности всех этих объектов",
+            "description": "Returns statistics on sports facilities, everything related to sports: "
+            "[swimming pools, gyms, fitness centers, ice rinks, figure skating rinks, "
+            "football fields, basketball courts]; data on the transport accessibility of all these facilities.",
             "parameters": {
                 "type": "object",
                 "properties": {"coordinates": {"type": "dict"}},
@@ -64,12 +64,12 @@ accessibility_tools = [
         "type": "function",
         "function": {
             "name": "get_general_stats_services",
-            "description": "Возвращает статистику по объектам улучшающим качество жизни, социальные услуги, объекты предоставляющим "
-            "различные услуги, объекты для питомцев: "
-            "[продуктовые магазины, магазины с одеждой, магазины техники, книжные магазины, "
-            "детские магазины, банки, центры оказания государственных услуг, парикмахерские, "
-            "салоны красоты, ветеринарные клиники, площадки для выгула собак; данные о транспортной "
-            "доступности всех этих объектов ",
+            "description": "Returns statistics on objects that improve the quality of life, social services, objects providing "
+            "various services, objects for pets: "
+            "[grocery stores, clothing stores, electronics stores, bookstores, "
+            "children's stores, banks, government service centers, hairdressers, "
+            "beauty salons, veterinary clinics, dog walking areas]; data on the transport "
+            "accessibility of all these objects.",
             "parameters": {
                 "type": "object",
                 "properties": {"coordinates": {"type": "dict"}},
@@ -81,12 +81,12 @@ accessibility_tools = [
         "type": "function",
         "function": {
             "name": "get_general_stats_demography",
-            "description": "Возвращает статистику по демографическим показателям: [численность населения территории, "
-            "численность населения моложе трудоспособного возраста (детей), трудоспособного возраста, старше трудоспособного "
-            "возраста, пенсионеров; прирост населения территории за последний год; численность детей дошкольного возраста, "
-            "школьного возраста;  ожидаемая численность беременных женщин и населения с детьми до одного года; "
-            "ожидаемая численность инвалидов по опорного-двигательному аппарату и т.п."
-            "Также по ключу 'Количество сервисов типа' доступна информация о количестве сервисов, соответствущих показателям.",
+            "description": "Returns statistics on demographic indicators: [population of the territory, "
+            "population under working age (children), working age, over working age, pensioners; population growth "
+            "over the last year; the number of preschool children, "
+            "school-age children; expected number of pregnant women and population with children under one year; "
+            "expected number of people with disabilities affecting motor skills, etc. "
+            "Also, using the key 'Number of service types,' you can get information on the number of services corresponding to the indicators.",
             "parameters": {
                 "type": "object",
                 "properties": {"coordinates": {"type": "dict"}},
@@ -98,11 +98,11 @@ accessibility_tools = [
         "type": "function",
         "function": {
             "name": "get_general_stats_housing_and_communal_services",
-            "description": "Возвращает статистику по таким позателям жилья и жилищно-коммунального хозяйства, как: общая площадь "
-            "жилых помещений и в расчете на одного жителя; доля ветхого и аварийного жилья; доля жилых домов с "
-            "центральным холодным/горячим водоснабжением; доля домов, обеспеченных центральной канализиацией; "
-            "средний возраст жилых домой на территории; количество аварийных жилых домов и т.п."
-            "Также по ключу 'Количество сервисов типа' доступна информация о количестве сервисов, соответствущих показателям.",
+            "description": "Returns statistics on such housing and communal services indicators as: total area "
+            "of residential premises and per capita; the share of dilapidated and emergency housing; the share of residential buildings with "
+            "central cold/hot water supply; the share of houses equipped with central sewage; "
+            "the average age of residential buildings in the area; the number of emergency residential buildings, etc. "
+            "Also, using the key 'Number of service types,' you can get information on the number of services corresponding to the indicators.",
             "parameters": {
                 "type": "object",
                 "properties": {"coordinates": {"type": "dict"}},
@@ -154,9 +154,9 @@ accessibility_tools = [
     #   "type": "function",
     #   "function": {
     #     "name": "get_general_stats_object",
-    #     "description": "Возвращает общую информацию по выбранному объекту. Если в вопросе НЕТ НИ ОДНОГО СЛОВА про образование, "
-    #                    "здравоохранение, культуру и досуг, физическую культуру и спорт, демографию, жилищно-коммунальное хозяйство, "
-    #                    "различные услуги для населения, следует обязательно выбирать ТОЛЬКО эту функцию.",
+    #     "description": "Returns general information about a selected object. If the query DOES NOT MENTION education, "
+    #                    "healthcare, culture and leisure, sports, demography, housing and communal services, "
+    #                    "various services for the population, only this function should be selected.",
     #     "parameters": {
     #       "type": "object",
     #       "properties": {

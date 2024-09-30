@@ -42,7 +42,7 @@ access_data_simple = pd.read_csv(
     Path(path_to_data, "test_data", "urb_accessibility_questions.csv")
 )
 strategy_data = strategy_data[strategy_data["correct_answer"].notnull()]
-access_data_simple = access_data_simple[access_data_simple["Ответ"].notnull()]
+access_data_simple = access_data_simple[access_data_simple["Answer"].notnull()]
 collection_name = "strategy-spb"
 total_all_questions = strategy_and_access_data.shape[0]
 total_strategy_questions = strategy_data.shape[0]
@@ -146,11 +146,11 @@ def choose_functions_test() -> None:
     total_check_function_time = 0
 
     for i, row in access_data_simple.iterrows():
-        question = row["Вопрос"]
-        correct_function = row["Датасет"]
-        t_type = row["Тип территории"]
-        t_name = row["Название территории"]
-        coordinates = row["Геометрия"]
+        question = row["Question"]
+        correct_function = row["Dataset"]
+        t_type = row["Territory Type"]
+        t_name = row["Territory Name"]
+        coordinates = row["Geometry"]
         print(f"Processing question {i}")
         agent = Agent("LLAMA_FC_URL", accessibility_tools)
         with Timer() as t:
@@ -205,12 +205,12 @@ def accessibility_pipeline_test() -> None:
 
     for i, row in access_data_simple.iterrows():
         print(f"Processing question {i}")
-        question = row["Вопрос"]
-        correct_answer = row["Ответ"]
-        correct_function = row["Датасет"]
-        t_t = row["Тип территории"]
-        t_n = row["Название территории"]
-        cs = row["Геометрия"]
+        question = row["Question"]
+        correct_answer = row["Answer"]
+        correct_function = row["Dataset"]
+        t_t = row["Territory Type"]
+        t_n = row["Territory Name"]
+        cs = row["Geometry"]
         t_type = None if pd.isnull(t_t) else t_t
         if pd.isnull(t_n):
             t_name = None
@@ -222,7 +222,7 @@ def accessibility_pipeline_test() -> None:
         if pd.isnull(cs):
             coordinates = None
         else:
-            coordinates = eval(row["Геометрия"])["coordinates"]
+            coordinates = eval(row["Geometry"])["coordinates"]
         agent = Agent("LLAMA_FC_URL", accessibility_tools)
         with Timer() as t:
             functions = agent.choose_functions(question, fc_sys_prompt, fc_user_prompt)

@@ -4775,14 +4775,14 @@ coordinates = [
 ]
 
 possible_name_ids = [
-    ("Санкт-Петербург", "city"),
-    ("Василеостровский район", "district"),
-    ("Кронштадт", "municipality"),
+    ("Saint Petersburg", "city"),
+    ("Vasileostrovsky District", "district"),
+    ("Kronstadt", "municipality"),
     (166074, None),
 ]
 
 possible_indicators = [
-    "Обеспеченность населения поликлиниками",
-    "Общая площадь жилых помещений",
-    "Среднее время доступности кафе и ресторанов пешком",
+    "Population provision with polyclinics",
+    "Total area of residential premises",
+    "Average pedestrian accessibility time of cafes and restaurants",
 ]

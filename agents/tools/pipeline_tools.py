@@ -6,11 +6,11 @@ pipeline_tools = [
             "description": "This pipeline returns detailed information about the accessibility of various urban "
             "services and facilities and their number. It evaluates the accessibility of healthcare, population, "
             "housing facilities, recreation, playgrounds, education (schools, universities, etc.), "
-            "public transport, churches and temples, sports infrastructure  (stadiums, etc.), "
+            "public transport, churches and temples, sports infrastructure (stadiums, etc.), "
             "cultural and leisure facilities (theatres, circuses, zoos, etc.), and more. "
             "It can also return information about the dissatisfaction of the population and information on various complaints. "
-            "The input usually contain words such as 'доступность', 'обеспеченность', 'доля', 'количество', "
-            "'средняя доступность', 'среднее время', 'общая площадь', 'численность', 'сколько' etc.",
+            "The input usually contains words such as 'accessibility', 'provision', 'share', 'quantity', "
+            "'average accessibility', 'average time', 'total area', 'population', 'how many', etc.",
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -30,8 +30,8 @@ pipeline_tools = [
             "document. It uses Retrieval-Augmented Generation (RAG) to extract relevant "
             "information from the provided document. The tool is designed to answer strategic "
             "questions about urban development, including healthcare, education, infrastructure, "
-            "and other aspects covered in the development strategy. The input usually contain words "
-            "such as 'планируемый', 'меры', etc.",
+            "and other aspects covered in the development strategy. The input usually contains words "
+            "such as 'planned', 'measures', etc.",
             "parameters": {
                 "type": "object",
                 "properties": {
