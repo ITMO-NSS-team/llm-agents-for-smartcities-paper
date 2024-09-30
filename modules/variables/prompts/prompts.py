@@ -12,7 +12,8 @@ mention for what field there was no data.
 5. If you do not know how to answer the questions, say so.
 6. Before give an answer to the user question, provide explanation. Mark the answer
 with keyword 'ANSWER', and explanation with 'EXPLANATION'.
-7. Answer should be three sentences maximum.
+7. If the question is about complaints, answer about at least 5 complaints topics.
+8. Answer should be three sentences maximum.
 """
 
 strategy_sys_prompt = r"""Answer the question following rules below. For answer you must
@@ -54,6 +55,5 @@ mention for what field there was no data.
 9. If you do not know how to answer the questions, say it.
 10. Before give an answer to the user question, provide explanation. Mark the answer
  with keyword "ANSWER",
-and explanation with "EXPLANATION". Both answer and explanation must be
-in Russian language
+and explanation with "EXPLANATION".
 11. Answer should be no longer than 3 sentences."""
