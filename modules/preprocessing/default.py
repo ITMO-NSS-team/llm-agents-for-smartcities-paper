@@ -4,7 +4,7 @@ from requests import Response
 
 
 def parse_answer(res):
-    answer_separator = "ОТВЕТ: "
+    answer_separator = "ANSWER: "
 
     if answer_separator in res:
         return res.split(answer_separator)[1].strip()

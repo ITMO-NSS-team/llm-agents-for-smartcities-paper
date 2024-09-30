@@ -4,16 +4,16 @@ from pipelines.strategy_pipeline import strategy_development_pipeline
 
 
 def test_strategy_development_pipeline():
-    question = "Какие проблемы демографического развития Санкт-Петербурга?"
+    question = "What are the demographic development problems of Saint Petersburg?"
     answer = strategy_development_pipeline(question)
     print(f"\nStrategy development pipeline\nQuestion: {question}\nAnswer: {answer}\n")
     assert answer != ""
 
 
 def test_service_accessibility_pipeline():
-    question = "Каково среднее время доступности больниц и школ?"
+    question = "What is the average accessibility time of hospitals and schools?"
     territory_type = "city"
-    territory_name = "Санкт-Петербург"
+    territory_name = "Saint Petersburg"
     territory_coords = None
     answer = service_accessibility_pipeline(
         question, territory_coords, territory_type, territory_name
@@ -23,10 +23,10 @@ def test_service_accessibility_pipeline():
 
 
 def test_master_pipeline():
-    question = "Какие проблемы демографического развития Санкт-Петербурга?"
+    question = "What are the demographic development problems of Saint Petersburg?"
     chunk_num = 4
     territory_type = "city"
-    territory_name = "Санкт-Петербург"
+    territory_name = "Saint Petersburg"
     territory_coords = None
     answer = answer_question_with_llm(
         question, territory_coords, territory_type, territory_name, chunk_num
@@ -34,7 +34,7 @@ def test_master_pipeline():
     print(f"\nMaster pipeline\nQuestion: {question}\nAnswer: {answer}\n")
     assert answer != ""
 
-    question = "Каково среднее время доступности больниц и школ?"
+    question = "What is the average accessibility time of hospitals and schools?"
     answer = answer_question_with_llm(
         question, territory_coords, territory_type, territory_name, chunk_num
     )
