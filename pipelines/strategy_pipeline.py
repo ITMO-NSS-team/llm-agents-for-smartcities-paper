@@ -17,7 +17,7 @@ def retrieve_context_from_chroma(q: str, collect_name: str, c_num: int) -> str:
     context_list = []
     metadata = []
     for ind, chunk in enumerate(res):
-        context = f"{context}Отрывок {ind}: {chunk[0].page_content} "
+        context = f"{context}Chunk {ind}: {chunk[0].page_content} "
         context_list.append(chunk[0].page_content)
         metadata.append(
             (
