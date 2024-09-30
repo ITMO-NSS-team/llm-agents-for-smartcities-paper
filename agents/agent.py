@@ -76,11 +76,13 @@ class Agent:
         try:
             for func in chosen_functions:
                 cur_handle = getattr(api.summary_tables_requests, func)
-                context += str(
-                    cur_handle(
+                table = cur_handle(
                         name_id=t_name, territory_type=t_type, coordinates=coordinates
                     )
-                )
+                # TODO: Make it look better
+                if 'Жалобы' in table:
+                    del table['Жалобы']['Тексты жалоб']
+                context += str(table)
         except Exception as e:
             # TODO: send these logs to frontend
             logger.error(f"Could NOT retrieve context from API: {e}")

@@ -12,6 +12,7 @@ possible_tables = {
     "transport": "Отраслевой контекст - транспорт",
     "housing_services": "Отраслевой контекст - жилье и жилищно-коммунальное хозяйство",
     "object": "Объекты - сводка по выбранному объекту",
+    "complaints": "Жалобы",
 }
 
 possible_table_indicators = [

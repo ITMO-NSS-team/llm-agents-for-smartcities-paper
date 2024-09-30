@@ -110,6 +110,17 @@ accessibility_tools = [
             },
         },
     },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_general_stats_complaints",
+            "description": "Возвращает статистику по различным жалобам на городские и жилищно-коммунальные услуги.",
+            "parameters": {
+                "type": "object",
+                "properties": {"coordinates": {"type": "dict"}},
+            },
+        },
+    },
     # {
     #   "type": "function",
     #   "function": {
