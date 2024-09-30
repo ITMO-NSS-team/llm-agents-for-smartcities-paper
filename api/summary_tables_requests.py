@@ -55,4 +55,6 @@ get_general_stats_transport = partial(
     get_summary_table, table=possible_tables["transport"]
 )
 get_general_stats_object = partial(get_summary_table, table=possible_tables["object"])
-get_general_stats_complaints = partial(get_summary_table, table=possible_tables["complaints"])
+get_general_stats_complaints = partial(
+    get_summary_table, table=possible_tables["complaints"]
+)
