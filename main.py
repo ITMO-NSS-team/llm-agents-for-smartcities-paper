@@ -13,7 +13,9 @@ from utils.logging_config import configure_logging
 
 
 class Question(BaseModel):
-    question_body: str = "What are the demographic development problems of Saint Petersburg?"
+    question_body: str = (
+        "What are the demographic development problems of Saint Petersburg?"
+    )
     chunk_num: int = 4
     territory_name_id: str = "Saint Petersburg"
     territory_type: str = "city"
