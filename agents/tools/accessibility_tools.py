@@ -126,7 +126,7 @@ accessibility_tools = [
         "function": {
             "name": "get_general_stats_provision",
             "description": "Возвращает статистику по показателям обеспеченности городскими службами, как: "
-                           "пожарные станции, полицейские участки, вокзалы.",
+            "пожарные станции, полицейские участки, вокзалы.",
             "parameters": {
                 "type": "object",
                 "properties": {"coordinates": {"type": "dict"}},
