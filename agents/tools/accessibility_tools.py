@@ -126,8 +126,8 @@ accessibility_tools = [
         "function": {
             "name": "get_general_stats_provision",
             "description": "Returns statistics on the provision of urban services of all kinds: "
-                           "[fire stations, police stations, train stations, public service centers, "
-                           "gas stations, trash bins, housing services, utilities];",
+            "[fire stations, police stations, train stations, public service centers, "
+            "gas stations, trash bins, housing services, utilities];",
             "parameters": {
                 "type": "object",
                 "properties": {"coordinates": {"type": "dict"}},
