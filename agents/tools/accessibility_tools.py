@@ -114,7 +114,7 @@ accessibility_tools = [
         "type": "function",
         "function": {
             "name": "get_general_stats_complaints",
-            "description": "Возвращает статистику по различным жалобам на городские и жилищно-коммунальные услуги.",
+            "description": "Returns statistics on various complaints regarding urban and housing services.",
             "parameters": {
                 "type": "object",
                 "properties": {"coordinates": {"type": "dict"}},
@@ -126,9 +126,9 @@ accessibility_tools = [
         "type": "function",
         "function": {
             "name": "get_general_stats_provision",
-            "description": "Возвращает статистику по обеспеченности городскими службами всех видов:"
-            "[пожарные станции, отделения полиции, вокзалы, МФЦ, автозаправки, мусорные баки, "
-            "жилкомсервисы, ЖКХ];",
+            "description": "Returns statistics on the provision of urban services of all kinds: "
+                           "[fire stations, police stations, train stations, public service centers, "
+                           "gas stations, trash bins, housing services, utilities];",
             "parameters": {
                 "type": "object",
                 "properties": {"coordinates": {"type": "dict"}},
