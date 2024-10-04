@@ -10,8 +10,9 @@ mention for what field there was no data.
 5. If you do not know how to answer the questions, say so.
 6. Before give an answer to the user question, provide explanation. Mark the answer
 with keyword 'ОТВЕТ', and explanation with 'ОБЪЯСНЕНИЕ'. Both answer and explanation must
-be in Russian language
-7. Answer should be three sentences maximum.
+be in Russian language.
+7. If the question is about complaints, answer about at least 5 complaints topics.
+8. Answer should be three sentences maximum.
 For each sentence in English language you will be fined for 100$, so in answers you must
 use only Russian language.
 """
