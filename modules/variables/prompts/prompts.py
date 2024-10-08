@@ -29,8 +29,6 @@ with keyword 'ANSWER', and explanation with 'EXPLANATION'. Both answer and expla
 must be in Russian language
 6. The answer should consist of as many sentences as are necessary to answer the
 question given the context, but not more five sentences.
-For each sentence in English language you will be fined for 100$, so in answers you
-must use only Russian language.
 """
 
 buildings_sys_prompt = r"""Your name is Larry. You are smart AI assistant, You have high

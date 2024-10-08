@@ -39,11 +39,11 @@ strategy_and_access_data = pd.read_csv(
 )
 strategy_data = pd.read_csv(Path(path_to_data, "test_data", "strategy_questions.csv"))
 access_data_simple = pd.read_csv(
-    Path(path_to_data, "test_data", "urb_accessibility_questions.csv")
+    Path(path_to_data, "test_data", "accessibility_dataset_eng.csv")
 )
 strategy_data = strategy_data[strategy_data["correct_answer"].notnull()]
-access_data_simple = access_data_simple[access_data_simple["Answer"].notnull()]
-collection_name = "strategy-spb"
+access_data_simple = access_data_simple[access_data_simple["correct_answer"].notnull()]
+collection_name = "strategy-spb-eng"
 total_all_questions = strategy_and_access_data.shape[0]
 total_strategy_questions = strategy_data.shape[0]
 total_access_questions = access_data_simple.shape[0]
@@ -192,7 +192,7 @@ def accessibility_pipeline_test() -> None:
     """
     print("Accessibility pipeline test is running...")
     path_to_results = Path(
-        path_to_data, "test_results", "accessibility_pipeline_test_results.txt"
+        path_to_data, "test_results", "eng_accessibility_pipeline_test_results.txt"
     )
     os.makedirs(os.path.dirname(path_to_results), exist_ok=True)
 
@@ -205,12 +205,12 @@ def accessibility_pipeline_test() -> None:
 
     for i, row in access_data_simple.iterrows():
         print(f"Processing question {i}")
-        question = row["Question"]
-        correct_answer = row["Answer"]
-        correct_function = row["Dataset"]
-        t_t = row["Territory Type"]
-        t_n = row["Territory Name"]
-        cs = row["Geometry"]
+        question = row["question"]
+        correct_answer = row["correct_answer"]
+        correct_function = row["correct_functions"]
+        t_t = row["territory_type"]
+        t_n = row["territory_name"]
+        cs = row["geometry"]
         t_type = None if pd.isnull(t_t) else t_t
         if pd.isnull(t_n):
             t_name = None
@@ -222,7 +222,7 @@ def accessibility_pipeline_test() -> None:
         if pd.isnull(cs):
             coordinates = None
         else:
-            coordinates = eval(row["Geometry"])["coordinates"]
+            coordinates = eval(row["geometry"])["coordinates"]
         agent = Agent("LLAMA_FC_URL", accessibility_tools)
         with Timer() as t:
             functions = agent.choose_functions(question, fc_sys_prompt, fc_user_prompt)
@@ -252,7 +252,7 @@ def accessibility_pipeline_test() -> None:
             correct_function_choice += 1
         correct_answer = re.findall(r"\d+,\d+|\d+\.\d+|\d+", correct_answer)
         numbers_from_response = re.findall(
-            r"\d+,\d+|\d+\.\d+|\d+", llm_res.split("ОТВЕТ")[1]
+            r"\d+,\d+|\d+\.\d+|\d+", llm_res
         )
         correct_answer = list(map(lambda x: x.replace(",", "."), correct_answer))
         numbers_from_response = list(
@@ -398,5 +398,5 @@ if __name__ == "__main__":
     metrics = [answer_relevancy, faithfulness, correctness_metric]
     # choose_pipeline_test()
     # choose_functions_test()
-    # accessibility_pipeline_test()
-    strategy_pipeline_test(metrics, chunks)
+    accessibility_pipeline_test()
+    # strategy_pipeline_test(metrics, chunks)
