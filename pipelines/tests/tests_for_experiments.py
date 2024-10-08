@@ -11,7 +11,6 @@ from deepeval.metrics import GEval
 from deepeval.test_case import LLMTestCase
 from deepeval.test_case import LLMTestCaseParams
 import pandas as pd
-from utils_for_test import generate_path_to_results
 
 from agents.agent import Agent
 from agents.prompts import ac_cor_user_prompt
@@ -30,6 +29,7 @@ from modules.variables.prompts import strategy_sys_prompt
 from pipelines.accessibility_pipeline import define_default_functions
 from pipelines.accessibility_pipeline import set_default_value_if_empty
 from pipelines.strategy_pipeline import retrieve_context_from_chroma
+from pipelines.tests.utils_for_test import generate_path_to_results
 from utils.measure_time import Timer
 
 
@@ -60,8 +60,26 @@ context_relevancy = ContextualRelevancyMetric(**metrics_init_params)
 correctness_metric = GEval(
     name="Correctness",
     criteria=(
-        "Correctness - determine if the actual output is factually "
-        "correct according to the expected output."
+        "1. Correctness and Relevance:"
+        "- Compare the actual response against the expected response. Determine the"
+        " extent to which the actual response captures the key elements and concepts of"
+        " the expected response."
+        "- Assign higher scores to actual responses that accurately reflect the core"
+        " information of the expected response, even if only partial."
+        "2. Numerical Accuracy and Interpretation:"
+        "- Pay particular attention to any numerical values present in the expected"
+        " response. Verify that these values are correctly included in the actual"
+        " response and accurately interpreted within the context."
+        "- Ensure that units of measurement, scales, and numerical relationships are"
+        " preserved and correctly conveyed."
+        "3. Allowance for Partial Information:"
+        "- Do not heavily penalize the actual response for incompleteness if it covers"
+        " significant aspects of the expected response. Prioritize the correctness of"
+        " provided information over total completeness."
+        "4. Handling of Extraneous Information:"
+        "- While additional information not present in the expected response should not"
+        " necessarily reduce score, ensure that such additions do not introduce"
+        " inaccuracies or deviate from the context of the expected response."
     ),
     evaluation_params=[
         LLMTestCaseParams.ACTUAL_OUTPUT,
@@ -71,7 +89,7 @@ correctness_metric = GEval(
 )
 
 
-def choose_pipeline_test(answer_check: bool = False) -> None:
+def choose_pipeline_test(answer_check: bool = False) -> pd.DataFrame:
     """Tests pipeline choosing functions.
 
     Counts number of correctly chosen pipelines and measures elapsed time for
@@ -116,24 +134,27 @@ def choose_pipeline_test(answer_check: bool = False) -> None:
         results["territory_name"].append(t_name)
         agent = Agent("LLAMA_FC_URL", pipeline_tools)
         with Timer() as t:
-            pipeline = agent.choose_functions(
-                question, fc_sys_prompt, binary_fc_user_prompt
-            )
+            try:
+                pipeline = agent.choose_functions(
+                    question, fc_sys_prompt, binary_fc_user_prompt
+                )
+                results["pipeline_from_model"].append(pipeline[0])
+            except:
+                results["pipeline_from_model"].append(None)
             results["pipeline_selection_time"].append(t.seconds_from_start)
         if answer_check:
             with Timer() as t:
-                checked_pipeline = agent.check_functions(
-                    question, pipeline, base_sys_prompt, pip_cor_user_prompt
-                )
                 if results.get("pipeline_checking_time") is None:
                     results["pipeline_checking_time"] = []
                     results["checked_pipeline_from_model"] = []
-                    results["pipeline_checking_time"].append(t.seconds_from_start)
+                try:
+                    checked_pipeline = agent.check_functions(
+                        question, pipeline, base_sys_prompt, pip_cor_user_prompt
+                    )
                     results["checked_pipeline_from_model"].append(checked_pipeline[0])
-                else:
-                    results["pipeline_checking_time"].append(t.seconds_from_start)
-                    results["checked_pipeline_from_model"].append(checked_pipeline[0])
-        results["pipeline_from_model"].append(pipeline[0])
+                except:
+                    results["checked_pipeline_from_model"].append(None)
+                results["pipeline_checking_time"].append(t.seconds_from_start)
 
     result_df = pd.DataFrame.from_dict(results)
     result_df.to_csv(path_to_df, index=False)
@@ -146,15 +167,29 @@ def choose_pipeline_test(answer_check: bool = False) -> None:
     )
     avg_pipe_choose_time = result_df["pipeline_selection_time"].mean().round(2)
     avg_pipe_check_time = "RUN WITHOUT CHECKING"
+    corr_pipe_percent_check = "RUN WITHOUT CHECKING"
     if answer_check:
+        result_df.loc[:, "correct_or_not_check"] = result_df.apply(
+            lambda r: 1
+            if r["checked_pipeline_from_model"] == r["correct_pipeline"]
+            else 0,
+            axis=1,
+        )
+        corr_pipe_percent_check = (
+            result_df["correct_or_not_check"].value_counts(normalize=True).loc[1].round(4)
+            * 100
+        )
         avg_pipe_check_time = result_df["pipeline_checking_time"].mean().round(2)
 
     to_print = f"""Percentage of correctly chosen pipeline: {corr_pipe_percent}
+Percentage of correctly chosen pipeline with checking: {corr_pipe_percent_check}
 Average pipeline choosing time: {avg_pipe_choose_time}
 Average pipeline checking time: {avg_pipe_check_time}"""
 
     with open(path_to_results, "w") as f:
         print(to_print, file=f)
+
+    return result_df
 
 
 # The same metrics as this function are counted in the next test, so there is little point
@@ -248,7 +283,7 @@ Average function checking time: {avg_func_check_time}"""
 
 def accessibility_pipeline_test(
     metrics_to_calculate: List, answer_check: bool = False
-) -> None:
+) -> pd.DataFrame:
     """Tests whole accessibility pipeline.
 
     Counts the number of correctly chosen functions and correct answers,
@@ -276,6 +311,7 @@ def accessibility_pipeline_test(
         "correct_answer": [],
         "correct_function": [],
         "function_from_model": [],
+        "functions_for_context": [],
         "context": [],
         "answer_from_model": [],
         "function_selection_time": [],
@@ -313,31 +349,55 @@ def accessibility_pipeline_test(
         results["territory_name"].append(t_name)
         agent = Agent("LLAMA_FC_URL", accessibility_tools)
         with Timer() as t:
-            functions = agent.choose_functions(question, fc_sys_prompt, fc_user_prompt)
-            results["function_selection_time"].append(t.seconds_from_start)
-        if answer_check:
-            with Timer() as t:
-                functions = agent.check_functions(
-                    question, functions, base_sys_prompt, ac_cor_user_prompt
+            try:
+                functions = agent.choose_functions(
+                    question, fc_sys_prompt, fc_user_prompt
                 )
-                if results.get("function_checking_time") is None:
-                    results["function_checking_time"] = []
-                    results["function_checking_time"].append(t.seconds_from_start)
-                else:
-                    results["function_checking_time"].append(t.seconds_from_start)
-        functions = define_default_functions(t_type, t_name, coordinates) + functions
-        functions = set_default_value_if_empty(functions)
-        results["function_from_model"].append(functions)
-        context = agent.retrieve_context_from_api(t_name, t_type, coordinates, functions)
+            except:
+                functions = []
+            results["function_selection_time"].append(t.seconds_from_start)
+            results["function_from_model"].append(functions)
+            functions = define_default_functions(t_type, t_name, coordinates) + functions
+            functions = set_default_value_if_empty(functions)
+            results["functions_for_context"].append(functions)
+        if answer_check:
+            if results.get("function_checking_time") is None:
+                results["function_checking_time"] = []
+                results["checked_function_from_model"] = []
+                results["functions_for_context_check"] = []
+            with Timer() as t:
+                try:
+                    functions = agent.check_functions(
+                        question, functions, base_sys_prompt, ac_cor_user_prompt
+                    )
+                except:
+                    functions = []
+                results["function_checking_time"].append(t.seconds_from_start)
+                results["checked_function_from_model"].append(functions)
+                functions = (
+                    define_default_functions(t_type, t_name, coordinates) + functions
+                )
+                functions = set_default_value_if_empty(functions)
+                results["functions_for_context_check"].append(functions)
+        try:
+            context = agent.retrieve_context_from_api(
+                t_name, t_type, coordinates, functions
+            )
+        except:
+            context = ""
         results["context"].append(context)
         with Timer() as t:
             model_url = os.environ.get("LLAMA_URL")
             model_connector = LanguageModelCreator.create_llm_connector(
                 model_url, accessibility_sys_prompt
             )
-            llm_res = model_connector.generate(question, context)
+            try:
+                llm_res = model_connector.generate(question, context)
+                results["answer_from_model"].append(llm_res)
+            except:
+                llm_res = "No response due to an error"
+                results["answer_from_model"].append(None)
             results["answer_generation_time"].append(t.seconds_from_start)
-            results["answer_from_model"].append(llm_res)
         test_case = LLMTestCase(
             input=question,
             actual_output=llm_res,
@@ -367,13 +427,23 @@ def accessibility_pipeline_test(
     result_df.to_csv(path_to_df, index=False)
     mask = result_df["correct_pipeline"] == "service_accessibility_pipeline"
     correct_or_not = result_df[mask].apply(
-        lambda r: 1 if r["correct_function"] in r["function_from_model"] else 0, axis=1
+        lambda r: 1 if r["correct_function"] in r["functions_for_context"] else 0, axis=1
     )
     # Calculation of basic statistics for exec time and function selection
     corr_func = correct_or_not.value_counts(normalize=True).loc[1].round(4) * 100
     avg_func_choose_time = result_df["function_selection_time"].mean().round(2)
+    corr_func_check = "RUN WITHOUT CHECKING"
     avg_func_check_time = "RUN WITHOUT CHECKING"
     if answer_check:
+        correct_or_not_check = result_df[mask].apply(
+            lambda r: 1
+            if r["correct_function"] in r["functions_for_context_check"]
+            else 0,
+            axis=1,
+        )
+        corr_func_check = (
+            correct_or_not_check.value_counts(normalize=True).loc[1].round(4) * 100
+        )
         avg_func_check_time = result_df["function_checking_time"].mean().round(2)
     avg_ans_generation_time = result_df["answer_generation_time"].mean().round(2)
     avg_total_time = result_df["total_time"].mean().round(2)
@@ -385,14 +455,15 @@ def accessibility_pipeline_test(
     for column in metrics_score_columns:
         result_df[column] = pd.to_numeric(result_df[column])
         avg_score = result_df[result_df[column] != -1][column].mean()
-        success_metric = result_df[result_df[column] != -1].shape[0]
+        failed_evaluations = result_df[result_df[column] == -1].shape[0]
         metrics_to_print.append(
-            f"Average {column} is {avg_score}. Number of successfully"
-            f" processed questions {success_metric}"
+            f"Average {column} is {avg_score}. Number of unsuccessfully"
+            f" processed questions {failed_evaluations}"
         )
     short_metrics_result = "\n".join(metrics_to_print)
 
     to_print = f"""Percentage of correctly chosen functions: {corr_func}
+Percentage of correctly chosen functions with checking: {corr_func_check}
 Average function choosing time: {avg_func_choose_time}
 Average functions checking time: {avg_func_check_time}
 Average answer generation time: {avg_ans_generation_time}
@@ -403,8 +474,12 @@ Short metrics results:
     with open(path_to_results, "w") as f:
         print(to_print, file=f)
 
+    return result_df
 
-def strategy_pipeline_test(metrics_to_calculate: List, chunk_num: int = 4) -> None:
+
+def strategy_pipeline_test(
+    metrics_to_calculate: List, chunk_num: int = 4
+) -> pd.DataFrame:
     """Tests strategy pipeline.
 
     Evaluate metrics for model answers using 'deepeval' and measures elapsed
@@ -428,7 +503,7 @@ def strategy_pipeline_test(metrics_to_calculate: List, chunk_num: int = 4) -> No
         "territory_name": [],
         "correct_answer": [],
         "context": [],
-        "llm_ans": [],
+        "answer_from_model": [],
         "answer_generation_time": [],
     }
     for metric in metrics_to_calculate:
@@ -458,9 +533,13 @@ def strategy_pipeline_test(metrics_to_calculate: List, chunk_num: int = 4) -> No
             model_connector = LanguageModelCreator.create_llm_connector(
                 model_url, strategy_sys_prompt
             )
-            llm_ans = model_connector.generate(question, context)
+            try:
+                llm_ans = model_connector.generate(question, context)
+                results["answer_from_model"].append(llm_ans)
+            except:
+                llm_ans = "No response due to an error"
+                results["answer_from_model"].append(None)
             results["answer_generation_time"].append(t.seconds_from_start)
-            results["llm_ans"].append(llm_ans)
         test_case = LLMTestCase(
             input=question,
             actual_output=llm_ans,
@@ -491,10 +570,10 @@ def strategy_pipeline_test(metrics_to_calculate: List, chunk_num: int = 4) -> No
     for column in metrics_score_columns:
         result_df[column] = pd.to_numeric(result_df[column])
         avg_score = result_df[result_df[column] != -1][column].mean()
-        success_metric = result_df[result_df[column] != -1].shape[0]
+        failed_evaluations = result_df[result_df[column] == -1].shape[0]
         metrics_to_print.append(
-            f"Average {column} is {avg_score}. Number of successfully"
-            f" processed questions {success_metric}"
+            f"Average {column} is {avg_score}. Number of unsuccessfully"
+            f" processed questions {failed_evaluations}"
         )
     short_metrics_result = "\n".join(metrics_to_print)
 
@@ -506,6 +585,101 @@ Short metrics results:
     with open(path_to_results, "w") as f:
         print(to_print, file=f)
 
+    return result_df
+
+
+def complete_pipeline_metrics(
+    pipeline_selection: str = None,
+    accessibility_pipeline: str = None,
+    strategy_pipeline: str = None,
+    check_flag: bool = False,
+) -> None:
+    """Calculate complete statistics for app
+
+    Args:
+        pipeline_selection: pipeline selection test results file
+        accessibility_pipeline: accessibility pipeline test results file
+        strategy_pipeline: strategy pipeline test results file
+        check_flag: run tests with answer check or not
+    """
+    files = [pipeline_selection, accessibility_pipeline, strategy_pipeline]
+    test_names = ["pipeline_selection", "accessibility_pipeline", "strategy_pipeline"]
+    paths = []
+    if not all(files):
+        pipeline_selection_df = choose_pipeline_test(answer_check=check_flag)
+        access_pipeline_df = accessibility_pipeline_test(metrics, answer_check=check_flag)
+        strategy_pipeline_df = strategy_pipeline_test(metrics, chunks)
+    else:
+        for test_name, file_name in zip(test_names, files):
+            paths.append(Path(path_to_data, "test_results", test_name, file_name))
+        pipeline_selection_df = pd.read_csv(paths[0])
+        access_pipeline_df = pd.read_csv(paths[1])
+        strategy_pipeline_df = pd.read_csv(paths[2])
+
+    metrics_results = dict()
+
+    for pipeline in ["service_accessibility_pipeline", "strategy_development_pipeline"]:
+        if check_flag:
+            selected_pipeline = pipeline_selection_df[
+                pipeline_selection_df["checked_pipeline_from_model"] == pipeline
+            ]
+        else:
+            selected_pipeline = pipeline_selection_df[
+                pipeline_selection_df["pipeline_from_model"] == pipeline
+            ]
+
+        if pipeline == "service_accessibility_pipeline":
+            df_to_calculate = selected_pipeline.merge(
+                access_pipeline_df,
+                on=["question", "territory_name"],
+                how="inner",
+                suffixes=["_1", "_2"],
+            )
+        else:
+            df_to_calculate = selected_pipeline.merge(
+                strategy_pipeline_df,
+                on=["question", "territory_name"],
+                how="inner",
+                suffixes=["_1", "_2"],
+            )
+        mask = (df_to_calculate["answer_from_model"].isnull()) | (
+            df_to_calculate["answer_from_model"] == ""
+        )
+        failed_questions = df_to_calculate[mask].shape[0]
+        avg_ans_generation_time = (
+            df_to_calculate["answer_generation_time"].mean().round(2)
+        )
+        avg_total_time = df_to_calculate["total_time"].mean().round(2)
+        metrics_score_columns = list(
+            filter(lambda x: "score" in x, df_to_calculate.columns.tolist())
+        )
+        metrics_to_print = []
+        for column in metrics_score_columns:
+            df_to_calculate[column] = pd.to_numeric(df_to_calculate[column])
+            failed_evaluations = df_to_calculate[df_to_calculate[column] == -1].shape[0]
+            avg_score = df_to_calculate[df_to_calculate[column] != -1][column].mean()
+            if metrics_results.get(column) is None:
+                metrics_results[column] = []
+            metrics_results[column].append(avg_score)
+            metrics_to_print.append(
+                f"Average {column} is {avg_score}. Number of unsuccessfully"
+                f" processed questions {failed_evaluations}"
+            )
+        short_metrics_result = "\n".join(metrics_to_print)
+        print(f"""Results for questions that have been assigned to the {pipeline}
+Number of failed questions: {failed_questions}
+Average answer generation time ({pipeline}): {avg_ans_generation_time}
+Average total time: ({pipeline}): {avg_total_time}
+Metrics results:
+{short_metrics_result}
+""")
+
+    model_name = os.getenv("MODEL_NAME")
+    print(f"Results for {model_name}")
+    for k in metrics_results.keys():
+        avg = sum(metrics_results[k]) / len(metrics_results[k])
+        print(f"Average result for {k} is {avg}")
+
 
 if __name__ == "__main__":
     chunks = 4
@@ -515,3 +689,10 @@ if __name__ == "__main__":
     # choose_pipeline_test(answer_check=False)
     accessibility_pipeline_test(metrics, answer_check=False)
     # strategy_pipeline_test(metrics, chunks)
+
+    # path_1 = "pipeline_selection_llama3_1_70b_instruct_2024-09-27 16:43:00.csv"
+    # path_2 = "accessibility_pipeline_llama3_1_70b_instruct_2024-09-27 16:44:00.csv"
+    # path_3 = "strategy_pipeline_llama3_1_70b_instruct_2024-09-27 16:51:00.csv"
+    # complete_pipeline_metrics(path_1, path_2, path_3, check_flag=False)
+
+    # complete_pipeline_metrics(check_flag=False)
