@@ -141,10 +141,10 @@ accessibility_tools = [
         "function": {
             "name": "get_general_stats_recreation",
             "description": "Returns statistics on the provision of recreational areas and facilities for "
-                           "leisure: [parks, beaches, embankments]; data on the accessibility of "
-                           "recreational objects by transport and walking, as well as the levels of population "
-                           "coverage by recreational zones. Includes evaluation of transport accessibility to "
-                           "beaches, walking accessibility to embankments and parks.",
+            "leisure: [parks, beaches, embankments]; data on the accessibility of "
+            "recreational objects by transport and walking, as well as the levels of population "
+            "coverage by recreational zones. Includes evaluation of transport accessibility to "
+            "beaches, walking accessibility to embankments and parks.",
             "parameters": {
                 "type": "object",
                 "properties": {"coordinates": {"type": "dict"}},
