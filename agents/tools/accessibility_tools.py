@@ -118,6 +118,7 @@ accessibility_tools = [
             "parameters": {
                 "type": "object",
                 "properties": {"coordinates": {"type": "dict"}},
+                "required": ["coordinates"],
             },
         },
     },
@@ -131,6 +132,21 @@ accessibility_tools = [
             "parameters": {
                 "type": "object",
                 "properties": {"coordinates": {"type": "dict"}},
+                "required": ["coordinates"],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_general_stats_recreation",
+            "description": "Возвращает статистику по обеспеченности рекреационными зонами и объектами для отдыха: [парки, пляжи, набережные]; "
+            "данные о транспортной и пешей доступности рекреационных объектов и уровнях обеспеченности населения рекреационными "
+            "зонами. Оценка доступности пляжей на транспорте, набережных и парков пешком.",
+            "parameters": {
+                "type": "object",
+                "properties": {"coordinates": {"type": "dict"}},
+                "required": ["coordinates"],
             },
         },
     },

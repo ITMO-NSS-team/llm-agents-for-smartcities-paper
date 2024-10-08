@@ -61,3 +61,6 @@ get_general_stats_complaints = partial(
 get_general_stats_provision = partial(
     get_summary_table, table=possible_tables["provision"]
 )
+get_general_stats_recreation = partial(
+    get_summary_table, table=possible_tables["recreation"]
+)
