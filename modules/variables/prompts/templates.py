@@ -14,3 +14,13 @@ llama_8b_template = (
     r'{"role":"user","content":"${user_prompt}"}]}'
 )
 all_gpt_template = r'[{"role":"system","content":"${system_prompt}"},{"role":"user","content":"${user_prompt}"}]'
+
+llama_70b_int4_template = (
+    r'{"job_id":"${job_id}",'
+    r'"meta":{"temperature":"${temperature}",'
+    r'"tokens_limit":"${token_limit}",'
+    r'"stop_words":[]},'
+    r'"messages":[{"role":"system",'
+    r'"content":"${system_prompt}"},'
+    r'{"role":"user","content":"${user_prompt}"}]}'
+)

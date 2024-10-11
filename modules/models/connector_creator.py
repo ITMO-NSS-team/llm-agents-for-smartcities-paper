@@ -14,6 +14,7 @@ from modules.variables import ROOT
 from modules.variables.prompts import all_gpt_template
 from modules.variables.prompts import llama_8b_template
 from modules.variables.prompts import llama_70b_template
+from modules.variables.prompts.templates import llama_70b_int4_template
 
 
 load_dotenv(ROOT / "config.env")
@@ -33,6 +34,10 @@ class LanguageModelCreator:
             "template": llama_70b_template,
             "postprocessor": llama_70b_postprocessing,
         },
+        "llama-70b-int4": {
+            "template": llama_70b_int4_template,
+            "postprocessor": llama_70b_postprocessing,
+        },
     }
 
     @classmethod
@@ -44,6 +49,9 @@ class LanguageModelCreator:
 
         Returns: The type of the LLM service.
         """
+        if "stairs-llm-queue" in url:
+            return "llama-70b-int4"
+
         url_parts = urllib.parse.urlparse(url)
         url = f"{url_parts.scheme}://{url_parts.netloc}/v1/models"
         res = requests.get(url=url)

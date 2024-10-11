@@ -34,14 +34,18 @@ from utils.measure_time import Timer
 
 
 path_to_data = Path(ROOT, "pipelines", "tests")
-all_questions = pd.read_csv(Path(path_to_data, "test_data", "complete_dataset.csv"))
+# all_questions = pd.read_csv(Path(path_to_data, "test_data", "complete_dataset.csv"))
+all_questions = pd.read_csv(
+    Path(path_to_data, "test_data", "accessibility_dataset_eng_full.csv")
+)
 strategy_data = all_questions.loc[
     all_questions["correct_pipeline"] == "strategy_development_pipeline"
 ].reset_index()
 access_data = all_questions.loc[
     all_questions["correct_pipeline"] == "service_accessibility_pipeline"
 ].reset_index()
-collection_name = "strategy-spb"
+# collection_name = "strategy-spb"
+collection_name = "strategy-spb-eng"
 
 model = VseGPTConnector(
     model="openai/gpt-4o-mini"
@@ -49,7 +53,7 @@ model = VseGPTConnector(
 
 metrics_init_params = {
     "model": model,
-    "verbose_mode": False,
+    "verbose_mode": True,
     "async_mode": False,
 }
 answer_relevancy = AnswerRelevancyMetric(**metrics_init_params)
@@ -684,15 +688,15 @@ Metrics results:
 if __name__ == "__main__":
     chunks = 4
     # metrics = [answer_relevancy, faithfulness, correctness_metric]
-    metrics = [correctness_metric]
+    metrics = [correctness_metric, answer_relevancy]
     # metrics = []
-    # choose_pipeline_test(answer_check=False)
-    accessibility_pipeline_test(metrics, answer_check=False)
+    # choose_pipeline_test(answer_check=True)
+    # accessibility_pipeline_test(metrics, answer_check=True)
     # strategy_pipeline_test(metrics, chunks)
 
-    # path_1 = "pipeline_selection_llama3_1_70b_instruct_2024-09-27 16:43:00.csv"
-    # path_2 = "accessibility_pipeline_llama3_1_70b_instruct_2024-09-27 16:44:00.csv"
-    # path_3 = "strategy_pipeline_llama3_1_70b_instruct_2024-09-27 16:51:00.csv"
-    # complete_pipeline_metrics(path_1, path_2, path_3, check_flag=False)
+    # path_1 = "pipeline_selection_with_check_mixtral-8x22b-instruct_2024-10-09 19:00:00.csv"
+    # path_2 = "accessibility_pipeline_with_check_mixtral-8x22b-instruct_2024-10-09 19:11:00.csv"
+    # path_3 = "strategy_pipeline_mixtral-8x22b-instruct_2024-10-09-13:59:00.csv"
+    # complete_pipeline_metrics(path_1, path_2, path_3, check_flag=True)
 
-    # complete_pipeline_metrics(check_flag=False)
+    complete_pipeline_metrics(check_flag=False)
