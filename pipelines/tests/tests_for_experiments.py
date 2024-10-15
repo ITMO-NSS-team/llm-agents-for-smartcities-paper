@@ -36,7 +36,7 @@ from utils.measure_time import Timer
 path_to_data = Path(ROOT, "pipelines", "tests")
 # all_questions = pd.read_csv(Path(path_to_data, "test_data", "complete_dataset.csv"))
 all_questions = pd.read_csv(
-    Path(path_to_data, "test_data", "accessibility_dataset_eng_full.csv")
+    Path(path_to_data, "test_data", "dataset_eng_full.csv")
 )
 strategy_data = all_questions.loc[
     all_questions["correct_pipeline"] == "strategy_development_pipeline"
