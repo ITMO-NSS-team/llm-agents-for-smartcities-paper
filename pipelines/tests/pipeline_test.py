@@ -251,9 +251,7 @@ def accessibility_pipeline_test() -> None:
         if correct_function in res_funcs:
             correct_function_choice += 1
         correct_answer = re.findall(r"\d+,\d+|\d+\.\d+|\d+", correct_answer)
-        numbers_from_response = re.findall(
-            r"\d+,\d+|\d+\.\d+|\d+", llm_res.split("ОТВЕТ")[1]
-        )
+        numbers_from_response = re.findall(r"\d+,\d+|\d+\.\d+|\d+", llm_res)
         correct_answer = list(map(lambda x: x.replace(",", "."), correct_answer))
         numbers_from_response = list(
             map(lambda x: x.replace(",", "."), numbers_from_response)

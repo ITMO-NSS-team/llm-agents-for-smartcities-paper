@@ -18,12 +18,12 @@ accessibility_tools = [
         "type": "function",
         "function": {
             "name": "get_general_stats_healthcare",
-            "description": "Returns statistics on all possible healthcare facilities for PEOPLE, "
-            "everything related to human health: [clinics, "
-            "polyclinics, hospitals, inpatient facilities, trauma departments, maternity homes, "
-            "dentistry, women's consultations, pharmacies, emergency stations, "
-            "psychological help centers]; data on the transport accessibility of all "
-            "medical services.",
+            "description": "Возвращает статистику по всем возможным объектам здравоохранения для ЛЮДЕЙ, "
+            "всем что связано с человеческим здровьем:  [клиники,"
+            "поликлиники, больницы, стационары, травматологические отделения, родильные дома,"
+            "стоматология, женские консультации, аптеки, станции "
+            "скорой помощи, центры психологической помощи]; данные о транспортной доступности всех "
+            "медицинских услуг",
             "parameters": {
                 "type": "object",
                 "properties": {"coordinates": {"type": "dict"}},
@@ -141,10 +141,10 @@ accessibility_tools = [
         "function": {
             "name": "get_general_stats_recreation",
             "description": "Returns statistics on the provision of recreational areas and facilities for "
-                           "leisure: [parks, beaches, embankments]; data on the accessibility of "
-                           "recreational objects by transport and walking, as well as the levels of population "
-                           "coverage by recreational zones. Includes evaluation of transport accessibility to "
-                           "beaches, walking accessibility to embankments and parks.",
+            "leisure: [parks, beaches, embankments]; data on the accessibility of "
+            "recreational objects by transport and walking, as well as the levels of population "
+            "coverage by recreational zones. Includes evaluation of transport accessibility to "
+            "beaches, walking accessibility to embankments and parks.",
             "parameters": {
                 "type": "object",
                 "properties": {"coordinates": {"type": "dict"}},
