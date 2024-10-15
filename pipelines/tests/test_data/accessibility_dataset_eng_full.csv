@@ -1,0 +1,444 @@
+,question,correct_answer,correct_pipeline,territory_name,context,correct_functions,territory_type,geometry
+0,What is the population's availability of dental clinics?,"The population is 100% provided with dental clinics in the city, and the provision can be considered good. Security in the city in the accessibility zone is 64.18%, security can be considered poor, and a significant part of the population is not provided for",service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_healthcare,city,
+1,How many polyclinics are there in Saint Petersburg?,There are 252 polyclinics in the city of Saint Petersburg.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_city,city,
+2,What is the availability of polyclinics for the population?,"The provision of polyclinics in the city is 100%, and the provision can be considered good. The availability of polyclinics in the city in the accessibility zone is 63.32%, the availability can be considered poor, and a significant part of the population is not provided.",service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_city,city,
+3,What is the availability of hospitals for the population?,"The city's population is 100% provided with hospitals, and the provision can be considered good. The availability of hospitals in the city in the accessibility zone is 94.16%, and the availability can be considered good.",service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_city,city,
+4,What is the availability of trauma departments for the population?,"Provision of the population with emergency rooms in the city is 58.11%, the provision can be considered poor. The availability of emergency rooms in the city in the accessibility zone is 0%. The availability can be considered unsatisfactory, since less than half of the population does not have access to the service.",service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_city,city,
+5,What is the number of fire stations in the Admiralteysky district?,The number of fire stations in the Admiralteysky district is: 4.,service_accessibility_pipeline,Адмиралтейский район,,get_general_stats_provision,district,
+6,What is the number of police stations in the Admiralteysky district?,The number of police stations in the Admiralteysky district is: 24.,service_accessibility_pipeline,Адмиралтейский район,,get_general_stats_provision,district,
+7,What is the number of fire stations in the city of Saint Petersburg?,The number of fire stations in the city is: 74.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_provision,city,
+8,What is the number of police departments in the city of Saint Petersburg?,The number of police departments in the city is: 343.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_provision,city,
+9,What is the number of fire stations in the Vasileostrovsky district?,The number of fire stations in the Vasileostrovsky district is: 2.,service_accessibility_pipeline,Василеостровский район,,get_general_stats_provision,district,
+10,What is the population's availability of playgrounds?,"The city's population is 100% provided with playgrounds, and the provision can be considered good. The availability of children's playgrounds in the city in the accessibility zone is 90.13%, the availability can be considered satisfactory, and a small proportion of the unsecured.",service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_city,city,
+11,How many playgrounds are there in the city?,There are 5737 playgrounds in the city of Saint Petersburg.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_city,city,
+12,How many playgrounds are there in the Admiralteysky district?,There are 208 playgrounds in the Admiralteysky district.,service_accessibility_pipeline,Адмиралтейский район,,get_general_stats_districts_mo,district,
+13,What is the average accessibility of dog walking areas in the city on foot?,The average time to reach dog walking areas on foot in the city is 104.1 minutes.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_services,city,
+14,What is the total area of recreational areas in the city?,The total area of recreational areas in the city is 155455899.12 square meters.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_city,city,
+15,What is the size of the city's resident population?,The population of the city is 7825.4 thousand people.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_city,city,
+16,What is the average total area of residential premises per inhabitant in the city?,The total area of residential premises per average resident in Saint Petersburg is 31.49 sq. m.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_city,city,
+17,What is the share of dilapidated housing in the city?,The share of dilapidated and dilapidated housing stock in the total volume of housing stock is 0%.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_city,city,
+18,What is the share of dilapidated housing in the Admiralteysky district?,The share of dilapidated and dilapidated housing stock in the total volume of housing stock in the Admiralteysky district is 0%.,service_accessibility_pipeline,Адмиралтейский район,,get_general_stats_city,district,
+19,What is the population size in the Admiralteysky district?,The population of Admiralteysky district is 395.73 thousand people.,service_accessibility_pipeline,Адмиралтейский район,,get_general_stats_districts_mo,district,
+20,How many schools are located in Saint Petersburg?,There are 737 schools in St. Petersburg.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_city,city,
+21,How many educational facilities are there in the Admiralteysky district?,Total educational facilities in the Admiralteysky district: 148.,service_accessibility_pipeline,Адмиралтейский район,,get_general_stats_districts_mo,district,
+22,What is the availability of educational facilities for the population?,"The population is provided with educational facilities in the city of 85.91%, the provision can be considered satisfactory, a small proportion of unsecured. The availability of educational facilities in the city in the accessibility zone is 45.94%, which can be considered unsatisfactory, since less than half of the population does not have access to the service.",service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_city,city,
+23,What is the average availability of preschool institutions in the city?,"The provision of kindergartens in the city is 100%, and the provision can be considered good. The availability of kindergartens in the accessibility zone in the city is 39.48%, while the availability in the accessibility zone can be considered unsatisfactory, since less than half of the population does not have access to the service.",service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_city,city,
+24,What is the population's availability of schools?,"The provision of schools in the city is 75.87%, the provision can be considered poor, and a significant part of the population is not provided for. The availability of schools in the city's accessibility zone is 44.63%, while the availability in the accessibility zone can be considered unsatisfactory, since less than half of the population does not have access to the service.",service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_city,city,
+25,What is the pedestrian accessibility of public transport stops?,Public transport stops in the city are 5.55 minutes ' walk away. This accessibility is considered good.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_transport,city,
+26,What is the average correspondence time in the city on public transport?,The average correspondence time in the city by public transport in the city is 167.44 minutes. This time limit is considered unacceptably long.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_city,city,
+27,What is the average correspondence time in the city by private transport?,The average correspondence time in the city by private transport in the city is 167.44 minutes. This time limit is considered unacceptably long.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_city,city,
+28,How many train terminals are there in the city?,There are 21 railway terminals in Saint Petersburg.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_provision,city,
+29,What is the number of public transport stops in the city?,Saint Petersburg has 5900 public transport stops.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_city,city,
+30,What is the average time when swimming pools are accessible by public transport?,The average time to reach swimming pools by public transport in the city is 39.97 minutes,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_sports,city,
+31,What is the number of sports infrastructure facilities in the city?,There are 385 sports infrastructure facilities in Saint Petersburg.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_city,city,
+32,What is the provision of swimming pools for the population of St. Petersburg?,"The population is provided with swimming pools at 69.53%. The security indicator is poor, and a significant part of the population does not have access to the services of the service. In the accessibility zone, the availability of swimming pools is 60.28%, which can also be considered poor, and a significant part of the population is not provided for.",service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_sports,city,
+33,What is the availability of sports infrastructure facilities for St. Petersburg residents in the accessibility zone?,"The availability of sports infrastructure facilities in the city in the accessibility zone is 20.87%, which can be considered unsatisfactory, since less than half of the population does not have access to the service. ",service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_sports,city,
+34,What is the average time of access to sports halls by private transport in Saint Petersburg?,The average time to reach gyms by private transport is 41.3 minutes. The average availability time can be interpreted as the average for the city.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_sports,city,
+35,What is the average walking distance to cafes and restaurants?,The average walking distance to cafes and restaurants is 12.5 minutes.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_culture,city,
+36,What is the average circus availability time?,The average circus availability time is 94.97 minutes.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_culture,city,
+37,What is the availability of cultural and leisure facilities?,"The provision of cultural and leisure facilities in the city is 99.99%, and the provision can be considered good. The population's availability of cultural and leisure facilities in the accessible area in the city is 79.48 %, the availability in the accessible area can be considered satisfactory, and a small proportion of those who are unsecured.",service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_culture,city,
+38,What is the average walking distance to museums?,The average walking distance to museums is 39.22 minutes.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_culture,city,
+39,What is the average theater availability time?,The average theater availability time is 57 minutes.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_culture,city,
+40,What is the population's availability of recreational areas?,"The population is 100% provided with recreational areas in the city, and the provision can be considered good. Availability in the accessibility zone is 79.2% and is considered a satisfactory indicator.",service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_city,city,
+41,What is the population's availability of recreational areas in the Admiralteysky district?,"The population is 100% provided with recreational areas in the city, and the provision can be considered good. Availability in the availability zone is 99.03, which is also considered a good indicator.",service_accessibility_pipeline,Адмиралтейский район,,get_general_stats_districts_mo,district,
+42,How many recreational areas are there in Saint Petersburg?,There are 14297 recreational areas in Saint Petersburg.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_city,city,
+43,What is the average time when parks are accessible?,The average accessibility time for park areas is 22.25 minutes.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_city,city,
+44,How many recreational areas are located in the Admiralteysky district?,There are 884 recreational areas in the Admiralteysky district.,service_accessibility_pipeline,Адмиралтейский район,,get_general_stats_districts_mo,district,
+45,What is the average accessibility of multifunctional centers for providing state and municipal services on foot?,The average time of accessibility of multifunctional centers for the provision of state and municipal services on foot in the selected territory is 50.8 minutes.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_services,city,
+46,What is the average accessibility of multifunctional centers for providing state and municipal services on public transport?,The average time of accessibility of multifunctional centers for the provision of state and municipal services by public transport is 29.25 minutes.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_services,city,
+47,What is the average availability of multifunctional centers for providing state and municipal services by private transport?,The average time of accessibility of multifunctional centers for the provision of state and municipal services by private transport in the selected territory is 29.25 minutes.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_services,city,
+48,How many MFC's are located in Saint Petersburg?,There are 345 MFC centers in St. Petersburg.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_services,city,
+49,What is the provision of maternity hospitals for the population?,"The provision of maternity hospitals in the city is 11.02%, which can be considered unsatisfactory, since less than half of the population does not have access to the services of the service. The availability of maternity hospitals in the city in the accessibility zone is 9.22%, which can be considered unsatisfactory, since less than half of the population does not have access to the services of the service.",service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_healthcare,city,
+50,What is the average accessibility of the city center?,The average time to reach the city center is 122.37 minutes.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_city,city,
+51,What is the number of railway stations in the city?,There are 126 railway stations in Saint Petersburg.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_provision,city,
+52,What is the number of public transport stops in the Admiralteysky district?,There are 181 public transport stops in the Admiralteysky district.,service_accessibility_pipeline,Адмиралтейский район,,get_general_stats_transport,district,
+53,What is the average accessibility to the city center from Admiralteysky district?,The average time to reach the city center from Admiralteysky district is 27.47 minutes.,service_accessibility_pipeline,Адмиралтейский район,,get_general_stats_districts_mo,district,
+54,What is the pedestrian accessibility of public transport stops in the Admiralteysky district?,Public transport stops in the Admiralteiskiy district are within walking distance in 2.43 minutes. This accessibility is considered good.,service_accessibility_pipeline,Адмиралтейский район,,get_general_stats_districts_mo,district,
+55,What is the number of preschool children?,The number of preschool children in the city is 103.04 thousand people.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_demography,city,
+56,What is the number of school-age children?,The number of school-age children in the city is 288.94 thousand people.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_demography,city,
+57,What is the number of pensioners?,The number of pensioners in the city is 596.08 thousand people.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_demography,city,
+58,What is the size of the working-age population?,The number of working-age population in the city is 1631.57 thousand people.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_demography,city,
+59,What is the population size below working age?,The city's population below the working age is 375.21 thousand people.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_demography,city,
+60,What is the average walking distance to grocery stores?,The average time to reach grocery stores on foot in the city is 7.64 minutes.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_services,city,
+61,What is the average accessibility of home appliance stores by private transport?,The average time of access to household appliances stores by private transport in Gorod is 35.02 minutes.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_services,city,
+62,What is the average accessibility of bookstores by private transport?,The average time to reach bookstores by private transport in the city is 13.58 minutes.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_services,city,
+63,What is the average accessibility of children's goods stores on foot?,"On the selected territory, the average time to reach children's goods stores on foot in gorod is 69.23 minutes. ",service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_services,city,
+64,How many grocery stores are there in St. Petersburg?,There are 2991 grocery stores in Saint Petersburg.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_services,city,
+65,What is the availability of cultural and leisure facilities?,"In the selected territory, the availability of cultural and leisure facilities is 99.99%, which can be considered good. Availability in the availability zone is 79.48%, it can be considered satisfactory, a small proportion of unsecured",service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_culture,city,
+66,What is the availability of museums for the population?,"The availability of museums is 100%, and the availability can be considered good. Availability in the availability zone is 90.64%, and it can be considered good.",service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_culture,city,
+67,What is the average walking distance to museums?,The average time to reach museums on foot in the city is 39.22 minutes.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_culture,city,
+68,What is the average time that a circus is available?,The average time of circus accessibility in the city is 94.97 minutes.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_culture,city,
+69,What is the average theater availability time?,The average time available for theaters in the city is 57 minutes.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_culture,city,
+70,What is the provision of higher education institutions for the population?,"The provision of universities is 100%, the provision can be considered good. Security in the accessibility zone is 67.54%, it can be considered poor, and a significant part of the population is not provided for.",service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_education,city,
+71,What is the availability of universities for the population of the Admiralteysky district?,"The provision of universities is 100%, the provision can be considered good. Security in the availability zone is 100%, and it can also be considered good.",service_accessibility_pipeline,Адмиралтейский район,,get_general_stats_education,district,
+72,How many universities are there in Saint Petersburg?,There are 226 universities in Saint Petersburg.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_education,city,
+73,What is the provision of secondary vocational education institutions for the population?,"In the selected territory, the provision of secondary vocational education institutions is 100%, and the provision can be considered good. Availability in the accessibility zone is 68.27%, it can be considered poor, and a significant part of the population is not provided for.",service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_education,city,
+74,What is the number of secondary vocational education institutions?,The number of secondary vocational education institutions in the city is 139.,service_accessibility_pipeline,Санкт-Петербург,,get_general_stats_education,city,
+75,"What measures should be taken to implement the task ""Improving the provision of specialized, including high-tech medical care, and increasing its accessibility""?
+","To solve the problem of improving the provision of specialized, including high-tech medical care, and increasing its accessibility, it is necessary to::
+
+ 1. Develop medical infrastructure to extend active life and develop medical tourism.
+ 2. Improve the availability of primary and specialized medical care through the development of consultation and diagnostic centers and outpatient clinics, improving patient routing and implementing public-private partnership projects.
+ 3. Provide state-of-the-art laboratory equipment and create emergency response systems for rapid monitoring of patients ' health.
+ 4. Develop a system for assessing the need for a bed fund and expand the availability of specialized medical care.
+ 5. Develop multidisciplinary and specialized medical organizations, improve the skills of medical professionals and improve the provision of high-tech medical care.
+ 6. Continue to develop high-tech medicine, programs to combat cancer and cardiovascular diseases, and improve transfusion care.
+ 7. Expand palliative care through the opening of new departments, field services and the creation of specialized teams.
+ 8. Develop geriatric centers and departments for the elderly, providing them with the necessary support and services.
+ 9. Create modern health care systems for older age groups in cooperation with social organizations and volunteers.",strategy_development_pipeline,Санкт-Петербург,,,city,
+76,"How can we ensure sustainable natural population growth, improve health, and increase life expectancy?","According to the Strategy of Socio-economic Development:
+achieving the goal of ensuring sustainable natural population growth, improving its health and increasing life expectancy is planned to be implemented through the implementation of the following tasks::
+
+1.1. Task ""Increasing the birth rate, creating favorable conditions for the life of young families and families with children"".
+1.2. Task ""Improving the quality and effectiveness of preventive measures"".
+1.3. Task ""Formation of a healthy lifestyle"".
+1.4. Task ""Development of primary health care"".
+1.5. Task ""Improvement of rehabilitation medical care"".
+1.6. Task ""Improvement of the provision of specialized, including high-tech medical care, and increasing its accessibility"".
+1.7. Task ""Improvement of the system of preferential drug provision"".
+1.8. Task ""Improving conditions for maternal and child health protection, as well as preserving women's reproductive health"".
+1.9. Task ""Improving the efficiency of the medical care system"".
+1.10. Task ""Development of applied research and development, as well as formation of an effective system for implementing scientific developments in clinical practice"".
+1.11. Task ""Development of personalized medicine"".
+1.12. Task ""Creating conditions for providing the healthcare system with highly qualified specialists"".
+1.13. Task ""Improving the level of informatization of the healthcare system, development of e-healthcare and telemedicine"".
+",strategy_development_pipeline,Санкт-Петербург,,,city,
+77,What favorable factors contribute to the development of the healthcare sector in St. Petersburg?,"According to the Strategy of socio-economic development:
+increasing the level of informatization of the healthcare system, developing e-healthcare, developing the market for telemedicine services;
+
+improving the efficiency of patient routing between healthcare organizations;
+
+improving the level of development of applied research and development in the healthcare sector;
+
+increasing the level of implementation of modern treatment methods in clinical practice, including breakthrough discoveries in the field of genetics, genomics, molecular biology, gene and protein engineering, and other areas of medicine;
+
+development of private medical organizations, implementation of investment projects for the construction and modernization of healthcare facilities using public-private partnership mechanisms;
+
+improving the level of development of the system of medical examinations and preventive measures, contributing to the timely detection of diseases, pathological conditions and risk factors that cause them;
+
+increasing the level of population coverage with rehabilitation medical care, supporting the development of the medical rehabilitation system infrastructure;
+
+increasing the level of development of stationary substituting technologies.
+
+",strategy_development_pipeline,Санкт-Петербург,,,city,
+78,What should be done to increase public satisfaction with the quality of outpatient medical care?,"According to the Strategy, in order to increase public satisfaction with the quality of outpatient medical care, it is necessary to develop the infrastructure and material and technical base of medical organizations that provide medical care, including children, and to implement a new model of a medical organization that provides primary health care by introducing lean manufacturing technology in management and organizational processes It is aimed, inter alia, at improving the availability of services provided, increasing their efficiency and eliminating time, financial and other losses, and organizing jobs.",strategy_development_pipeline,Санкт-Петербург,,,city,
+79,How should we improve the quality and effectiveness of preventive measures?,"Improving the quality and effectiveness of preventive measures should be carried out by ensuring biological safety, including improving measures for the prevention of infections associated with the provision of medical care; prevention and treatment of infectious diseases, including those whose spread poses a biological threat to the population (tuberculosis, HIV infection, viral hepatitis B and C); countering the spread of infectious diseases. antimicrobial resistance; implementation of a set of preventive and anti-epidemic measures aimed at preventing the introduction of dangerous infectious diseases, the spread of natural focal infections and zoonotic diseases, as well as ensuring readiness to respond to biological threats of a natural and intentional nature; improving accounting and reporting on socially significant infectious diseases.
+",strategy_development_pipeline,Санкт-Петербург,,,city,
+80,"What activities are being implemented in the framework of the direction ""Ensuring the effectiveness of governance and development of civil society""?","Within the framework of the strategic direction for ensuring the efficiency of management and development of civil society, measures were implemented aimed at improving the efficiency of providing state and municipal services; developing automation of management processes and inter-information interaction of executive bodies of state power in St. Petersburg, improving the system of crime prevention and ensuring life safety in St. Petersburg, increasing the level of consolidation of maintaining civil peace and social harmony. ",strategy_development_pipeline,Санкт-Петербург,,,city,
+81,What is the degree of satisfaction of the population of St. Petersburg with the level of their personal security? ,"The degree of satisfaction of the population of St. Petersburg with the level of their personal security is also growing and amounted to 70.8% in 2014, 73.0% in 2015, 73.2% in 2016, and 88.2% in 2017, which is 1.6 times higher than the planned value of this target indicator for 2030 set by the 2030 Strategy (55%).",strategy_development_pipeline,Санкт-Петербург,,,city,
+82,What factors contribute to improving the level of social harmony and security in St. Petersburg?,"The main weaknesses and constraints to improving the level of social harmony and security in St. Petersburg are::
+
+insufficient educational and cultural awareness-raising measures to form the Russian civil identity, foster a culture of interethnic communication, and study the history and traditions of the peoples of Russia;
+
+insufficient level of public confidence in law enforcement agencies, as well as insufficient level of effectiveness of the implemented preventive response measures;
+
+increase in the number of offenses related to drug trafficking, road accidents;
+
+insufficient level of legal literacy of the population of Saint Petersburg;
+
+insufficient provision of urban space with elements of a safe environment.
+",strategy_development_pipeline,Санкт-Петербург,,,city,
+83,What methods will be used to improve the level of fire safety in St. Petersburg in accordance with the Strategy of socio-economic Development of St. Petersburg?,"According to the Strategy of socio-economic development, in order to increase the level of fire safety, it is necessary to increase the provision of fire depots in the territory of St. Petersburg, to ensure the improvement of their equipment system, including through the introduction of new models of fire equipment, robotic tools, monitoring tools, firefighter equipment, and to create conditions for increasing the efficiency of the Fire Service units of St. Petersburg.",strategy_development_pipeline,Санкт-Петербург,,,city,
+84,"Why is it necessary to ensure the development of the video surveillance system on the territory of St. Petersburg, the unification of information exchange between operational services of St. Petersburg through the introduction and development in accordance with common functional and technological standards of the hardware and software complex ""Safe City"" in accordance with the Strategy of socio-economic development of St. Petersburg?","According to the Strategy of socio-economic development of St. Petersburg, ensuring the development of video surveillance systems in the territory of St. Petersburg, the unification of information exchange between operational services of St. Petersburg through the introduction and development in accordance with common functional and technological standards of the hardware and software complex ""Safe City"" is necessary to improve the level of law and order and public safety Objectives: ""Improving the effectiveness of activities aimed at combating crime, protecting public order, ensuring public safety, and reducing the negative manifestations of religious and national extremism"".",strategy_development_pipeline,Санкт-Петербург,,,city,
+85,"What is the goal of implementing the task ""Development and launch of effective tools that encourage economic entities, including industrial enterprises, to introduce environmentally friendly technologies that are safe for the environment"" in the Strategy of Socio-economic Development?","The implementation of the task ""Development and launch of effective tools that encourage economic entities, including industrial enterprises, to introduce nature-saving technologies that are safe for the environment"" is aimed at implementing regional state environmental supervision in the implementation of economic activities.",strategy_development_pipeline,Санкт-Петербург,,,city,
+86,"Within the framework of what task is it necessary to ensure the creation of a modern infrastructure that ensures safe handling of waste of hazard classes I and II, and the elimination of the most dangerous objects of accumulated environmental damage?","According to the Strategy, the creation of a modern infrastructure that ensures safe handling of waste of hazard classes I and II, and the elimination of the most dangerous objects of accumulated environmental damage should be ensured within the framework of the task ""Creating an effective system for placing, recycling, processing, and neutralization of industrial and consumer waste"". ",strategy_development_pipeline,Санкт-Петербург,,,city,
+87,"What task is required to ensure the improvement of federal and regional facilities and public spaces, as well as measures to provide outdoor lighting for streets and highways in St. Petersburg, and inner-city areas?","According to the Strategy, it is necessary to ensure the improvement of objects of federal and regional significance and public spaces, measures to provide outdoor lighting to streets and highways of St. Petersburg, and intra-block territories within the framework of the ""Territory Improvement""task",strategy_development_pipeline,Санкт-Петербург,,,city,
+88,What needs to be done to implement the transition to the program-investment principle of territory improvement?,"To implement the transition to the program-investment principle of territory improvement, it is necessary to create a management system for territory improvement projects, timely change in the rules of improvement, taking into account federal methodological recommendations, the opinion of the population of St. Petersburg, territorial public self-government, and inner-city municipalities of the federal city of St. Petersburg.",strategy_development_pipeline,Санкт-Петербург,,,city,
+89,Do you plan to improve the city's territory in accordance with the Strategy of socio-economic development of St. Petersburg until 2035?,"It is necessary to ensure the improvement of objects of federal and regional significance and public spaces, measures to provide outdoor lighting for streets and highways of St. Petersburg, and intra-block territories.",strategy_development_pipeline,Санкт-Петербург,,,city,
+90,"What needs to be done to ensure sustainable provision of energy and municipal resources to the population, social sphere and economy of St. Petersburg?","Sustainable provision of energy and municipal resources to the population, social sphere and economy of St. Petersburg requires consistent and balanced implementation of the policy of integrated development of heat, electric power, water supply and sanitation, gas supply, and large-scale introduction of energy-saving technologies.",strategy_development_pipeline,Санкт-Петербург,,,city,
+91,"What is the goal of the task ""Creating economic methods to stimulate the efficiency of grid organizations, developing the scientific and innovative potential of the electric grid complex""?","Implementation of the task ""Creation of economic methods to stimulate the efficiency of grid organizations, development of scientific and innovative potential of the electric grid complex"" aimed at stimulating the development of related industries, providing conditions for tariff stabilization, as well as attracting financial resources to the electric grid complex in the amount sufficient to solve the tasks of modernization and reconstruction of the electric grid economy.",strategy_development_pipeline,Санкт-Петербург,,,city,
+92,"What task is necessary to ensure synchronization of major repairs of domestic engineering systems, including repairs of cold and hot water supply, heat supply and sanitation systems?","As part of the task ""Improving the efficiency of planning programs for major repairs of apartment buildings, implementing a regional program for major repairs of common property in apartment buildings"", it is necessary to ensure synchronization of work on major repairs of intra-house engineering systems, including repairs of cold and hot water supply, heat supply and sanitation systems in accordance with the Strategy of Socio-Economic Development of St. Petersburg.",strategy_development_pipeline,Санкт-Петербург,,,city,
+93,"What tasks need to be solved to achieve the goal of integrated development of municipal infrastructure, energy and energy saving systems?","The goal of integrated development of municipal infrastructure, energy and energy saving systems is planned to be achieved through the implementation of the following tasks:
+1. Balanced development of municipal infrastructure and energy systems in accordance with the needs for construction and reconstruction of capital construction facilities.
+ 2. To ensure the reliability and safety of the municipal infrastructure and energy systems of St. Petersburg"".
+ 3. Create economic methods for stimulating the efficiency of grid organizations, developing the scientific and innovative potential of the electric grid complex.
+ 4. Ensure that the connection (technological connection) to the engineering and technical support networks is available.
+ 5. Develop energy conservation and energy efficiency of municipal infrastructure systems.",strategy_development_pipeline,Санкт-Петербург,,,city,
+94,What works should be performed in the gas supply system?," In terms of the gas supply system, the following tasks should be performed:
+expanding the coverage area of the territory of St. Petersburg with gas distribution networks to supply gas to
+promising development areas and to transfer all existing non-gasified consumers to gas fuel
+;
+construction of the main sources of the gas supply system - gas distribution stations (hereinafter referred to as GDS) to
+ensure gas consumption increases and increase the reliability of the gas supply system, including the construction
+of separate GDS for gas supply to new thermal power plants;
+improving the reliability and stability of the gas supply system in St. Petersburg through additional
+ring-forming of gas distribution networks, construction of new sources of
+the gas supply system in St. Petersburg - high - pressure gas control points (hereinafter referred to as hydraulic fracturing).
+Large-scale implementation of energy-saving technologies in the housing stock, municipal complex
+and industry of St. Petersburg is necessary. It is necessary to reduce the negative impact of the fuel and energy
+complex on the environment of St. Petersburg.",strategy_development_pipeline,Санкт-Петербург,,,city,
+95,"What tasks need to be implemented to achieve the goal: ""Improving education, quality and accessibility of education for all segments of the population""?"," To achieve the goal of"" Improving education, quality and accessibility of education for all segments of the population"", it is necessary to::
+ 1. Increasing the desire of children and young people to acquire knowledge, forming an effective system for identifying, supporting and developing abilities and talents of children and young people.
+ 2. Ensuring equal conditions for obtaining quality education for all groups of the population.
+ 3. Development of infrastructure that ensures the availability of general, vocational and additional education services.
+ 4. Increasing the role of secondary vocational education"".
+ 5. Improving the efficiency of the professional education system, including the development of a system of professional training for enterprises of priority sectors of the economy of St. Petersburg.
+ 6. Improving the system of training and professional development of personnel in the field of education.
+ 7. Improving the international competitiveness of professional and higher education institutions"".
+ 8. Development of research activities on the basis of educational institutions of higher education.
+ 9. Development of a modern and secure digital educational environment.
+ 10. Improving the legal, financial and digital literacy of the population.",strategy_development_pipeline,Санкт-Петербург,,,city,
+96,How is it necessary to ensure the availability and attractiveness of vocational education services?,"As part of the task of ensuring the availability and attractiveness of vocational education services, it is necessary to plan the needs of educational organizations in a timely manner, develop variable forms of preschool education, and attract investors to the education system.",strategy_development_pipeline,Санкт-Петербург,,,city,
+97,What is the characteristic feature of St. Petersburg's education sector?,"The education sector of St. Petersburg, which is characterized by a well-developed network of educational organizations at all levels that provide variability, accessibility and high quality of educational services, is one of the key components that ensure a high level of quality of life in St. Petersburg compared to other regions of the Russian Federation.
+",strategy_development_pipeline,Санкт-Петербург,,,city,
+98,"Within the framework of what task is it necessary to increase the level of information openness of the education system, introduce new methods of teaching and upbringing, educational technologies, including distance learning?","Within the framework of the task ""Development of a modern and secure digital educational environment"", it is necessary to increase the level of information openness of the education system, introduce new methods of teaching and upbringing, educational technologies, including distance learning.
+",strategy_development_pipeline,Санкт-Петербург,,,city,
+99,"What is necessary in the framework of the task ""Development of research activities on the basis of educational institutions of higher education""?","As part of the task ""Development of research activities on the basis of educational institutions of higher education"", it is necessary to increase the level of involvement of teachers and students in fundamental and applied scientific research, create conditions for conducting research and development that meet modern principles of organizing scientific, scientific, technical and innovative activities and the best Russian and international practices, and participate in the implementation of international research projects that provide access to advanced competencies and resources, develop tools and mechanisms to support the implementation of scientific research in the interests of organizations and enterprises in St. Petersburg and the organization of a technology transfer system.
+",strategy_development_pipeline,Санкт-Петербург,,,city,
+100,What is necessary for the development of railway passenger transport in St. Petersburg?,"""The development of railway passenger transport in St. Petersburg requires:
+
+1. Development and renewal of railway infrastructure.
+ 2. Renewal of rolling stock.
+ 3. Improving the quality of services provided.
+ 4. Expansion of package offers in accordance with emerging demand and current global trends.""",strategy_development_pipeline,Санкт-Петербург,,,city,
+101,What measures should be taken to ensure the development of high-speed passenger services and reduce the negative impact of freight trains?,"To ensure the development of high-speed passenger traffic and reduce the negative impact of freight train traffic, it is necessary to create transport corridors bypassing St. Petersburg to allow transit traffic flows.",strategy_development_pipeline,Санкт-Петербург,,,city,
+102,What needs to be done to improve road safety in accordance with the Social and Economic Development Strategy of Saint Petersburg until 2035?,"To improve road safety, it is necessary to ensure the implementation of measures aimed at improving road safety conditions, equipping road network facilities with technical means, introducing automated and robotic technologies for traffic management and monitoring compliance with traffic rules.",strategy_development_pipeline,Санкт-Петербург,,,city,
+103,How should we consider the development of the St. Petersburg transport system? ,"The development of the transport system of St. Petersburg should be considered in conjunction with its spatial organization, which ensures connectivity of the districts of St. Petersburg, and the organization of external relations of St. Petersburg with the centers of the global transport network serving direct and transit flows of passengers and cargo. In the long run, the transport system of St. Petersburg should correspond to the level of the world's leading megacities in terms of accessibility, comfort and efficiency.
+
+",strategy_development_pipeline,Санкт-Петербург,,,city,
+104,Why is it necessary to continue the development of high-speed rail transport in St. Petersburg?,"In order to increase the transport accessibility of the suburbs of St. Petersburg and create transport corridors bypassing St. Petersburg to allow transit traffic flows, it is necessary to continue developing high-speed rail transport.",strategy_development_pipeline,Санкт-Петербург,,,city,
+105,What factors contribute to the improvement of physical culture and sports in St. Petersburg?,"According to the strategy:
+increasing the level of public involvement in physical culture and sports;
+
+improving the level of provision of the population with sports facilities, including within walking distance;
+
+improving the level of development of children's and youth sports;
+
+availability of a well-developed sports infrastructure for professional participation in various sports, including Paralympic ones;
+
+professional development of coaching and teaching staff, including in sports institutions under the jurisdiction of St. Petersburg district administrations;
+
+holding a significant number of national and international sporting events in St. Petersburg.",strategy_development_pipeline,Санкт-Петербург,,,city,
+106,What factors hinder the development of physical culture and sports in St. Petersburg?,"According to the strategy:
+territorial disparities in the availability of sports infrastructure;
+
+insufficient level of development of sports infrastructure for physical culture and sports for disabled people and other low-mobility groups of the population;
+
+low level of material and technical equipment of some physical culture and sports facilities.",strategy_development_pipeline,Санкт-Петербург,,,city,
+107,What weaknesses and main factors can hinder the development of physical culture and sports in St. Petersburg?,"Weaknesses and main factors hindering the development of physical culture and sports in St. Petersburg are::
+
+territorial disparities in the availability of sports infrastructure;
+
+insufficient level of development of sports infrastructure for physical culture and sports for disabled people and other low-mobility groups of the population;
+
+low level of material and technical equipment of some physical culture and sports facilities.
+",strategy_development_pipeline,Санкт-Петербург,,,city,
+108,"What needs to be done in the framework of the task ""Creating infrastructure for the development of high-performance sports and holding interregional, national and international physical culture and sports events""?","Within the framework of the task ""Creating infrastructure for the development of high-performance sports and holding interregional, all-Russian and international physical culture and sports events"", special attention should be paid to planning the location and creation of sports facilities for holding physical culture and sports events of interregional, all-Russian and international level, including training bases, as well as solving the problems of their transport and engineering support in territorial planning documents.",strategy_development_pipeline,Санкт-Петербург,,,city,
+109,"As part of the implementation of what task is it necessary to ensure the possibility of developing a network of courtyard sports grounds, stadiums, and sports clubs in general education organizations in St. Petersburg?","As part of the task ""Creating infrastructure for regular physical education and sports within walking distance"", it is necessary to ensure the possibility of developing a network of courtyard sports grounds, stadiums, and sports clubs in general education organizations in St. Petersburg.",strategy_development_pipeline,Санкт-Петербург,,,city,
+110,"What tasks need to be implemented to achieve the goal: ""Ensuring the harmonious development of the individual based on the cultural and historical heritage of St. Petersburg""?"," To achieve the goal of ""Ensuring the harmonious development of the individual based on the cultural and historical heritage of St. Petersburg"", it is necessary to::
+ 1. Preservation of cultural and historical heritage objects in St. Petersburg.
+ 2. Increasing the cultural potential of St. Petersburg, strengthening the role of St. Petersburg as a center of world culture and art.
+ 3. Creating conditions for the development of theatrical, musical and audiovisual art in St. Petersburg.
+ 4. Development of contemporary art in St. Petersburg.
+ 5. Increasing the educational role of culture, promoting traditional values.
+ 6. Increasing public involvement in the cultural sphere.
+ 7. Development of cultural infrastructure.
+ 8. Creating conditions for attracting highly qualified personnel to the field of culture and art.
+ 9. Active introduction of modern information technologies in the activities of cultural organizations.",strategy_development_pipeline,Санкт-Петербург,,,city,
+111,What is the objective of attracting private capital for the restoration of cultural heritage sites and stimulating the interest of individuals and legal entities in preserving cultural heritage sites?,"Within the framework of the task ""Preservation of cultural and historical heritage objects in St. Petersburg"", such measures are being taken as improving the set of measures to ensure the safety and security of cultural and historical heritage objects in St. Petersburg, including in cooperation with federal state authorities to ensure the implementation of projects for their restoration at the expense of budget funds, as well as ensuring the attraction of private capital in the restoration of cultural heritage objects and stimulating the interest of individuals and legal entities in preserving cultural heritage objects when using them, developing mechanisms for implementing public-private partnership projects in the field of cultural heritage protection.",strategy_development_pipeline,Санкт-Петербург,,,city,
+112,What can be favorable factors contributing to the development of the cultural sphere of St. Petersburg?,"The main favorable factors contributing to the development of the cultural sphere of St. Petersburg can be::
+
+increase the number and diversity of cultural events and activities;
+
+developing the potential of contemporary art;
+
+improving the quality of cultural services;
+
+raising awareness of cultural events and events among the population and visitors of St. Petersburg;
+
+extensive use of interactive and multimedia tools;
+
+increasing the level of informatization of cultural institutions.
+",strategy_development_pipeline,Санкт-Петербург,,,city,
+113,What is the task of promoting the expansion of cooperation between cultural organizations in St. Petersburg and cultural organizations of the constituent entities of the Russian Federation and foreign countries?,"Within the framework of the task ""Increasing the cultural potential of St. Petersburg, strengthening the role of St. Petersburg as a center of world culture and art"", it is necessary to promote the expansion of cooperation between cultural organizations in St. Petersburg and cultural organizations of the constituent entities of the Russian Federation and foreign countries. ",strategy_development_pipeline,Санкт-Петербург,,,city,
+114,"For what purpose is it necessary to provide conditions for the active development of contemporary art and the creation of a new artistic product at the level corresponding to the best world achievements, as well as for the dissemination and organization of society's perception of contemporary art?","Within the framework of the task ""Development of contemporary art in St. Petersburg"", it is necessary to provide conditions for the active development of contemporary art and the creation of a new artistic product at the level corresponding to the best world achievements, as well as for the dissemination and organization of society's perception of contemporary art.",strategy_development_pipeline,Санкт-Петербург,,,city,
+115,How is it necessary to preserve natural complexes and restore the biological diversity of flora and fauna?,"Conservation of natural complexes and restoration of biological diversity of flora and fauna should be carried out through the development of specially protected natural territories of regional significance, including the organization of new specially protected natural territories of regional significance, planning and conducting scientific research in the field of nature management, identifying violations in specially protected natural territories, developing programs for the conservation of natural complexes, increasing the environmental protection and restoration measures. It is advisable to attract public attention to solving environmental issues and organize cooperation with international and public environmental organizations.",strategy_development_pipeline,Санкт-Петербург,,,city,
+116,"How can we ensure an efficient system for locating, disposing of, treating, and neutralizing industrial and consumer waste?","As part of the specified task, you must provide:
+
+prevention and reduction of waste generation, including through the development and implementation of advanced technologies to reduce waste generation;
+
+organization of a system for separate accumulation and collection of waste, including municipal solid waste, on the territory of Saint Petersburg;
+
+maximum level of neutralization, treatment and disposal of waste, including municipal solid waste, including through their involvement in economic turnover as raw materials;
+
+
+creation of a modern infrastructure that ensures safe handling of waste of hazard classes I and II, and elimination of the most dangerous objects of accumulated environmental damage;
+
+construction of recycling plants, waste sorting and reloading stations, waste recycling plants using the most modern and safe technologies;
+
+recultivation of existing landfills, elimination of unauthorized landfills and organization of new territories for the placement of waste disposal and neutralization facilities;
+
+creation and effective functioning of a public control system aimed at identifying and eliminating unauthorized landfills.",strategy_development_pipeline,Санкт-Петербург,,,city,
+117,How will St. Petersburg's green spaces be effectively managed to preserve their functions and the system of specially protected natural areas?,"It is necessary to create a more effective system of integrated work with the city's green spaces, involving residents of St. Petersburg and organizing control over the maintenance of green spaces.
+
+As part of this task, it is necessary to ensure proper maintenance and repair of green spaces in St. Petersburg, as well as the creation of green spaces, primarily in areas with a poor environmental situation.
+
+Conservation of natural complexes and restoration of biological diversity of flora and fauna should be carried out through the development of specially protected natural territories of regional significance, including the organization of new specially protected natural territories of regional significance, planning and conducting scientific research in the field of nature management, identifying violations in specially protected natural territories, developing programs for the conservation of natural complexes, increasing the environmental protection and restoration measures. It is advisable to attract public attention to solving environmental issues and organize cooperation with international and public environmental organizations.
+
+The development of a system of specially protected natural areas will also contribute to the conservation of rare and endangered species of animals, plants and other organisms. It is necessary to expand measures to preserve biological diversity, including rare and endangered species of plants, animals and other organisms, as well as to preserve their habitats.",strategy_development_pipeline,Санкт-Петербург,,,city,
+118,What are the main objectives of the task related to ensuring rational use of natural resources and environmental safety?,"As part of the specified task, you must provide:
+
+improvement of legislation in the field of environmental protection and environmental safety;
+
+functioning and development of territorial systems for monitoring the state of the environment in St. Petersburg;
+
+environmental safety of water bodies and hydraulic structures (including reduction of anthropogenic impact on water bodies and their catchment areas, rehabilitation and restoration of water bodies, clearing of bottom sediments from water bodies, prevention of river degradation and depletion);
+
+prevention of flooding of St. Petersburg territories;
+
+prevention and elimination of accidents and emergencies of natural and man-made nature;
+
+environmental certification of the territory of Saint Petersburg;
+
+implementation of environmental education and formation of ecological culture of the population;
+
+reducing the negative impact on atmospheric air and subsurface resources, reducing the total amount of pollutants released into the atmospheric air;
+
+radiation and chemical safety;
+
+step-by-step reduction of harmful substance emissions;
+
+promotion of the use of environmentally friendly fuels and alternative energy sources, including in the use of motor vehicles;
+
+stricter requirements for the environmental characteristics of purchased and used vehicles intended for passenger transportation.",strategy_development_pipeline,Санкт-Петербург,,,city,
+119,"What is the goal of developing and launching effective tools that encourage economic entities, including industrial enterprises, to introduce environmentally friendly technologies that are safe for the environment","The implementation of this task is aimed at the implementation of regional state environmental supervision in the implementation of economic activities. It is necessary to encourage enterprises that implement programs of environmental modernization of production, including the introduction of nature-saving technologies and environmental rehabilitation of polluted territories, to support the formation of a market for eco-friendly products, technologies and equipment, the development of voluntary environmental certification of goods and services, to develop market instruments for environmental protection and environmental safety.",strategy_development_pipeline,Санкт-Петербург,,,city,
+120,"What measures are being taken to solve the problem of ""Increasing the birth rate, creating favorable conditions for the life of young families and families with children""?","To solve the problem of increasing the birth rate, creating favorable conditions for the life of young families and families with children, it is necessary to take a number of measures:
+
+1) Ensure improvement of the population's reproductive health, improvement of assisted reproductive technologies, prevention and reduction of the number of abortions.
+2) To ensure the improvement of the quality of life and economic independence of St. Petersburg families with minor children.
+3) Create conditions for improving the housing conditions of young families and families with children, to meet the needs of families with children in pre-school education services.
+4) Ensure targeted promotion of traditional values of family and marriage.",strategy_development_pipeline,Санкт-Петербург,,,city,
+121,What are the main favorable factors that contribute to the development of the social protection system of the population of St. Petersburg?,"The main favorable factors contributing to the development of the social protection system of the population of St. Petersburg can be::
+
+- improving the effectiveness of social support measures for certain categories of citizens, taking into account the principles of targeting and neediness;
+- participation of non-governmental organizations in providing social services to citizens;
+- introduction of modern forms of public services and technologies, including inpatient substitution, in the activities of social service institutions.
+",strategy_development_pipeline,Санкт-Петербург,,,city,
+122,"What hinders the development of the system of social protection, support and social services for the population of St. Petersburg?","Weaknesses and main factors hindering the development of the system of social protection, support and social services for the population of St. Petersburg are:
+insufficient level of material and technical equipment of social service institutions;
+
+- a long waiting period for obtaining a place in state inpatient social service institutions for older citizens and disabled people in St. Petersburg;
+- shortage of personnel in the social protection system of the population;
+- insufficient accessibility of the urban environment for the disabled and other low-mobility groups of the population.
+",strategy_development_pipeline,Санкт-Петербург,,,city,
+123,What is the basis for the well-being of the least protected segments of the population of St. Petersburg and the equalization of the standard of living of the population?,"The high level of development of the system of social protection, support and social services of the population, which provides targeted support to various categories of the population of St. Petersburg, is the basis for the well-being of the least protected segments of the population of St. Petersburg and equalization of the standard of living of the population.",strategy_development_pipeline,Санкт-Петербург,,,city,
+124,What is the social policy in St. Petersburg aimed at?,"The state social policy in St. Petersburg is aimed at reducing the level of poverty of the population, ensuring the fulfillment of state obligations in terms of providing social payments and benefits to various categories of citizens, implementing the principles of targeting and neediness in assigning social payments and benefits, and improving the quality of social services for the population.",strategy_development_pipeline,Санкт-Петербург,,,city,
+125,"What is planned to be done for the development of the territories of the ""Gray Belt"" of St. Petersburg in accordance with the Strategy of socio-economic development of St. Petersburg until 2035?","For the development of the territories of the ""Gray Belt"" of St. Petersburg, it is necessary to ensure the gradual withdrawal of environmentally hazardous industrial enterprises, the modernization of environmentally safe industrial enterprises, and the formation of advanced high-tech research and production clusters. In certain areas of the"" Gray Belt "" that have an attractive location, it is advisable to carry out fragmented public-business and (or) residential development, to place new theme parks and parks of culture and recreation.",strategy_development_pipeline,Санкт-Петербург,,,city,
+126,"What is planned to be done for the development of the territories of ""Residential areas"" of St. Petersburg in accordance with the Strategy of socio-economic development of St. Petersburg until 2035?","For the development of the"" sleeping areas "" of St. Petersburg, it is necessary to ensure a comprehensive renovation of residential areas built in the period 1960-1970 with the placement of new business centers and places of employment, the creation of social infrastructure and service facilities, the creation of public spaces, local recreational and pedestrian zones, parking spaces, and comprehensive landscaping of intra-quarter territories.",strategy_development_pipeline,Санкт-Петербург,,,city,
+127,What is necessary for a balanced socio-economic development of territories in accordance with the Strategy of socio-economic development of St. Petersburg until 2035?,"For a balanced socio-economic development of territories, it is necessary to ensure the effective use of land for mass housing construction, provided that the green fund and territories where natural objects of ecological, historical, cultural, recreational, health-improving and other valuable significance are located are preserved and developed, as well as to create mechanisms for developing a comfortable urban environment and integrated development of territories St. Petersburg based on the urban environment quality index.",strategy_development_pipeline,Санкт-Петербург,,,city,
+128,What is holding back the spatial development of St. Petersburg?,"The main weaknesses and constraints to effective and rational spatial development of St. Petersburg are::
+
+- an imbalance in the provision of the population of St. Petersburg with housing, places of employment, social, transport, municipal infrastructure, landscaping facilities and public spaces;
+- the discrepancy between the legal regulation of urban development activities and long-term trends in the economy and social sphere, which causes disproportions in the spatial development of St. Petersburg;
+- lack of legal regulation of the status of agglomerations in the Russian Federation, as well as their development processes.
+",strategy_development_pipeline,Санкт-Петербург,,,city,
+129,What are the main favorable factors contributing to the efficient and rational spatial development of St. Petersburg?,"The main favorable factors contributing to the efficient and rational spatial development of St. Petersburg can be::
+
+- the active position of the state authorities of St. Petersburg in taking into account the interests of developers in relation to the implementation of investment projects affecting the spatial aspects of the development of St. Petersburg, related to the formation of new zones of industrial, public-business and housing development, redevelopment of territories;
+- the growing need of the population of St. Petersburg to ensure compactness and connectivity of the territories of St. Petersburg.
+",strategy_development_pipeline,Санкт-Петербург,,,city,
+130,What tasks need to be implemented in the framework of the goal to improve the efficiency of providing state and municipal services and transparency of public administration?,"To achieve the goal of improving the quality of public services and transparency of public administration, it is planned to implement the following tasks:
+
+1. Introduce modern information technologies in the work of public authorities.
+ 2. Implement and develop project activities in the executive bodies of state power of St. Petersburg.
+ 3. Strengthen the role of public discussion.
+ 4. Improve the professional training of state civil servants in St. Petersburg.
+ 5. Improve the availability and quality of public services.
+ 6. Reduce administrative barriers for businesses.
+ 7. Improve the information security system.",strategy_development_pipeline,Санкт-Петербург,,,city,
+131,What are the strengths of the public administration system in St. Petersburg?,"According to the Socio-economic Development Strategy:
+
+The strengths of the public administration system in St. Petersburg are relatively low administrative barriers, high quality of state and municipal services, and the involvement of the population in the management processes of St. Petersburg. ",strategy_development_pipeline,Санкт-Петербург,,,city,
+132,What are the main factors contributing to the development of the public administration system in St. Petersburg?,"According to the socio-economic development strategy: 
+
+The main favorable factors contributing to the development of the public administration system in St. Petersburg can be::
+
+- increasing the share of the population and organizations of St. Petersburg that use the Internet to interact with public authorities and local self-government bodies in St. Petersburg, including for receiving state and municipal services;
+- improving the efficiency of communication links, including through electronic interaction, between citizens, organizations, state authorities and local self-government bodies in St. Petersburg.
+",strategy_development_pipeline,Санкт-Петербург,,,city,
+133,What factors hinder the development of the public administration system in St. Petersburg?,"According to the socio-economic development strategy: 
+
+Weaknesses and main factors hindering the development of the public administration system in St. Petersburg are::
+
+- low level of use of electronic document management in the current activities of the state authorities of St. Petersburg and local self-government bodies in St. Petersburg;
+- the presence of a large number of poorly integrated state information systems in St. Petersburg.",strategy_development_pipeline,Санкт-Петербург,,,city,
+134,What measures are being implemented in St. Petersburg in the context of public administration?,"St. Petersburg is implementing measures aimed at reducing administrative barriers, optimizing and improving the quality of providing state and municipal services.",strategy_development_pipeline,Санкт-Петербург,,,city,
+135,What measures are being taken to attract investment to the city and support businesses?,"According to the socio-economic development strategy, the following measures are being taken to attract investment: provision of tax incentives and administrative preferences related to the lease of land plots, simplification of urban planning procedures, preferential connection to infrastructure.",strategy_development_pipeline,Санкт-Петербург,,,city,
+136,What factors stimulate the economic development of St. Petersburg?,"According to the Socio-economic Development Strategy:
+1. developed inner-city transport infrastructure;
+
+2. availability of all types of external transport (air, rail, water, road) and significant capacities of the logistics complex of the seaport, Pulkovo airport, and railway junction;
+
+3. availability of a reserve of territorial resources for their involvement in economic turnover;
+
+4. the presence of a domestic consumer market and markets for investment goods, characterized by significant volumes of trade turnover, which is attractive, including for foreign companies, when entering the Russian market.",strategy_development_pipeline,Санкт-Петербург,,,city,
+137,What factors hinder the sustainable and efficient development of the St. Petersburg economy?,"According to the Strategy of Socio-Economic Development:
+deterioration of external development conditions associated with the application of discriminatory measures against key sectors of the Russian economy, as well as with the restriction of access to foreign financial resources, modern technologies and increased fluctuations in the global commodity and financial markets;
+
+insufficient innovation and investment activity of the real sector of the St. Petersburg economy, which causes a lag in the development and implementation of advanced technologies and an insufficient level of competitiveness of products manufactured by St. Petersburg enterprises;
+
+low labor productivity;
+
+the qualification level of personnel that does not meet the needs of the economy is inadequate.",strategy_development_pipeline,Санкт-Петербург,,,city,
+138,What is the main source of economic development?,"The main source of economic development is investment, which plays a crucial role in the dynamic development and competitiveness of the economy of St. Petersburg.",strategy_development_pipeline,Санкт-Петербург,,,city,
+139,What is necessary for St. Petersburg's economic growth to be sustainable?,"To ensure the sustainability of economic growth, it is necessary to maintain a diversified structure of the economy of St. Petersburg while increasing the efficiency of using all types of resources. Taking into account the limited territory of St. Petersburg, it is necessary to strive to maximize the specific economic return per unit area of its territory and increase the share in GRP of segments of the economy whose main resource is human capital. At the same time, the economic policy should be flexible and ensure rapid adaptation of the economy of St. Petersburg to changes in macroeconomic conditions and the external environment through the creation of tools for the redistribution of key resources, the development of electronic interaction between participants in economic activity. The reallocation of resources will be ensured by a well-developed system of personnel retraining, an increase in the share of small businesses and self-employed citizens in the economy of St. Petersburg, and the development of an effective system of state support for business entities.",strategy_development_pipeline,Санкт-Петербург,,,city,
+140,What needs to be done to develop the tourism sector in the city in accordance with the Strategy of socio-economic development of St. Petersburg?,"According to the Socio-economic Development Strategy:
+for the development of the tourism sector in the city, it is necessary to ensure the formation of an accessible and comfortable tourist environment to improve the quality of tourist services and their accessibility. To do this, you must provide:
+- high level of development of transport infrastructure in areas of high tourist interest, including the organization of entrances and parking spaces for tourist buses and water transport;
+- increase the number of direct flights to St. Petersburg from the regions of the Russian Federation and foreign countries, including through the creation of a local air carrier;
+- renewal of the cruise fleet, construction of port (berthing) infrastructure;
+- preparation of legislative initiatives related to the creation and maintenance of special visa regimes;
+- development of hotel and restaurant infrastructure in the middle price segment.",strategy_development_pipeline,Санкт-Петербург,,,city,
+141,What is the reason for the tourist attractiveness of St. Petersburg?,"According to the Socio-economic Development Strategy:
+
+The tourist attraction of St. Petersburg is mainly due to the high concentration of museum, historical, cultural and entertainment sites, and the inclusion of the ""Historical Center of St. Petersburg and related groups of monuments"" in the UNESCO World Heritage List. ",strategy_development_pipeline,Санкт-Петербург,,,city,
+142,Why does St. Petersburg have a high potential for further development of business tourism? ,"According to the Socio-economic Development Strategy: 
+
+St. Petersburg has a high potential for further development of business tourism due to the developed congress and exhibition infrastructure, which occupies one of the leading positions in the Russian Federation in terms of its scale.",strategy_development_pipeline,Санкт-Петербург,,,city,
+143,What factors contribute to the development of tourism in St. Petersburg?,"According to the Socio-economic Development Strategy:
+
+The main favorable factors contributing to the development of tourism in St. Petersburg can be::
+
+- increasing international mobility of the population;
+- simplification of visa procedures, as well as development of special visa regimes;
+- increasing the competitiveness of the tourist complex by improving the quality and accessibility of tourist and related services, as well as the development of tourist infrastructure;
+- creating a positive image of St. Petersburg as a city favorable for tourism, including by improving the system of ensuring the safety of tourists;
+- the emergence of new routes of external transport, including due to the development of competition in the air transportation market.
+",strategy_development_pipeline,Санкт-Петербург,,,city,
+144,What factors hinder the development of tourism in St. Petersburg?,"According to the Socio-economic Development Strategy:
+
+Weaknesses and main factors hindering the development of tourism in St. Petersburg are::
+
+- lack of a quality management system for providing tourist services;
+- insufficiently developed tourist infrastructure;
+- high level of influence of seasonality on tourist activity;
+- reducing the value of the architectural appearance of St. Petersburg due to the loss of monuments and the destruction of the facades of historical buildings and structures, the implementation of projects that change the views of the historical center of St. Petersburg.",strategy_development_pipeline,Санкт-Петербург,,,city,
+145,What factors contribute to increasing scientific and innovation activity in St. Petersburg?,"According to the Strategy of socio-economic development:
+increasing competition in the field of research activities;
+
+improving the efficiency of interaction (cooperation) between industrial, educational and research organizations in order to develop, transfer and commercialize innovations;
+
+active participation of research and production organizations of St. Petersburg in the processes of international scientific and technical cooperation, providing access to advanced technologies, competencies and resources;
+
+expanding St. Petersburg's participation in the implementation of the National Technology Initiative;
+
+venture capital inflows;
+
+placement of research and development centers and leading Russian and international companies in Saint Petersburg;
+
+creating a favorable innovation ecosystem, including the development of innovative infrastructure, and the availability of business services.
+
+",strategy_development_pipeline,Санкт-Петербург,,,city,
+146,What factors hinder the development of scientific and innovative activity in St. Petersburg?,"According to the Socio-economic Development Strategy:
+insufficient level of sensitivity of the St. Petersburg economy and society to innovation;
+
+low level of investment activity in the field of research activities, including when updating the material and technical base of educational and research organizations;
+
+insufficient level of dual-use knowledge and technology transfer between the military-industrial complex and civilian sectors of the economy.",strategy_development_pipeline,Санкт-Петербург,,,city,
+147,What are the priority digital technologies for St. Petersburg state authorities?,"According to the Strategy of Socio-economic Development of St. Petersburg, the priority information technologies for public authorities include digital maps, digital models of the city and objects of the urban environment, software and hardware tools for their maintenance, updating, verification, as well as technologies for generating and publishing open data and open algorithms.",strategy_development_pipeline,Санкт-Петербург,,,city,
+148,What contributes to creating a favorable competitive environment for activating innovation processes and introducing innovative products in St. Petersburg?,"According to the Socio-economic Development Strategy:
+
+the high concentration of educational and research organizations, the presence of a large number of highly qualified specialists performing fundamental and applied research and development, participating in the implementation of the National Technology Initiative, as well as the multi-industry structure of the economy of St. Petersburg contribute to creating a favorable competitive environment for activating innovation processes and introducing innovative products in St. Petersburg.",strategy_development_pipeline,Санкт-Петербург,,,city,
+149,What share of high-tech and knowledge-intensive industries is planned in the GRP structure of St. Petersburg by 2030?,"According to the Socio-economic Development Strategy:
+
+By 2030, it is planned to reach the share of high-tech and knowledge-intensive sectors of the economy in the amount of 67% in the GRP structure of St. Petersburg.",strategy_development_pipeline,Санкт-Петербург,,,city,
