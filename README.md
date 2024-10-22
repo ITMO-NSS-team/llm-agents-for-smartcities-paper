@@ -1,10 +1,12 @@
-# BIAM-Urb
+# LLM Agents for Smart City Management: Enhancing Decision Support through Multi-Agent AI Systems
 
-## Собрать образ для пайплайна с RAG и запустить контейнер:
+The repository contains code and data for the LLM-based city management research.
 
-Создать на сервере переменную окружения `$NSS_NPA_TOKEN`
+## Build an image for the Pipeline with RAG and start the container:
 
-Подтянуть изменения:
+Create the `$NSS_NPA_TOKEN` environment variable on the server
+
+Pull changes:
 
 ```
 cd /var/essdata/llm/project/BIAM-Urb
@@ -12,7 +14,7 @@ git checkout <required_branch>
 git pull
 ```
 
-Создать `config.env` в корне проекта:
+Create `config.env` in the root of the project:
 
 ```
 LLAMA_URL=<url>
@@ -24,7 +26,7 @@ ENDPOINT_PROVISION_URL=<url>
 ENDPOINT_TABLES_URL=<url>
 ```
 
-Пересобрать образ и запустить контейнер
+Rebuild the image and run the container
 
 ```
 docker container stop llm_city_app-container
@@ -36,62 +38,51 @@ docker build -t llm_city_app --build-arg NSS_NPA_TOKEN=$NSS_NPA_TOKEN -f docker/
 docker run -d --restart always -p <port>:80 --name llm_city_app-container llm_city_app
 ```
 
-## Тестировать пайплайн на сервере:
+## Test the Pipeline on the server:
 
-В терминале отправить запрос:
-
+In the terminal, send a request:
 ```
-curl -v POST http://<ip>:<port>/question -H 'Content-Type: application/json' -d '{"question_body": "Какие проблемы демографического развития Санкт-Петербурга?"}'
+curl -v POST http://<ip>:<port>/question -H 'Content-Type: application/json' -d '{"question_body": "What are the problems of demographic development of St. Petersburg?"}'
 ```
 
-В браузере:
+In the browser:
 
 ```
 http://<ip>:<port>/docs/
 ```
 
-Логи приложения можно проверить на сервере:
+The application logs can be checked on the server:
 
 ```
 docker logs --follow --timestamps llm_city_app-container
 ```
 
-Или же по следующему пути: `/var/essdata/llm/log/biam-urb/`
+## Test api locally:
 
-## Тестировать апи локально:
-
-Запустить сервер (из корня проекта):
+Start the server (from the project root):
 
 ```
 fastapi run main.py --proxy-headers --port 80
 ```
 
-В терминале отправить запрос:
+In the terminal, send a query:
 
 ```
-curl -v POST http://0.0.0.0:80/question -H 'Content-Type: application/json' -d '{"question_body": "Какие проблемы демографического развития Санкт-Петербурга?"}'
+curl -v POST http://0.0.0.0:80/question -H ‘Content-Type: application/json’ -d ‘{’question_body‘: “What are the problems of demographic development of St. Petersburg?”}’
 ```
 
-В браузере:
+In the browser:
 
 ```
 http://localhost/docs#/
 ```
 
-## Запустить ChromaDB и модель эмбеддинга на сервере
+## Run ChromaDB and the embedding model on the server
 
-Скопировать на сервер [compose.yaml](docker/chroma/compose.yaml)
+Copy [compose.yaml](docker/chroma/compose.yaml) to the server
 
-Выполнить команду:
+Execute the command:
 
 ```
 docker compose up
 ```
-
-## Проверка линтером и форматтером `ruff`
-
-Настроена проверка кода при каждом `push`. Если необходимо отключить проверку для отдельных строк кода, в конце каждой
-такой строки необходимо добавить комментарий `# noqa`. Это отключит проверку всех правил. Если же нужно отклюить
-конкретное, то нужно дописать его название после `# noqa`.
-
-Доступные правила можно найти [здесь](https://docs.astral.sh/ruff/rules/)
