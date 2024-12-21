@@ -1,0 +1,152 @@
+question,territory_name,correct_pipeline,pipeline_from_model,pipeline_selection_time
+What is the population's availability of dental clinics?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.052138
+How many polyclinics are there in Saint Petersburg?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.076605
+What is the availability of polyclinics for the population?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.07608
+What is the availability of hospitals for the population?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.078871
+What is the availability of trauma departments for the population?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.046192
+What is the number of fire stations in the Admiralteysky district?,Адмиралтейский район,service_accessibility_pipeline,service_accessibility_pipeline,1.077311
+What is the number of police stations in the Admiralteysky district?,Адмиралтейский район,service_accessibility_pipeline,service_accessibility_pipeline,1.090197
+What is the number of fire stations in the city of Saint Petersburg?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.079307
+What is the number of police departments in the city of Saint Petersburg?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.072509
+What is the number of fire stations in the Vasileostrovsky district?,Василеостровский район,service_accessibility_pipeline,service_accessibility_pipeline,1.079803
+What is the population's availability of playgrounds?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.075295
+How many playgrounds are there in the city?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.080507
+How many playgrounds are there in the Admiralteysky district?,Адмиралтейский район,service_accessibility_pipeline,service_accessibility_pipeline,1.074093
+What is the average accessibility of dog walking areas in the city on foot?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.057977
+What is the total area of recreational areas in the city?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.122688
+What is the size of the city's resident population?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.074868
+What is the average total area of residential premises per inhabitant in the city?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.079443
+What is the share of dilapidated housing in the city?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.041599
+What is the share of dilapidated housing in the Admiralteysky district?,Адмиралтейский район,service_accessibility_pipeline,service_accessibility_pipeline,1.081748
+What is the population size in the Admiralteysky district?,Адмиралтейский район,service_accessibility_pipeline,service_accessibility_pipeline,1.074111
+How many schools are located in Saint Petersburg?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.043501
+How many educational facilities are there in the Admiralteysky district?,Адмиралтейский район,service_accessibility_pipeline,service_accessibility_pipeline,1.077747
+What is the availability of educational facilities for the population?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.07425
+What is the average availability of preschool institutions in the city?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.07488
+What is the population's availability of schools?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.077914
+What is the pedestrian accessibility of public transport stops?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.078622
+What is the average correspondence time in the city on public transport?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.056505
+What is the average correspondence time in the city by private transport?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.045974
+How many train terminals are there in the city?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.051575
+What is the number of public transport stops in the city?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.042924
+What is the average time when swimming pools are accessible by public transport?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.080062
+What is the number of sports infrastructure facilities in the city?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.085057
+What is the provision of swimming pools for the population of St. Petersburg?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.090303
+What is the availability of sports infrastructure facilities for St. Petersburg residents in the accessibility zone?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.084942
+What is the average time of access to sports halls by private transport in Saint Petersburg?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.075443
+What is the average walking distance to cafes and restaurants?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.101419
+What is the average circus availability time?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.054468
+What is the availability of cultural and leisure facilities?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.07466
+What is the average walking distance to museums?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.076566
+What is the average theater availability time?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.090577
+What is the population's availability of recreational areas?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.078602
+What is the population's availability of recreational areas in the Admiralteysky district?,Адмиралтейский район,service_accessibility_pipeline,service_accessibility_pipeline,1.041452
+How many recreational areas are there in Saint Petersburg?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.080161
+What is the average time when parks are accessible?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.083311
+How many recreational areas are located in the Admiralteysky district?,Адмиралтейский район,service_accessibility_pipeline,service_accessibility_pipeline,1.077444
+What is the average accessibility of multifunctional centers for providing state and municipal services on foot?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.07613
+What is the average accessibility of multifunctional centers for providing state and municipal services on public transport?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.078059
+What is the average availability of multifunctional centers for providing state and municipal services by private transport?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.088199
+How many MFC's are located in Saint Petersburg?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.075417
+What is the provision of maternity hospitals for the population?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.078467
+What is the average accessibility of the city center?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.081259
+What is the number of railway stations in the city?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.077848
+What is the number of public transport stops in the Admiralteysky district?,Адмиралтейский район,service_accessibility_pipeline,service_accessibility_pipeline,1.087939
+What is the average accessibility to the city center from Admiralteysky district?,Адмиралтейский район,service_accessibility_pipeline,service_accessibility_pipeline,1.194108
+What is the pedestrian accessibility of public transport stops in the Admiralteysky district?,Адмиралтейский район,service_accessibility_pipeline,service_accessibility_pipeline,1.085055
+What is the number of preschool children?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.084424
+What is the number of school-age children?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.073727
+What is the number of pensioners?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.078214
+What is the size of the working-age population?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.078345
+What is the population size below working age?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.077549
+What is the average walking distance to grocery stores?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.077923
+What is the average accessibility of home appliance stores by private transport?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.079044
+What is the average accessibility of bookstores by private transport?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.074389
+What is the average accessibility of children's goods stores on foot?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.078039
+How many grocery stores are there in St. Petersburg?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.079447
+What is the availability of cultural and leisure facilities?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.079748
+What is the availability of museums for the population?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.076297
+What is the average walking distance to museums?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.076564
+What is the average time that a circus is available?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.043314
+What is the average theater availability time?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.080993
+What is the provision of higher education institutions for the population?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.078529
+What is the availability of universities for the population of the Admiralteysky district?,Адмиралтейский район,service_accessibility_pipeline,service_accessibility_pipeline,1.076438
+How many universities are there in Saint Petersburg?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.043987
+What is the provision of secondary vocational education institutions for the population?,Санкт-Петербург,service_accessibility_pipeline,service_accessibility_pipeline,1.081029
+What is the number of secondary vocational education institutions?,Санкт-Петербург,service_accessibility_pipeline,strategy_development_pipeline,1.090932
+"What measures should be taken to implement the task 'Improving the provision of specialized, including high-tech medical care, and increasing its accessibility'?
+",Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.04336
+"How can we ensure sustainable natural population growth, improve health, and increase life expectancy?",Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.079144
+What favorable factors contribute to the development of the healthcare sector in St. Petersburg?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.046906
+What should be done to increase public satisfaction with the quality of outpatient medical care?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.047618
+How should we improve the quality and effectiveness of preventive measures?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.042368
+What activities are being implemented in the framework of the direction 'Ensuring the effectiveness of governance and development of civil society'?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.046968
+What is the degree of satisfaction of the population of St. Petersburg with the level of their personal security? ,Санкт-Петербург,strategy_development_pipeline,service_accessibility_pipeline,1.073456
+What factors contribute to improving the level of social harmony and security in St. Petersburg?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.076787
+What methods will be used to improve the level of fire safety in St. Petersburg in accordance with the Strategy of socio-economic Development of St. Petersburg?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.07505
+"Why is it necessary to ensure the development of the video surveillance system on the territory of St. Petersburg, the unification of information exchange between operational services of St. Petersburg through the introduction and development in accordance with common functional and technological standards of the hardware and software complex 'Safe City' in accordance with the Strategy of socio-economic development of St. Petersburg?",Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.049189
+"What is the goal of implementing the task 'Development and launch of effective tools that encourage economic entities, including industrial enterprises, to introduce environmentally friendly technologies that are safe for the environment' in the Strategy of Socio-economic Development?",Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.052358
+"Within the framework of what task is it necessary to ensure the creation of a modern infrastructure that ensures safe handling of waste of hazard classes I and II, and the elimination of the most dangerous objects of accumulated environmental damage?",Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.081119
+"What task is required to ensure the improvement of federal and regional facilities and public spaces, as well as measures to provide outdoor lighting for streets and highways in St. Petersburg, and inner-city areas?",Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.087119
+What needs to be done to implement the transition to the program-investment principle of territory improvement?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.074858
+Do you plan to improve the city's territory in accordance with the Strategy of socio-economic development of St. Petersburg until 2035?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.079967
+"What needs to be done to ensure sustainable provision of energy and municipal resources to the population, social sphere and economy of St. Petersburg?",Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.076159
+"What is the goal of the task 'Creating economic methods to stimulate the efficiency of grid organizations, developing the scientific and innovative potential of the electric grid complex'?",Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.078219
+"What task is necessary to ensure synchronization of major repairs of domestic engineering systems, including repairs of cold and hot water supply, heat supply and sanitation systems?",Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.076731
+"What tasks need to be solved to achieve the goal of integrated development of municipal infrastructure, energy and energy saving systems?",Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.079665
+What works should be performed in the gas supply system?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.11098
+"What tasks need to be implemented to achieve the goal: 'Improving education, quality and accessibility of education for all segments of the population'?",Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.066562
+How is it necessary to ensure the availability and attractiveness of vocational education services?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.064772
+What is the characteristic feature of St. Petersburg's education sector?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.045143
+"Within the framework of what task is it necessary to increase the level of information openness of the education system, introduce new methods of teaching and upbringing, educational technologies, including distance learning?",Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.060564
+What is necessary in the framework of the task 'Development of research activities on the basis of educational institutions of higher education'?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.052953
+What is necessary for the development of railway passenger transport in St. Petersburg?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.084499
+What measures should be taken to ensure the development of high-speed passenger services and reduce the negative impact of freight trains?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.074581
+What needs to be done to improve road safety in accordance with the Social and Economic Development Strategy of Saint Petersburg until 2035?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.077064
+How should we consider the development of the St. Petersburg transport system? ,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.120803
+Why is it necessary to continue the development of high-speed rail transport in St. Petersburg?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.081298
+What factors contribute to the improvement of physical culture and sports in St. Petersburg?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.078099
+What factors hinder the development of physical culture and sports in St. Petersburg?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.088757
+What weaknesses and main factors can hinder the development of physical culture and sports in St. Petersburg?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.098681
+"What needs to be done in the framework of the task 'Creating infrastructure for the development of high-performance sports and holding interregional, national and international physical culture and sports events'?",Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.086219
+"As part of the implementation of what task is it necessary to ensure the possibility of developing a network of courtyard sports grounds, stadiums, and sports clubs in general education organizations in St. Petersburg?",Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.053176
+What tasks need to be implemented to achieve the goal: 'Ensuring the harmonious development of the individual based on the cultural and historical heritage of St. Petersburg'?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.112692
+What is the objective of attracting private capital for the restoration of cultural heritage sites and stimulating the interest of individuals and legal entities in preserving cultural heritage sites?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.088439
+What can be favorable factors contributing to the development of the cultural sphere of St. Petersburg?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.077466
+What is the task of promoting the expansion of cooperation between cultural organizations in St. Petersburg and cultural organizations of the constituent entities of the Russian Federation and foreign countries?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.078531
+"For what purpose is it necessary to provide conditions for the active development of contemporary art and the creation of a new artistic product at the level corresponding to the best world achievements, as well as for the dissemination and organization of society's perception of contemporary art?",Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.079184
+How is it necessary to preserve natural complexes and restore the biological diversity of flora and fauna?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.129931
+"How can we ensure an efficient system for locating, disposing of, treating, and neutralizing industrial and consumer waste?",Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.081074
+How will St. Petersburg's green spaces be effectively managed to preserve their functions and the system of specially protected natural areas?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.078055
+What are the main objectives of the task related to ensuring rational use of natural resources and environmental safety?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.078107
+"What is the goal of developing and launching effective tools that encourage economic entities, including industrial enterprises, to introduce environmentally friendly technologies that are safe for the environment",Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.085082
+"What measures are being taken to solve the problem of 'Increasing the birth rate, creating favorable conditions for the life of young families and families with children'?",Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.078159
+What are the main favorable factors that contribute to the development of the social protection system of the population of St. Petersburg?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.078047
+"What hinders the development of the system of social protection, support and social services for the population of St. Petersburg?",Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.085195
+What is the basis for the well-being of the least protected segments of the population of St. Petersburg and the equalization of the standard of living of the population?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.115047
+What is the social policy in St. Petersburg aimed at?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.103746
+What is planned to be done for the development of the territories of the 'Gray Belt' of St. Petersburg in accordance with the Strategy of socio-economic development of St. Petersburg until 2035?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.113891
+What is planned to be done for the development of the territories of 'Residential areas' of St. Petersburg in accordance with the Strategy of socio-economic development of St. Petersburg until 2035?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.095806
+What is necessary for a balanced socio-economic development of territories in accordance with the Strategy of socio-economic development of St. Petersburg until 2035?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.042634
+What is holding back the spatial development of St. Petersburg?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.075064
+What are the main favorable factors contributing to the efficient and rational spatial development of St. Petersburg?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.099238
+What tasks need to be implemented in the framework of the goal to improve the efficiency of providing state and municipal services and transparency of public administration?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.080111
+What are the strengths of the public administration system in St. Petersburg?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.074555
+What are the main factors contributing to the development of the public administration system in St. Petersburg?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.079306
+What factors hinder the development of the public administration system in St. Petersburg?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.077902
+What measures are being implemented in St. Petersburg in the context of public administration?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.088111
+What measures are being taken to attract investment to the city and support businesses?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.072578
+What factors stimulate the economic development of St. Petersburg?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.042552
+What factors hinder the sustainable and efficient development of the St. Petersburg economy?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.085676
+What is the main source of economic development?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.084778
+What is necessary for St. Petersburg's economic growth to be sustainable?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.087826
+What needs to be done to develop the tourism sector in the city in accordance with the Strategy of socio-economic development of St. Petersburg?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.076847
+What is the reason for the tourist attractiveness of St. Petersburg?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.080432
+Why does St. Petersburg have a high potential for further development of business tourism? ,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.075865
+What factors contribute to the development of tourism in St. Petersburg?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.079799
+What factors hinder the development of tourism in St. Petersburg?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.080327
+What factors contribute to increasing scientific and innovation activity in St. Petersburg?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.082394
+What factors hinder the development of scientific and innovative activity in St. Petersburg?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.075433
+What are the priority digital technologies for St. Petersburg state authorities?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.079675
+What contributes to creating a favorable competitive environment for activating innovation processes and introducing innovative products in St. Petersburg?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.113413
+What share of high-tech and knowledge-intensive industries is planned in the GRP structure of St. Petersburg by 2030?,Санкт-Петербург,strategy_development_pipeline,strategy_development_pipeline,1.077042
