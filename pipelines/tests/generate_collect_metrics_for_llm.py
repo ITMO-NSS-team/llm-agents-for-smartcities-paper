@@ -114,8 +114,9 @@ must use only Russian language.
 
     models_list = [
         # "openai/gpt-4o-2024-08-06",
-        "mistralai/mixtral-8x22b-instruct",
-        "meta-llama/llama-3.1-70b-instruct",
+        # "mistralai/mixtral-8x22b-instruct",
+        # "meta-llama/llama-3.1-70b-instruct",
+        "llama-3.1-70b-instruct-int4",
     ]
     metric_model = VseGPTConnector(model="openai/gpt-4o-mini", sys_prompt="")
     metrics_init_params = {
