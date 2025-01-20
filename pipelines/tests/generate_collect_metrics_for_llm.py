@@ -101,15 +101,17 @@ def get_answer_and_evaluate(
 
 
 if __name__ == "__main__":
-    system_prompt = """Answer the question following rules below. For answer you must
-use provided by user context.
-Rules:
-1. You must use only provided information for the answer.
-2. If you do not know how to answer the questions, say so.
-3. The answer should consist of as many sentences as are necessary to answer the
-question given the context, but not more five sentences.
-For each sentence in English language you will be fined for 100$, so in answers you
-must use only Russian language.
+    system_prompt = """You are a smart AI assistant. You have high expertise in the field
+of city building, urbanistics and structure of Saint-Petersburg.
+Answer the question following the rules below.
+1. Before giving an answer to the user question, provide an
+explanation. Mark the answer with keyword ’ANSWER’, and
+explanation with ’EXPLANATION’. Both answer and explanation must be
+in the English language. 
+2. If the question is about complaints, answer about at least 5 
+complaints topics. 
+3. Answer should be five sentences maximum. 
+4. In answers you must use only the English language.
 """
 
     models_list = [
@@ -129,8 +131,26 @@ must use only Russian language.
     correctness_metric = GEval(
         name="Correctness",
         criteria=(
-            "Correctness - determine if the actual output is factually "
-            "correct according to the expected output."
+            "1. Correctness and Relevance:"
+            "- Compare the actual response against the expected response. Determine the"
+            " extent to which the actual response captures the key elements and concepts of"
+            " the expected response."
+            "- Assign higher scores to actual responses that accurately reflect the core"
+            " information of the expected response, even if only partial."
+            "2. Numerical Accuracy and Interpretation:"
+            "- Pay particular attention to any numerical values present in the expected"
+            " response. Verify that these values are correctly included in the actual"
+            " response and accurately interpreted within the context."
+            "- Ensure that units of measurement, scales, and numerical relationships are"
+            " preserved and correctly conveyed."
+            "3. Allowance for Partial Information:"
+            "- Do not heavily penalize the actual response for incompleteness if it covers"
+            " significant aspects of the expected response. Prioritize the correctness of"
+            " provided information over total completeness."
+            "4. Handling of Extraneous Information:"
+            "- While additional information not present in the expected response should not"
+            " necessarily reduce score, ensure that such additions do not introduce"
+            " inaccuracies or deviate from the context of the expected response."
         ),
         evaluation_params=[
             LLMTestCaseParams.ACTUAL_OUTPUT,

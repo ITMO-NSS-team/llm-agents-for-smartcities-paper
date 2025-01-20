@@ -2,7 +2,7 @@
 
 The repository contains code and data for the LLM-based city management research.
 
-## Build an image for the Pipeline with RAG and start the container:
+## Build an image for the RAG pipelines and start the container:
 
 Create the `$NSS_NPA_TOKEN` environment variable on the server
 
