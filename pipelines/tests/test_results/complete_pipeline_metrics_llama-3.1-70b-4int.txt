@@ -1,5 +1,5 @@
-Average total time (LLM only): 2.5
-Average total time (LLM + RAG + Agents): 9.2
+Average total time (LLM only): 2.5 seconds.
+Average total time (LLM + RAG + Agents): 9.2 seconds.
 
 Short metrics results:
 Average Correctness (LLM only) is 0.28.
